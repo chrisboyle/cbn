@@ -1,0 +1,10 @@
+-if params[:is_root]
+	=render :partial => 'rootbanner'
+-else
+	%h1 Listing posts
+
+=render :partial => @posts
+
+%br/
+
+=link_to 'New post', new_post_path
