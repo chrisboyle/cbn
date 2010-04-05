@@ -41,3 +41,5 @@ Rails::Initializer.run do |config|
 end
 
 Harsh.enable_haml
+ExceptionNotifier.exception_recipients = %w(chris@boyle.name)
+ExceptionNotifier.sender_address = "\"Rails exception\" <rails-exception@chris.boyle.name>"
