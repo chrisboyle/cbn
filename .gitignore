@@ -5,3 +5,5 @@ log/*.log
 tmp/**/*
 public/stylesheets/main.css
 config/database.yml
+Capfile
+config/deploy.rb
