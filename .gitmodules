@@ -1,3 +1,6 @@
 [submodule "vendor/plugins/harsh"]
 	path = vendor/plugins/harsh
 	url = git://github.com/michaeledgar/harsh.git
+[submodule "vendor/plugins/acts_as_tree"]
+	path = vendor/plugins/acts_as_tree
+	url = git://github.com/saturnflyer/acts_as_tree.git

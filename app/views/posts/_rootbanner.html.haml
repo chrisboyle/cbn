@@ -1,4 +1,25 @@
-.rootbanner
+#rootbanner
 	%h1 Chris Boyle
 	.tagline Witty tagline goes here
-	%img{:src => image_path('services.png')}
+	-[ |
+		['google','Google profile','http://www.google.com/profiles/chris.boyle.name'], |
+		['insanejournal','InsaneJournal: shortcipher','http://shortcipher.insanejournal.com/'], |
+		['debian','Debian QA stats','http://qa.debian.org/developer.php?login=cmb@debian.org'], |
+		['launchpad','Launchpad: cmb','https://launchpad.net/~cmb'], |
+		['picasa','Picasa albums','http://picasaweb.google.com/chris.boyle.name'], |
+		['facebook','Facebook: shortcipher','http://www.facebook.com/shortcipher'], |
+		['lastfm','Last.fm: shortcipher','http://www.last.fm/user/shortcipher'], |
+		['linkedin','LinkedIn: shortcipher','http://www.linkedin.com/in/shortcipher'], |
+		['orkut','Orkut profile','http://www.orkut.com/Profile.aspx?uid=5151257037369954632'], |
+		['amazon','Amazon profile','http://www.amazon.co.uk/gp/pdp/profile/A14ZX1C5G75VLP?ie=UTF8'], |
+		['ebay','eBay: chrisboyle','http://myworld.ebay.com/chrisboyle'], |
+		['steam','SteamID: kerneloops','http://steamcommunity.com/id/kerneloops'], |
+		['worldofgoo','World Of Goo profile','http://goofans.com/leaderboard/player/ae06cbe5d4bb4b85ebfbe453ba14dbce'], |
+		['maelfroth','Maelfroth: cmb','http://wiki.maelfroth.org/~cmb'], |
+		['twitter','Twitter: c_boyle','http://twitter.com/c_boyle'], |
+		['stackoverflow','Stack Overflow: cmb','http://stackoverflow.com/users/6540/chris-boyle'], |
+		['serverfault','Server Fault: cmb','http://serverfault.com/users/5708/chris-boyle'], |
+		['superuser','Super User: cmb','http://superuser.com/users/4211/chris-boyle'], |
+		].each do |i,t,u| |
+		%a{:href=> u, :rel => 'me', :title => t}
+			=image_tag("sprites/fav_#{i}.png")

@@ -10,6 +10,28 @@
 
 	%body
 		#page
-			.notice= flash[:notice]
+			#tree
+				%ul
+					%li about
+					%li
+						blog
+						%ul
+							%li 2009
+							%li
+								2010
+								%ul
+									%li
+										April
+										%ul
+											%li Hello, world
+					%li contact
+					%li projects
 
-			=yield
+			#identblock
+				=link_to 'Sign in', '/login'
+
+			#content
+				-if flash[:notice]
+					.notice= flash[:notice]
+
+				=yield

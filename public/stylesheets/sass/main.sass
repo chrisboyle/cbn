@@ -21,9 +21,13 @@ body
 	margin: 0 auto 0
 	padding: 0 1em 0
 	max-width: 900px
+	min-width: 28em
 
 * html #page
 	height: 100%
+
+p
+	margin: 0 0 1em 0
 
 pre
 	font-size: 130%
@@ -36,12 +40,32 @@ pre
 h1, h2, h3, h4, h5
 	margin: 0
 
+#tree
+	float: left
+	width: 10em
+
+#tree ul
+	padding-left: 0
+	list-style-type: none
+
+#tree ul ul
+	padding-left: 1em
+
+#identblock
+	float: right
+
+#content
+	min-width: 14em
+	margin-left: 12em
+
 .hentry
+	clear: right
 	margin: 1em 0 1em
 
-.rootbanner
-	background: url(/images/illustshort.png) no-repeat 0% 50%
-	padding: 1em 0 1em 100px
+#rootbanner
+	clear: right
+	background: url(/images/illustshort.png) no-repeat 0% 0.4em
+	padding: 0 0 1em 100px
 	min-height: 90px
 	vertical-align: middle
 
@@ -50,3 +74,4 @@ h1, h2, h3, h4, h5
 
 .tagline
 	margin-bottom: 0.5em
+	font-style: italic

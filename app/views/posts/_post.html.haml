@@ -1,4 +1,4 @@
--div_for post do
+-div_for(post, :class => 'hentry') do
 	%h2.entry-title= link_to_unless_current(post.title, post, :rel => 'bookmark')
 	-begin
 		.entry-content= Haml::Engine.new(post.body, :format => :html5).render
