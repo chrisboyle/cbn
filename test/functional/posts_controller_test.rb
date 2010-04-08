@@ -1,10 +1,10 @@
 require 'test_helper'
 
-class PostsControllerTest < ActionController::TestCase
+class PagesControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:posts)
+    assert_not_nil assigns(:pages)
   end
 
   test "should get new" do
@@ -12,34 +12,34 @@ class PostsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should create post" do
-    assert_difference('Post.count') do
-      post :create, :post => { }
+  test "should create page" do
+    assert_difference('Page.count') do
+      post :create, :page => { }
     end
 
-    assert_redirected_to post_path(assigns(:post))
+    assert_redirected_to page_path(assigns(:page))
   end
 
-  test "should show post" do
-    get :show, :id => posts(:one).to_param
+  test "should show page" do
+    get :show, :id => pages(:one).to_param
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, :id => posts(:one).to_param
+    get :edit, :id => pages(:one).to_param
     assert_response :success
   end
 
-  test "should update post" do
-    put :update, :id => posts(:one).to_param, :post => { }
-    assert_redirected_to post_path(assigns(:post))
+  test "should update page" do
+    put :update, :id => pages(:one).to_param, :page => { }
+    assert_redirected_to page_path(assigns(:page))
   end
 
-  test "should destroy post" do
-    assert_difference('Post.count', -1) do
-      delete :destroy, :id => posts(:one).to_param
+  test "should destroy page" do
+    assert_difference('Page.count', -1) do
+      delete :destroy, :id => pages(:one).to_param
     end
 
-    assert_redirected_to posts_path
+    assert_redirected_to pages_path
   end
 end

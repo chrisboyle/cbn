@@ -1,0 +1,18 @@
+%h1
+	=@page.id ? "Editing page" : "New page"
+
+-form_for @page do |f|
+	=f.error_messages
+
+	%p
+		=f.label :title
+		%br/
+		=f.text_field :title
+	%p
+		=f.label :body
+		%br/
+		~f.text_area :body
+	%p= f.submit(@page.id ? 'Update' : 'Create')
+
+=link_to 'Show', @page if @page.id
+=link_to 'Back', pages_path

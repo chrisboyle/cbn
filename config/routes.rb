@@ -1,6 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :posts, :as => 'blog', :has_many => :comments
-  map.root :controller => :posts, :is_root => true
+  map.resources :pages, :as => 'blog', :has_many => :comments
+  map.root :controller => :pages, :is_root => true
   map.resource :session
 
   # The priority is based upon order of creation: first created -> highest priority.

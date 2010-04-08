@@ -40,11 +40,11 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.xml
   def create
-    @post = Post.find(params[:post_id])
-    @comment = @post.comments.create!(params[:comment])
+    @page = Page.find(params[:page_id])
+    @comment = @page.comments.create!(params[:comment])
     respond_to do |format|
       #flash[:notice] = 'Comment was successfully created.'
-      format.html { redirect_to(@post) }
+      format.html { redirect_to(@page) }
       format.js
     end
   end
