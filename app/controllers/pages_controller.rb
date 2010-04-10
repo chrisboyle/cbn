@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_filter :authenticate, :except => [:index, :show]
+  before_filter :authenticate, :except => [:index, :show, :find_by_month_and_name]
 
   # GET /pages
   # GET /pages.xml
@@ -21,6 +21,18 @@ class PagesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.haml
+      format.xml  { render :xml => @page }
+      format.json { render :json => @page }
+    end
+  end
+
+  def find_by_month_and_name
+    start = Time.local(params[:year], params[:month])
+    finish = start.end_of_month.end_of_day
+    @page = Page.first(:conditions => ['created_at > ? and created_at < ? and name = ?', start, finish, params[:name]])
+
+    respond_to do |format|
+      format.html { render 'show' }
       format.xml  { render :xml => @page }
       format.json { render :json => @page }
     end

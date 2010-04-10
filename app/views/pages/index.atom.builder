@@ -3,7 +3,7 @@ atom_feed do |feed|
 	feed.updated @pages.first.created_at
 
 	@pages.each do |page|
-		next unless page.is_blog?
+		next unless page.blog
 		feed.entry page do |entry|
 			entry.title page.title
 			entry.content page.body, :type => 'html'

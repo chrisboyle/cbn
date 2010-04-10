@@ -1,6 +1,11 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :pages, :as => 'blog', :has_many => :comments
-  map.root :controller => :pages, :is_root => true
+  #map.resources :pages, :as => 'blog', :has_many => :comments
+  map.page ':year/:month/:name.:format', :controller => 'pages', :action => 'find_by_month_and_name', :requirements => { :year => /\d{4}/, :month => /\d{2}/ }
+  map.new_page 'pages/new', :controller => :pages, :action => :new
+  #map.edit_page ':year/:month/:name/edit', :controller => 'pages', :action => 'edit_by_month_and_name', :requirements => { :year => /\d{4}/, :month => /\d{2}/ }
+  map.edit_page 'pages/:id/edit', :controller => :pages, :action => :edit
+  map.pages '', :controller => :pages, :action => :index, :is_root => true
+  map.feed 'feed.:format', :controller => :pages, :action => :index, :is_root => true
   map.resource :session
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -34,14 +39,5 @@ ActionController::Routing::Routes.draw do |map|
   #     admin.resources :products
   #   end
 
-  # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  # map.root :controller => "welcome"
-
   # See how all your routes lay out with "rake routes"
-
-  # Install the default routes as the lowest priority.
-  # Note: These default routes make all actions in every controller accessible via GET requests. You should
-  # consider removing or commenting them out if you're using named routes and resources.
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
 end
