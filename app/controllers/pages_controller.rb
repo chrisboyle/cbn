@@ -1,8 +1,6 @@
 class PagesController < ApplicationController
   before_filter :authenticate, :except => [:index, :show, :find_by_month_and_name]
 
-  # GET /pages
-  # GET /pages.xml
   def index
     @pages = Page.all
 
@@ -14,48 +12,27 @@ class PagesController < ApplicationController
     end
   end
 
-  # GET /pages/1
-  # GET /pages/1.xml
   def show
-    @page = Page.find(params[:id])
-
+    @page = find_dated(params)
     respond_to do |format|
-      format.html # show.html.haml
+      format.html
       format.xml  { render :xml => @page }
       format.json { render :json => @page }
     end
   end
 
-  def find_by_month_and_name
-    start = Time.local(params[:year], params[:month])
-    finish = start.end_of_month.end_of_day
-    @page = Page.first(:conditions => ['created_at > ? and created_at < ? and name = ?', start, finish, params[:name]])
-
-    respond_to do |format|
-      format.html { render 'show' }
-      format.xml  { render :xml => @page }
-      format.json { render :json => @page }
-    end
-  end
-
-  # GET /pages/new
-  # GET /pages/new.xml
   def new
     @page = Page.new
-
     respond_to do |format|
       format.html { render 'edit' }
       format.xml  { render :xml => @page }
     end
   end
 
-  # GET /pages/1/edit
   def edit
-    @page = Page.find(params[:id])
+    @page = find_dated(params)
   end
 
-  # POST /pages
-  # POST /pages.xml
   def create
     @page = Page.new(params[:page])
 
@@ -106,5 +83,11 @@ class PagesController < ApplicationController
       authenticate_or_request_with_http_digest do |u|
           return "secret"
       end
+  end
+
+  def find_dated(params)
+    start = Time.local(params[:year], params[:month])
+    finish = start.end_of_month.end_of_day
+    Page.first(:conditions => ['created_at > ? and created_at < ? and name = ?', start, finish, params[:name]])
   end
 end

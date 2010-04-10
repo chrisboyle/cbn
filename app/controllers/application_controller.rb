@@ -8,4 +8,14 @@ class ApplicationController < ActionController::Base
 
 	# Scrub sensitive parameters from your log
 	filter_parameter_logging :password
+
+	def url_for(options = {})
+		if options[:year].class.to_s == 'Page'
+			page = options[:year]
+			options[:year] = page.created_at.year
+			options[:month] = '%02d' % page.created_at.month
+			options[:name] = page.name
+		end
+		super(options)
+	end
 end

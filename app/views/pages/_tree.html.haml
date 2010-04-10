@@ -1,5 +1,5 @@
 -if tree
 	%ul
 		-tree.each do |p|
-			%li= link_to p.title, p.url
+			%li= link_to p.title, p
 			=render :partial => 'tree', :tree => p.children
