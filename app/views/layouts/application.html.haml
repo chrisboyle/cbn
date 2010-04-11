@@ -2,7 +2,11 @@
 %html{html_attrs('en-GB')}
 	%head
 		%meta{'http-equiv' => 'content-type', :content => 'text/html;charset=UTF-8'}
-		%title #{controller.controller_name.capitalize}: #{controller.action_name}
+		%title
+			-title = yield :title
+			-if title
+				#{title} - 
+			=SITE_NAME
 		%link{:rel => 'shortcut icon', :href => image_path('favicon.png'), :type => 'image/png'}
 		=auto_discovery_link_tag :atom, feed_path(:atom) if controller.controller_name == 'pages'
 		=stylesheet_link_tag :all, :recursive => true, :cache => true

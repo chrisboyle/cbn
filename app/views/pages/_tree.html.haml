@@ -2,4 +2,4 @@
 	%ul
 		-tree.each do |p|
 			%li= link_to p.title, p
-			=render :partial => 'tree', :tree => p.children
+			=render :partial => 'tree', :object => p.children
