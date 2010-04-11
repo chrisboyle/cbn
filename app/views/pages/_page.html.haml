@@ -1,6 +1,12 @@
 -div_for(page, :class => 'hentry') do
 	%h2.entry-title= link_to_unless_current(page.title, page, :rel => 'bookmark')
-	-begin
-		.entry-content= Haml::Engine.new(page.body, :format => :html5).render
-	-rescue
-		.entry-content.hamlfail= page.body
+	-if page.is_a? Post
+		.times
+			-if page.updated_at > page.created_at
+				=succeed "," do
+					%span.published= page.created_at.friendly8601
+				updated at
+				%span.updated= page.updated_at.friendly8601
+			-else
+				%span.published= page.created_at.friendly8601
+	=render :partial => 'body', :format => 'html', :locals => { :body => page.body }

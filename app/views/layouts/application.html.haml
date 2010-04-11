@@ -6,7 +6,7 @@
 			-title = yield :title
 			-if title
 				#{title} - 
-			=SITE_NAME
+			Chris Boyle
 		%link{:rel => 'shortcut icon', :href => image_path('favicon.png'), :type => 'image/png'}
 		=auto_discovery_link_tag :atom, feed_path(:atom) if controller.controller_name == 'pages'
 		=stylesheet_link_tag :all, :recursive => true, :cache => true
@@ -15,10 +15,10 @@
 	%body
 		#page
 			#tree
-				=render :partial => 'tree', :object => Page.roots
+				=render :partial => 'tree', :object => Page.all(:conditions => "type != 'Post'")
 
 			#identblock
-				=link_to 'Sign in', '/login'
+				=link_to 'Sign in', :controller => :sessions, :action => :new
 
 			#content
 				-if flash[:notice]

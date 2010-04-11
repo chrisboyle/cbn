@@ -1,10 +1,10 @@
--if params[:is_root]
-	=render :partial => 'rootbanner'
--else
-	%h1 Listing pages
+.hfeed
+	-if params[:is_root]
+		=render :partial => 'rootbanner'
+	-else
+		%h1 Listing pages
 
-=render :partial => @pages
+	.entries
+		=render :partial => @pages
 
-%br/
-
-=link_to 'New page', new_page_path
+	=link_to 'New page', new_page_path

@@ -1,6 +1,15 @@
 #rootbanner
-	%h1= SITE_NAME
-	.tagline= TAGLINE
+	%address.author.vcard
+		%h1.fn.n
+			%span.given-name Chris
+			%span.family-name Boyle
+		.tagline
+			%span.role.title Software engineer
+			in
+			%span.adr
+				=succeed "," do
+					%span.locality Cambridge
+				%abbr.country-name{:title => "United Kingdom"} UK
 	-[ |
 		['google','Google profile','http://www.google.com/profiles/chris.boyle.name'], |
 		['insanejournal','InsaneJournal: shortcipher','http://shortcipher.insanejournal.com/'], |

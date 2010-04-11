@@ -1,12 +1,10 @@
-%h1
-	=@page.id ? "Editing page" : "New page"
+=titleh1 @page.id ? "Editing page" : "New page"
 
 -form_for @page do |f|
 	=f.error_messages
 
 	%p
-		-parents = Page.all(:conditions => ["id != ?", @page.id]).map { |p| [p.id, "#{page_path(p)} (#{p.title})"] }
-		=f.collection_select :parent_id, parents, :first, :last, :prompt => "No parent"
+		=f.select :type, %w(Page Post)
 		=f.text_field :name
 
 	%p

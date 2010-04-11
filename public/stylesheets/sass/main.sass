@@ -42,13 +42,11 @@ h1, h2, h3, h4, h5
 #tree
 	float: left
 	width: 10em
-
-#tree ul
-	padding-left: 0
-	list-style-type: none
-
-#tree ul ul
-	padding-left: 1em
+	ul
+		padding-left: 0
+		list-style-type: none
+		ul
+			padding-left: 1em
 
 #identblock
 	float: right
@@ -61,6 +59,9 @@ h1, h2, h3, h4, h5
 	clear: right
 	margin: 1em 0 1em
 
+.entry-content
+	margin: 0.5em 0 1em
+
 #rootbanner
 	clear: right
 	background: url(/images/illustshort.png) no-repeat 0% 0.4em
@@ -68,9 +69,13 @@ h1, h2, h3, h4, h5
 	margin-bottom: 1em
 	min-height: 90px
 	vertical-align: middle
-
-#rootbanner h1
-	white-space: nowrap
+	h1
+		white-space: nowrap
+	address
+		display: inline
+		font-style: normal
+		abbr
+			text-decoration: none
 
 .notice
 	color: #00ff00
@@ -78,3 +83,7 @@ h1, h2, h3, h4, h5
 .tagline
 	margin-bottom: 0.5em
 	font-style: italic
+
+.times
+	color: #444444
+	font-size: 80%

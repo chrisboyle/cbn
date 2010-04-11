@@ -2,7 +2,7 @@ class PagesController < ApplicationController
   before_filter :authenticate, :except => [:index, :show, :find_by_month_and_name]
 
   def index
-    @pages = Page.all
+    @pages = Post.all
 
     respond_to do |format|
       format.html # index.html.haml
@@ -24,7 +24,7 @@ class PagesController < ApplicationController
   def new
     @page = Page.new
     respond_to do |format|
-      format.html { render 'edit' }
+      format.html { render :edit  }
       format.xml  { render :xml => @page }
     end
   end
@@ -48,10 +48,8 @@ class PagesController < ApplicationController
     end
   end
 
-  # PUT /pages/1
-  # PUT /pages/1.xml
   def update
-    @page = Page.find(params[:id])
+    @page = find_dated(params)
 
     respond_to do |format|
       if @page.update_attributes(params[:page])
@@ -65,10 +63,8 @@ class PagesController < ApplicationController
     end
   end
 
-  # DELETE /pages/1
-  # DELETE /pages/1.xml
   def destroy
-    @page = Page.find(params[:id])
+    @page = find_dated(params)
     @page.destroy
 
     respond_to do |format|
@@ -86,8 +82,12 @@ class PagesController < ApplicationController
   end
 
   def find_dated(params)
-    start = Time.local(params[:year], params[:month])
-    finish = start.end_of_month.end_of_day
-    Page.first(:conditions => ['created_at > ? and created_at < ? and name = ?', start, finish, params[:name]])
+    if params[:year]
+        start = Time.local(params[:year], params[:month])
+        finish = start.end_of_month.end_of_day
+        Page.first(:conditions => ['created_at > ? and created_at < ? and name = ?', start, finish, params[:name]]) or raise ActiveRecord::RecordNotFound
+    else
+        Page.find_by_name(params[:name]) or raise ActiveRecord::RecordNotFound
+    end
   end
 end
