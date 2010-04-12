@@ -52,7 +52,7 @@ class PagesController < ApplicationController
     @page = find_dated(params)
 
     respond_to do |format|
-      if @page.update_attributes(params[:page])
+      if @page.update_attributes(params[@page.class.name.underscore])
         flash[:notice] = 'Page was successfully updated.'
         format.html { redirect_to(@page) }
         format.xml  { head :ok }

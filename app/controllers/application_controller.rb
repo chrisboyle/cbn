@@ -17,8 +17,6 @@ class ApplicationController < ActionController::Base
 			options[:year] = page.created_at.year
 			options[:month] = '%02d' % page.created_at.month
 			options[:name] = page.name
-		elsif options[:name].class.to_s == 'Page'
-			options[:name] = options[:name].name
 		end
 		super(options)
 	end
