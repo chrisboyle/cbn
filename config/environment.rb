@@ -23,6 +23,8 @@ Rails::Initializer.run do |config|
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
   config.gem "auto_sprite"
+  config.gem "coderay"
+  config.gem "haml-coderay"
 
   # Skip frameworks you're not going to use. To use Rails without a database,
   # you must remove the Active Record framework.
@@ -37,6 +39,6 @@ Rails::Initializer.run do |config|
 end
 
 Haml::Template.options[:attr_wrapper] = '"'
-Harsh.enable_haml
+Haml::Filters::CodeRay.encoder_options[:line_numbers] = :inline
 ExceptionNotifier.exception_recipients = %w(chris@boyle.name)
 ExceptionNotifier.sender_address = "\"Rails exception\" <rails-exception@chris.boyle.name>"

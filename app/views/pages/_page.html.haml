@@ -9,4 +9,4 @@
 				%span.updated= page.updated_at.friendly8601
 			-else
 				%span.published= page.created_at.friendly8601
-	=render :partial => 'body', :format => 'html', :locals => { :body => page.body }
+	=render :partial => 'body', :format => 'html', :object => page.body
