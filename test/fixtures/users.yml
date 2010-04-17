@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  openid_identifier: MyString
+  email: MyString
+
+two:
+  openid_identifier: MyString
+  email: MyString

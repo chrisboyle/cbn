@@ -1,7 +1,11 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :users
+
 	map.pages         '', :controller => :pages, :action => :index, :is_root => true, :conditions => {:method => :get}
 	map.feed          'feed.:format', :controller => :pages, :action => :index, :conditions => {:method => :get}
-	map.resource      :session
+	map.new_user_session 'session/new', :controller => :user_sessions, :action => :new, :conditions => {:method => :get}
+	map.connect       'session', :controller => :user_sessions, :action => :create, :conditions => {:method => :post}
+	map.user_sessions 'session', :controller => :user_sessions, :action => :index, :conditions => {:method => :get}
 	map.connect       '', :controller => :pages, :action => :create, :conditions => {:method => :post}
 	map.post          ':year/:month/:name.:format', :controller => 'pages', :action => 'show', :year => /\d{4}/, :month => /\d{2}/, :conditions => {:method => :get}
 	map.connect       ':year/:month/:name.:format', :controller => 'pages', :action => 'update', :year => /\d{4}/, :month => /\d{2}/, :conditions => {:method => :put}
