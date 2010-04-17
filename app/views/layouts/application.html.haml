@@ -18,7 +18,10 @@
 				=render :partial => 'pages/tree', :object => StaticPage.all
 
 			#identblock
-				=link_to 'Sign in', :controller => :user_sessions, :action => :new
+				-if current_user
+					current_user.openid_identifier
+				-else
+					=link_to 'Sign in', :controller => :user_sessions, :action => :new
 
 			#content
 				-if flash[:notice]

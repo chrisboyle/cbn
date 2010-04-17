@@ -26,7 +26,6 @@ Rails::Initializer.run do |config|
   config.gem "coderay"
   config.gem "haml-coderay"
   config.gem "authlogic"
-  config.gem "authlogic-oid", :lib => "authlogic_openid"
   config.gem "ruby-openid", :lib => "openid"
 
   # Skip frameworks you're not going to use. To use Rails without a database,
