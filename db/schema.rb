@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100418141322) do
+ActiveRecord::Schema.define(:version => 20100418144742) do
 
   create_table "comments", :force => true do |t|
     t.integer  "page_id"
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(:version => 20100418141322) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "openid_identifier",                   :null => false
+    t.string   "openid_identifier"
     t.string   "email"
     t.string   "persistence_token",                   :null => false
     t.integer  "login_count",          :default => 0, :null => false

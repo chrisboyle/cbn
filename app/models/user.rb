@@ -8,7 +8,10 @@ class User < ActiveRecord::Base
 	end
 
 	def before_connect(facebook_session)
+		# TODO: multiple
 		self.name = facebook_session.user.name
+		self.url = facebook_session.user.profile_url
+		self.reset_persistence_token
 	end
 
 	private

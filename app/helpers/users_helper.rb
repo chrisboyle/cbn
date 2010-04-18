@@ -1,5 +1,6 @@
 module UsersHelper
 	def recognise_user(user)
+		if user.facebook_uid then return ['facebook',nil] end
 		case user.openid_identifier
 		when /^https?:\/\/([^.]+)\.livejournal\.com\/$/ then ['livejournal', $1]
 		when /^https?:\/\/([^.]+)\.insanejournal\.com\/$/ then ['insanejournal', $1]
