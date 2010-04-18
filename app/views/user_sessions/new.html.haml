@@ -11,4 +11,4 @@
 	=f.submit "Sign in", :disable_with => 'Signing in&hellip;'
 =fb_connect_javascript_tag
 =init_fb_connect "XFBML"
-=authlogic_facebook_login_button
+=authlogic_facebook_login_button(:controller => 'session')  # not really that controller, but ALFB generates wrong URLs...
