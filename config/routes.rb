@@ -6,6 +6,8 @@ ActionController::Routing::Routes.draw do |map|
 	map.new_user_session 'session/new', :controller => :user_sessions, :action => :new, :conditions => {:method => :get}
 	map.connect       'session', :controller => :user_sessions, :action => :create, :conditions => {:method => :post}
 	map.user_sessions 'session', :controller => :user_sessions, :action => :index, :conditions => {:method => :get}
+	map.connect       'session', :controller => :user_sessions, :action => :destroy, :conditions => {:method => :delete}
+	map.connect       'logout', :controller => :user_sessions, :action => :destroy
 	map.connect       '', :controller => :pages, :action => :create, :conditions => {:method => :post}
 	map.post          ':year/:month/:name.:format', :controller => 'pages', :action => 'show', :year => /\d{4}/, :month => /\d{2}/, :conditions => {:method => :get}
 	map.connect       ':year/:month/:name.:format', :controller => 'pages', :action => 'update', :year => /\d{4}/, :month => /\d{2}/, :conditions => {:method => :put}

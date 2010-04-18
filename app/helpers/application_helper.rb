@@ -3,6 +3,7 @@ module ApplicationHelper
 	def title(t)
 		content_for :title, t
 	end
+
 	def titleh1(t)
 		title(t)
 		content_tag(:h1, t)

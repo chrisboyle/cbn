@@ -19,7 +19,8 @@
 
 			#identblock
 				-if current_user
-					current_user.openid_identifier
+					=user_html current_user
+					=button_to 'Sign out', {:controller => :user_sessions, :action => :destroy}, :method => :delete
 				-else
 					=link_to 'Sign in', :controller => :user_sessions, :action => :new
 

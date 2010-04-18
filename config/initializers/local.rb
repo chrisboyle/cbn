@@ -6,3 +6,4 @@ Haml::Filters::CodeRay.encoder_options[:line_numbers] = :inline
 ExceptionNotifier.exception_recipients = %w(chris@boyle.name)
 ExceptionNotifier.sender_address = "\"Rails exception\" <rails-exception@chris.boyle.name>"
 OpenIdAuthentication.store = OpenIdAuthentication::DbStore.new
+OpenID.fetcher.ca_file = "/etc/ssl/certs/ca-certificates.crt"

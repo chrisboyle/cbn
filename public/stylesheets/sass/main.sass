@@ -50,6 +50,8 @@ h1, h2, h3, h4, h5
 
 #identblock
 	float: right
+	form, form div
+		display: inline
 
 #content
 	min-width: 14em
@@ -97,6 +99,26 @@ h1, h2, h3, h4, h5
 .notice, .error
 	clear: right
 
+.errorExplanation
+	h2
+		background: #ff0000
+		color: #ffffff
+		font-size: 110%
+	ul
+		margin: 0
+	p
+		margin: 0
+	margin: 1em 0 1em
+	border: 1px solid red
+	clear: right
+
+.fieldWithErrors
+	display: inline-block
+	background: red
+	padding: 2px
+	label
+		color: white
+
 .CodeRay .code
 	pre
 		margin: 0
@@ -113,3 +135,7 @@ h1, h2, h3, h4, h5
 		image: url(/images/openid-login-bg.png)
 		position: 1px 50%
 		repeat: no-repeat
+
+.usericon
+	vertical-align: middle
+	padding-right: 1px

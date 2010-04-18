@@ -7,19 +7,21 @@ RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
 require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
-  # Settings in config/environments/* take precedence over those specified here.
-  # Application configuration should go into files in config/initializers
-  # -- all .rb files in that directory are automatically loaded.
+	# The OpenID DbStore classes should not be reloaded when vendor/plugins
+	# isn't, or chaos will result
+	config.load_once_paths += %W( #{RAILS_ROOT}/lib )
 
-  # Add additional load paths for your own custom dirs
-  # config.load_paths += %W( #{RAILS_ROOT}/extras )
+	# Cause a lot fewer http requests
+	config.gem "auto_sprite"
 
-  # Specify gems that this application depends on and have them installed with rake gems:install
-  config.gem "auto_sprite"
-  config.gem "coderay"
-  config.gem "haml-coderay"
-  config.gem "authlogic"
-  config.gem "ruby-openid", :lib => "openid"
+	# Pretty code samples
+	config.gem "coderay"
+	config.gem "haml-coderay"
 
-  config.time_zone = 'London'
+	# Authentication
+	config.gem "authlogic"
+	config.gem "ruby-openid", :lib => "openid"
+	# (also vendor/plugins/open_id_authentication)
+
+	config.time_zone = 'London'
 end
