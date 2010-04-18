@@ -22,6 +22,7 @@ Rails::Initializer.run do |config|
 	config.gem "authlogic"
 	config.gem "ruby-openid", :lib => "openid"
 	# (also vendor/plugins/open_id_authentication)
+	config.gem "facebooker"
 
 	config.time_zone = 'London'
 end

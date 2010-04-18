@@ -7,6 +7,10 @@ class User < ActiveRecord::Base
 		c.merge_validates_uniqueness_of_email_field_options(:allow_blank => true)
 	end
 
+	def before_connect(facebook_session)
+		self.name = facebook_session.user.name
+	end
+
 	private
 
 	def map_openid_registration(registration)

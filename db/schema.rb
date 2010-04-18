@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100418104244) do
+ActiveRecord::Schema.define(:version => 20100418115533) do
 
   create_table "comments", :force => true do |t|
     t.integer  "page_id"
@@ -43,11 +43,11 @@ ActiveRecord::Schema.define(:version => 20100418104244) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "openid_identifier",                 :null => false
+    t.string   "openid_identifier",                              :null => false
     t.string   "email"
-    t.string   "persistence_token",                 :null => false
-    t.integer  "login_count",        :default => 0, :null => false
-    t.integer  "failed_login_count", :default => 0, :null => false
+    t.string   "persistence_token",                              :null => false
+    t.integer  "login_count",                     :default => 0, :null => false
+    t.integer  "failed_login_count",              :default => 0, :null => false
     t.datetime "last_request_at"
     t.datetime "current_login_at"
     t.datetime "last_login_at"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(:version => 20100418104244) do
     t.datetime "updated_at"
     t.string   "name"
     t.string   "url"
+    t.integer  "facebook_uid",       :limit => 8
   end
 
 end

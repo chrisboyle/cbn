@@ -6,6 +6,7 @@ tmp/**/*
 public/stylesheets/main.css
 Capfile
 config/deploy.rb
+config/facebooker.yml
 .*.swp
 public/images/auto_sprite.png
 public/stylesheets/auto_sprite.css

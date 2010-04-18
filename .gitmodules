@@ -4,3 +4,6 @@
 [submodule "vendor/plugins/open_id_authentication"]
 	path = vendor/plugins/open_id_authentication
 	url = git://github.com/rails/open_id_authentication.git
+[submodule "vendor/plugins/authlogic_facebook_connect"]
+	path = vendor/plugins/authlogic_facebook_connect
+	url = git://github.com/kalasjocke/authlogic_facebook_connect.git
