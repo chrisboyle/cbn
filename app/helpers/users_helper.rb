@@ -12,6 +12,6 @@ module UsersHelper
 
 	def user_html(user)
 		recog = recognise_user(user)
-		content_tag(:span, image_tag("/images/sprites/user_#{recog[0]}.png"), :class => 'usericon') + (user.name || recog[1])
+		content_tag(:span, image_tag("/images/sprites/user_#{recog[0]}.png") + (user.name || recog[1]), :class => 'userhtml')
 	end
 end

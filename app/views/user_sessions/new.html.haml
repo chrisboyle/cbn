@@ -2,14 +2,28 @@
 =titleh1 "Sign in"
 =fb_connect_javascript_tag
 =init_fb_connect "XFBML"
+.loginbuttons
+	-[ |
+		['AOL','https://www.aol.com/'], |
+		['Blogger','http://username.blogspot.com/'], |
+		['Dreamwidth','http://username.dreamwidth.org/'], |
+		['Facebook',nil], |
+		['Flickr','http://flickr.com/example/'], |
+		['Google','https://www.google.com/accounts/o8/id'], |
+		['Insanejournal','http://username.insanejournal.com/'], |
+		['Livejournal','http://username.livejournal.com/'], |
+		['Wordpress','http://username.wordpress.com/'], |
+		['Twitter',nil], |
+		['Yahoo','https://www.yahoo.com/'], |
+		].each do |p| |
+		=loginbutton(*p)
 -form_for @user_session do |f|
-	=f.error_messages
+	=f.error_messages :header_message => "Could not sign in", :message => nil
 	.field
 		=f.label :openid_identifier, 'OpenID'
 		=f.text_field :openid_identifier, :class => 'openid_identifier'
+		=f.submit "Sign in", :disable_with => 'Signing in&hellip;'
 	.field<
 		=f.check_box :remember_me
 		=f.label :remember_me
-	=f.submit "Sign in", :disable_with => 'Signing in&hellip;'
 	=hidden_field_tag 'auth_using_fb'
-	=fb_login_button('$("auth_using_fb").value=1; $("new_user_session").submit()')
