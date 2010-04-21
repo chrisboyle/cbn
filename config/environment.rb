@@ -23,6 +23,7 @@ Rails::Initializer.run do |config|
 	config.gem "ruby-openid", :lib => "openid"
 	# (also vendor/plugins/open_id_authentication)
 	config.gem "facebooker"
+	config.gem "oauth"
 
 	config.time_zone = 'London'
 end

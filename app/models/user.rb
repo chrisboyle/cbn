@@ -14,6 +14,11 @@ class User < ActiveRecord::Base
 		self.reset_persistence_token
 	end
 
+	def self.get_twitter_user_find_or_create(token)
+		profile = JSON.parse(token.get('/account/verify_credentials.json').body)
+		find_or_create_by_twitter_username(:twitter_username => profile['screen_name'], :name => profile['name'])
+	end
+
 	private
 
 	def map_openid_registration(registration)

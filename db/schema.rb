@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100418144742) do
+ActiveRecord::Schema.define(:version => 20100421161915) do
 
   create_table "comments", :force => true do |t|
     t.integer  "page_id"
@@ -59,6 +59,11 @@ ActiveRecord::Schema.define(:version => 20100418144742) do
     t.string   "url"
     t.integer  "facebook_uid"
     t.string   "facebook_session_key"
+    t.string   "oauth_token"
+    t.string   "oauth_secret"
+    t.string   "twitter_username"
   end
+
+  add_index "users", ["oauth_token"], :name => "index_users_on_oauth_token"
 
 end
