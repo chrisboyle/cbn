@@ -12,17 +12,16 @@ class ApplicationController < ActionController::Base
 
 	protected
 
-	def url_for(options = {})
-		if options[:year].class.to_s == 'Post'
+	def default_url_options(options = {})
+		if options[:year].is_a?(Post)
 			page = options[:year]
-			options[:year] = page.created_at.year
-			options[:month] = '%02d' % page.created_at.month
-			options[:name] = page.name
+			options.merge!({:year => page.year, :month => page.month, :name => page.name})
+		else
+			{}
 		end
-		super(options)
 	end
 
-	def rescue_action(e)
+	def _rescue_action(e)
 		case e
 		when ActiveRecord::RecordNotFound
 			respond_to do |format|

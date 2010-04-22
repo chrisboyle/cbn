@@ -1,0 +1,1 @@
+PostsController = PagesController

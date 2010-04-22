@@ -1,20 +1,11 @@
 ActionController::Routing::Routes.draw do |map|
-	map.resources :users
-	map.resources :comments
+	map.connect       '', :controller => :pages, :action => :create, :conditions => {:method => :post}
+	map.resources     :posts, :member_path => ':year/:month/:name', :member_path_requirements => {:year => /\d{4}/, :month => /\d{2}/}, :has_many => :comments
 	map.pages         '', :controller => :pages, :action => :index, :is_root => true, :conditions => {:method => :get}
 	map.feed          'feed.:format', :controller => :pages, :action => :index, :conditions => {:method => :get}
-	map.new_user_session 'session/new', :controller => :user_sessions, :action => :new, :conditions => {:method => :get}
-	map.connect       'session', :controller => :user_sessions, :action => :create, :conditions => {:method => :post}
-	map.user_sessions 'session', :controller => :user_sessions, :action => :index, :conditions => {:method => :get}
-	map.connect       'session', :controller => :user_sessions, :action => :destroy, :conditions => {:method => :delete}
+	map.resources :users
+	map.resource :user_sessions, :as => 'session', :except => [:edit,:update]
 	map.connect       'logout', :controller => :user_sessions, :action => :destroy
-	map.connect       '', :controller => :pages, :action => :create, :conditions => {:method => :post}
-	map.post          ':year/:month/:name.:format', :controller => 'pages', :action => 'show', :year => /\d{4}/, :month => /\d{2}/, :conditions => {:method => :get}
-	map.connect       ':year/:month/:name.:format', :controller => 'pages', :action => 'update', :year => /\d{4}/, :month => /\d{2}/, :conditions => {:method => :put}
-	map.connect       ':year/:month/:name.:format', :controller => 'pages', :action => 'destroy', :year => /\d{4}/, :month => /\d{2}/, :conditions => {:method => :delete}
-	map.edit_post     ':year/:month/:name/edit.:format', :controller => 'pages', :action => 'edit', :year => /\d{4}/, :month => /\d{2}/, :conditions => {:method => :get}
-	map.post_comments ':year/:month/:name/comments.:format', :controller => 'comments', :action => 'index', :year => /\d{4}/, :month => /\d{2}/, :conditions => {:method => :get}
-	map.connect       ':year/:month/:name/comments.:format', :controller => 'comments', :action => 'create', :year => /\d{4}/, :month => /\d{2}/, :conditions => {:method => :post}
 	map.new_page      'newpage.:format', :controller => :pages, :action => :new, :conditions => {:method => :get}
 	map.static_page   ':name.:format', :controller => :pages, :action => :show, :conditions => {:method => :get}
 	map.connect       ':name.:format', :controller => :pages, :action => :update, :conditions => {:method => :put}
