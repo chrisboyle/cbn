@@ -1,4 +1,13 @@
 class User < ActiveRecord::Base
+	has_many :users_roles
+	has_many :roles, :through => :users_roles
+
+	def role_symbols
+		roles.map do |role|
+			role.name.underscore.to_sym
+		end
+	end
+
 	acts_as_authentic do |c|
 		c.openid_required_fields = [:fullname, :email]
 		# Email can be blank (even if not using OpenID)

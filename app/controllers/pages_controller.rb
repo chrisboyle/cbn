@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_filter :authenticate, :except => [:index, :show, :find_by_month_and_name]
+  filter_resource_access
 
   def index
     @pages = Post.all
@@ -13,7 +13,6 @@ class PagesController < ApplicationController
   end
 
   def show
-    @page = find_dated(params)
     respond_to do |format|
       format.html
       format.xml  { render :xml => @page }
@@ -29,13 +28,7 @@ class PagesController < ApplicationController
     end
   end
 
-  def edit
-    @page = find_dated(params)
-  end
-
   def create
-    @page = Page.new(params[:page])
-
     respond_to do |format|
       if @page.save
         flash[:notice] = 'Page was successfully created.'
@@ -49,8 +42,6 @@ class PagesController < ApplicationController
   end
 
   def update
-    @page = find_dated(params)
-
     respond_to do |format|
       if @page.update_attributes(params[@page.class.name.underscore])
         flash[:notice] = 'Page was successfully updated.'
@@ -64,7 +55,6 @@ class PagesController < ApplicationController
   end
 
   def destroy
-    @page = find_dated(params)
     @page.destroy
 
     respond_to do |format|
@@ -73,21 +63,19 @@ class PagesController < ApplicationController
     end
   end
 
-  private
+  protected
 
-  def authenticate
-      authenticate_or_request_with_http_digest do |u|
-          return "secret"
-      end
+  def new_from_params
+    @page = Page.new(params[:page])
   end
 
-  def find_dated(params)
+  def load_page
     if params[:year]
         start = Time.local(params[:year], params[:month])
         finish = start.end_of_month.end_of_day
-        Page.first(:conditions => ['created_at > ? and created_at < ? and name = ?', start, finish, params[:name]]) or raise ActiveRecord::RecordNotFound
+        @page = Page.first(:conditions => ['created_at > ? and created_at < ? and name = ?', start, finish, params[:name]]) or raise ActiveRecord::RecordNotFound
     else
-        Page.find_by_name(params[:name]) or raise ActiveRecord::RecordNotFound
+        @page = Page.find_by_name(params[:name]) or raise ActiveRecord::RecordNotFound
     end
   end
 end

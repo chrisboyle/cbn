@@ -7,4 +7,5 @@
 	.entries
 		=render :partial => @pages
 
-	=link_to 'New page', new_page_path
+	-if permitted_to? :create, Page.new
+		=link_to 'New page', new_page_path

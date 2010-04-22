@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100421161915) do
+ActiveRecord::Schema.define(:version => 20100421235110) do
 
   create_table "comments", :force => true do |t|
     t.integer  "page_id"
@@ -42,6 +42,12 @@ ActiveRecord::Schema.define(:version => 20100421161915) do
     t.string   "type"
   end
 
+  create_table "roles", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", :force => true do |t|
     t.string   "openid_identifier"
     t.string   "email"
@@ -65,5 +71,10 @@ ActiveRecord::Schema.define(:version => 20100421161915) do
   end
 
   add_index "users", ["oauth_token"], :name => "index_users_on_oauth_token"
+
+  create_table "users_roles", :force => true do |t|
+    t.integer "user_id", :null => false
+    t.integer "role_id", :null => false
+  end
 
 end

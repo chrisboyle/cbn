@@ -1,5 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
 	map.resources :users
+	map.resources :comments
 	map.pages         '', :controller => :pages, :action => :index, :is_root => true, :conditions => {:method => :get}
 	map.feed          'feed.:format', :controller => :pages, :action => :index, :conditions => {:method => :get}
 	map.new_user_session 'session/new', :controller => :user_sessions, :action => :new, :conditions => {:method => :get}
