@@ -1,3 +1,7 @@
+!pagebg = #bbeeff
+!borders = #0077bb
+!borderfill = #88ddff
+
 html, body
 	height: 100%
 	padding: 0
@@ -12,14 +16,14 @@ body
 	height: 100%
 
 #page
-	background: #bbeeff
+	background = !pagebg
 	border:
 		width: 0px 1px 0px 1px
 		style: solid
-		color: #0077bb
+		color = !borders
 	min-height: 100%
 	margin: 0 auto 0
-	padding: 0 1em 0
+	padding: 0 1em 1em
 	max-width: 900px
 	min-width: 28em
 
@@ -65,6 +69,23 @@ h1, h2, h3, h4, h5
 
 .entry-content
 	margin: 0.5em 0 1em
+
+.comment
+	border = 1px solid !borders
+	margin-bottom: 1em
+	.meta
+		border-bottom = 1px solid !borders
+		background = !borderfill
+	.controls
+		border-top = 1px solid !borders
+		background = !borderfill
+	.userhtml
+		font-weight: bolder
+		float: left
+	.times
+		float: right
+	.body
+		margin: 0.5em
 
 .face
 	float: left
@@ -132,7 +153,7 @@ h1, h2, h3, h4, h5
 	margin: 1em 0 1em
 	padding: 0.3em
 	background: #ffffff
-	border: 1px solid #0077bb
+	border = 1px solid !borders
 
 .openid_identifier
 	padding-left: 18px
@@ -142,11 +163,11 @@ h1, h2, h3, h4, h5
 		repeat: no-repeat
 
 .userhtml
-	vertical-align: middle
 	span
 		vertical-align: middle
 		margin-right: 1px
-		margin-bottom: 2px
+		position: relative
+		top: -2px
 
 .loginbuttons
 	max-width: 40em

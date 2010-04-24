@@ -9,13 +9,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100421235110) do
+ActiveRecord::Schema.define(:version => 20100424073017) do
 
   create_table "comments", :force => true do |t|
     t.integer  "page_id"
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   create_table "open_id_authentication_associations", :force => true do |t|

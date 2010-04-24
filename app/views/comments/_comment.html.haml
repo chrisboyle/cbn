@@ -1,12 +1,16 @@
 -div_for comment do
-	%p
-		%strong Posted #{time_ago_in_words comment.created_at} ago
-		%br/
+	.meta
+		#{user_html(comment.user)}
+		=render :partial => 'times', :format => 'html', :object => comment
+		.clear
+	.body
 		=simple_format h(comment.body)
-	%p
-		-#-if permitted_to? :edit, comment
-		-#	=link_to 'Edit', edit_comment_path(comment)
-		-#	|
-		-if permitted_to? :destroy, comment
-			=link_to 'Destroy', comment, :method => :delete, :confirm => "Are you sure?"
+	-can_edit = permitted_to? :edit, comment
+	-can_del = permitted_to? :destroy, comment
+	-if can_edit or can_del
+		.controls
+			-if can_edit
+				=link_to 'Edit', edit_comment_path(comment)
+			-if can_del
+				=link_to 'Destroy', comment, :method => :delete, :confirm => "Are you sure?"
 

@@ -1,7 +1,7 @@
 -title(@page.title)
 =render :partial => @page
 
-%p
+.controls
 	-if permitted_to? :edit, @page
 		=link_to 'Edit', edit_page_path(@page)
 		|
@@ -12,10 +12,15 @@
 	#comments
 		=render :partial => @page.comments
 
-	-if permitted_to? :create, [@page, Comment.new]
-		-remote_form_for [@page, Comment.new] do |f|
-			%p
-				=f.label :body, "New comment"
-				%br/
-				=f.text_area :body
-			%p= f.submit "Add comment"
+	-if permitted_to? :create, Comment.new(:page => @page)
+		#addcomment
+			-remote_form_for [@page, Comment.new] do |f|
+				%p
+					=f.label :body, "New comment"
+					%br/
+					=f.text_area :body
+				%p= f.submit "Add comment"
+
+	-elsif not current_user
+		#addcomment
+			=link_to 'Add a comment', new_post_comment_path

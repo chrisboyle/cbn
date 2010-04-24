@@ -21,7 +21,6 @@ class PagesController < ApplicationController
   end
 
   def new
-    @page = Page.new
     respond_to do |format|
       format.html { render :edit  }
       format.xml  { render :xml => @page }
@@ -58,15 +57,21 @@ class PagesController < ApplicationController
     @page.destroy
 
     respond_to do |format|
-      format.html { redirect_to(pages_url) }
+      format.html { redirect_to(root_url) }
       format.xml  { head :ok }
     end
   end
 
   protected
 
-  def new_from_params
-    @page = Page.new(params[:page])
+  def new_page_from_params
+    if params[:page]
+      t = params[:page].delete('type')
+      raise "Treason uncloaked!" unless %w(Post StaticPage).include?(t)
+      @page = t.constantize.new(params[:page])
+    else
+      @page = Page.new
+    end
   end
 
   def load_page

@@ -2,8 +2,12 @@ class User < ActiveRecord::Base
 	has_many :users_roles
 	has_many :roles, :through => :users_roles
 
+	def login
+		email
+	end
+
 	def role_symbols
-		roles.map do |role|
+		[:user] + roles.map do |role|
 			role.name.underscore.to_sym
 		end
 	end

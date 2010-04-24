@@ -15,7 +15,7 @@ class UserSessionsController < ApplicationController
 		@user_session.save do |result|
 			if result
 				flash[:notice] = "Successfully logged in."
-				redirect_to pages_url
+				redirect_to root_url
 			else
 				render :action => 'new'
 			end
@@ -26,6 +26,6 @@ class UserSessionsController < ApplicationController
 		@user_session = UserSession.find
 		@user_session.destroy
 		flash[:notice] = "Successfully logged out."
-		redirect_to pages_url
+		redirect_to root_url
 	end
 end

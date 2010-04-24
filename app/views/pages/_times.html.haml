@@ -1,0 +1,8 @@
+.times
+	-if times.updated_at > times.created_at
+		=succeed "," do
+			%span.published= times.created_at.friendly8601
+		updated at
+		%span.updated= times.updated_at.friendly8601
+	-else
+		%span.published= times.created_at.friendly8601

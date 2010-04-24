@@ -3,7 +3,7 @@
 	-t.each do |page|
 		-if page.name=='blog'
 			%li#blogtree
-				=link_to BLOG_WORD, pages_path
+				=link_to BLOG_WORD, root_path
 				%ul
 					-months = Post.all.group_by {|p| p.created_at.strftime("%B %Y")}
 					-months.map do |month,posts|
