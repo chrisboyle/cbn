@@ -20,7 +20,7 @@ module UsersHelper
 		end
 		u = content_tag(:span, t, :class => 'userhtml')
 		if user.url
-			link_to u, user.url
+			link_to u, user.url, :rel => 'nofollow'
 		else
 			u
 		end

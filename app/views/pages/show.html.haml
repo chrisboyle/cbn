@@ -12,15 +12,14 @@
 	#comments
 		=render :partial => @page.comments
 
-	-if permitted_to? :create, Comment.new(:page => @page)
-		#addcomment
-			-remote_form_for [@page, Comment.new] do |f|
-				%p
-					=f.label :body, "New comment"
-					%br/
-					=f.text_area :body
-				%p= f.submit "Add comment"
+	#addcomment
+		-if permitted_to? :create, Comment.new(:page => @page)
+			=render :partial => 'comments/new'
 
-	-elsif not current_user
-		#addcomment
+		-elsif not current_user
+			-# TODO just do the login form right here
 			=link_to 'Add a comment', new_post_comment_path
+
+		-else
+			%hr/
+			.placeholder You can't add a comment on this post.

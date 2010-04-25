@@ -1,7 +1,7 @@
 -div_for comment do
 	.meta
 		#{user_html(comment.user)}
-		=render :partial => 'times', :format => 'html', :object => comment
+		=render :partial => 'pages/times', :format => 'html', :object => comment
 		.clear
 	.body
 		=simple_format h(comment.body)

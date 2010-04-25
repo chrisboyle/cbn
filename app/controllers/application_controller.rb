@@ -23,7 +23,17 @@ class ApplicationController < ActionController::Base
 		end
 	end
 
-	def _rescue_action(e)
+	def load_page
+		if params[:year]
+			start = Time.local(params[:year], params[:month])
+			finish = start.end_of_month.end_of_day
+			@page = Page.first(:conditions => ['created_at > ? and created_at < ? and name = ?', start, finish, params[:name]]) or raise ActiveRecord::RecordNotFound
+		else
+			@page = Page.find_by_name(params[:name]) or raise ActiveRecord::RecordNotFound
+		end
+	end
+
+	def rescue_action(e)
 		case e
 		when ActiveRecord::RecordNotFound
 			respond_to do |format|
@@ -32,6 +42,25 @@ class ApplicationController < ActionController::Base
 			end
 		else
 			super
+		end
+	end
+
+	def permission_denied
+		if current_user
+			flash[:warning] = "Sorry, your current identity is not allowed to do that. Try another?"
+		else
+			flash[:notice] = "To do that, I need to know who you are."
+		end
+		if request.request_method == :get
+			session[:next] = request.request_uri
+		else
+			session.delete(:next)
+		end
+		loginpage = url_for :controller => :user_sessions, :action => :new
+		respond_to do |format|
+			format.html { redirect_to loginpage }
+			format.js { render(:update) {|p| p.redirect_to loginpage }}
+			format.all { render :file => "#{RAILS_ROOT}/public/403.html", :status => '403 Forbidden' }
 		end
 	end
 

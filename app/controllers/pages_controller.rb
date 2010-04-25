@@ -73,14 +73,4 @@ class PagesController < ApplicationController
 			@page = Page.new
 		end
 	end
-
-	def load_page
-		if params[:year]
-			start = Time.local(params[:year], params[:month])
-			finish = start.end_of_month.end_of_day
-			@page = Page.first(:conditions => ['created_at > ? and created_at < ? and name = ?', start, finish, params[:name]]) or raise ActiveRecord::RecordNotFound
-		else
-			@page = Page.find_by_name(params[:name]) or raise ActiveRecord::RecordNotFound
-		end
-	end
 end

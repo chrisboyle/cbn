@@ -16,7 +16,7 @@ authorization do
 			if_attribute :id => is { user.id }
 		end
 		has_permission_on :comments, :to => :create do
-			if_permitted_to :read, :page
+			#if_permitted_to :read, :page
 		end
 		has_permission_on :comments, :to => :update do
 			if_attribute :user => is { user }

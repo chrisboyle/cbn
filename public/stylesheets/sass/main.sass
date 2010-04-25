@@ -1,6 +1,7 @@
 !pagebg = #bbeeff
 !borders = #0077bb
 !borderfill = #88ddff
+!font = "FreeSans", "DejaVu Sans", "Liberation Sans", sans-serif
 
 html, body
 	height: 100%
@@ -8,8 +9,7 @@ html, body
 	margin: 0
 
 body
-	font:
-		family: sans-serif
+	font-family = !font
 	color: #000000
 	background: #ffffff
 	margin: 0px
@@ -23,7 +23,7 @@ body
 		color = !borders
 	min-height: 100%
 	margin: 0 auto 0
-	padding: 0 1em 1em
+	padding: 0 1em 0
 	max-width: 900px
 	min-width: 28em
 
@@ -36,6 +36,22 @@ p
 pre
 	font-size: 130%
 	white-space: pre-wrap
+
+textarea
+	font-family = !font
+	background-color: #ffffff
+	color: #000000
+	outline-offset: -2px
+	resize: vertical
+
+hr
+	clear: both
+	color: black
+	background-color = !borders
+	height: 1px
+	border = 0px solid !borders
+	width: 100%
+	display: block
 
 .clear
 	clear: both
@@ -62,6 +78,7 @@ h1, h2, h3, h4, h5
 #content
 	min-width: 14em
 	margin-left: 11em
+	padding-bottom: 1em
 
 .hentry
 	clear: right
@@ -86,6 +103,18 @@ h1, h2, h3, h4, h5
 		float: right
 	.body
 		margin: 0.5em
+
+#new_comment
+	.comment
+		margin-bottom: 0
+	.body
+		margin: 0
+		background-color: #ffffff
+	textarea
+		margin: 0.5em
+		width: 98%
+		border: none
+		outline: none
 
 .face
 	float: left
@@ -114,14 +143,22 @@ h1, h2, h3, h4, h5
 .notice
 	background: #88ff88
 	border: 1px solid #00ff00
-	margin: 0.5em 0 0.5em
+
+.warning
+	background: #ffff88
+	border: 1px solid #ffff00
 
 .error
 	background: #ff8888
 	border: 1px solid #ff0000
 
-.notice, .error
+.notice, .warning, .error
+	margin: 0.5em 0 0.5em
 	clear: right
+
+.placeholder
+	font-style: italic
+	font-size: 80%
 
 .errorExplanation
 	max-width: 40em
@@ -139,7 +176,6 @@ h1, h2, h3, h4, h5
 	clear: right
 
 .fieldWithErrors
-	display: inline-block
 	background: red
 	padding: 2px
 	label
@@ -167,7 +203,7 @@ h1, h2, h3, h4, h5
 		vertical-align: middle
 		margin-right: 1px
 		position: relative
-		top: -2px
+		top: -1px
 
 .loginbuttons
 	max-width: 40em

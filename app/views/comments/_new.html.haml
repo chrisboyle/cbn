@@ -1,0 +1,10 @@
+-remote_form_for [@page, @comment || Comment.new] do |f|
+	%h3 Add a comment
+	=f.error_messages :message => nil
+	.comment
+		.meta
+			=user_html(current_user)
+			.clear
+		.body<
+			~f.text_area :body, :cols => nil, :rows => 10
+	=f.submit "Add comment"

@@ -15,7 +15,7 @@ class UserSessionsController < ApplicationController
 		@user_session.save do |result|
 			if result
 				flash[:notice] = "Successfully logged in."
-				redirect_to root_url
+				redirect_to session.delete(:next) || root_url
 			else
 				render :action => 'new'
 			end
