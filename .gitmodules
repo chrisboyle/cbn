@@ -10,3 +10,6 @@
 [submodule "vendor/plugins/authlogic_oauth"]
 	path = vendor/plugins/authlogic_oauth
 	url = git://github.com/logankoester/authlogic_oauth.git
+[submodule "vendor/plugins/exception_notification"]
+	path = vendor/plugins/exception_notification
+	url = git://github.com/Odaeus/exception_notification.git
