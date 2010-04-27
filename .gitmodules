@@ -7,3 +7,6 @@
 [submodule "vendor/plugins/authlogic_facebook_connect"]
 	path = vendor/plugins/authlogic_facebook_connect
 	url = git://github.com/agibralter/authlogic_facebook_connect.git
+[submodule "vendor/plugins/authlogic_oauth"]
+	path = vendor/plugins/authlogic_oauth
+	url = git://github.com/logankoester/authlogic_oauth.git
