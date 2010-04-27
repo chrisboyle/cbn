@@ -4,6 +4,7 @@ BLOG_WORD = 'Blog'
 TWITTER = YAML.load(File.read("#{RAILS_ROOT}/config/twitter.yml"))
 
 require 'resource_hacks_hack'
+require 'authlogic_oauth_hacks'
 
 Haml::Template.options[:attr_wrapper] = '"'
 Haml::Filters::CodeRay.encoder_options[:line_numbers] = :inline
