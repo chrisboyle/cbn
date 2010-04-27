@@ -8,6 +8,7 @@ require 'authlogic_oauth_hacks'
 
 Haml::Template.options[:attr_wrapper] = '"'
 Haml::Filters::CodeRay.encoder_options[:line_numbers] = :inline
+ActionMailer::Base.delivery_method = :sendmail
 ExceptionNotification::Notifier.exception_recipients = %w(chris@boyle.name)
 ExceptionNotification::Notifier.sender_address = "\"Rails exception\" <rails-exception@chris.boyle.name>"
 OpenIdAuthentication.store = OpenIdAuthentication::DbStore.new
