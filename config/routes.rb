@@ -6,7 +6,7 @@ ActionController::Routing::Routes.draw do |map|
 	end
 	map.feed          'feed.:format', :controller => :pages, :action => :index, :conditions => {:method => :get}
 	map.new_page      'new.:format', :controller => :pages, :action => :new, :conditions => {:method => :get}
-	map.resources     :users
+	map.resources     :users, :except => [:new,:create]
 	map.resource      :user_sessions, :as => 'session', :except => [:edit,:update]
 	map.connect       'logout', :controller => :user_sessions, :action => :destroy
 	map.resources     :static_pages, :controller => :pages, :except => [:index,:create,:new], :member_path => ':name'

@@ -26,7 +26,7 @@ class CommentsController < ApplicationController
 	end
 
 	def create
-		if not @comment.user then raise "Anonymous comments are not allowed" end
+		if not @comment.identity then raise "Anonymous comments are not allowed" end
 		respond_to do |format|
 			if @comment.save
 				#flash[:notice] = 'Comment was successfully created.'
@@ -69,6 +69,6 @@ class CommentsController < ApplicationController
 
 	def new_comment_from_params
 		@comment = Comment.new(params[:comment])
-		@comment.user = current_user
+		@comment.identity = current_user && current_user.default_identity
 	end
 end

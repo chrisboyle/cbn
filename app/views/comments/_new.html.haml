@@ -3,7 +3,7 @@
 	=f.error_messages :message => nil
 	.comment
 		.meta
-			=user_html(current_user)
+			=ident_select(f, current_user.identities)
 			.clear
 		.body<
 			~f.text_area :body, :cols => nil, :rows => 10

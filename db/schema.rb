@@ -9,14 +9,27 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100424073017) do
+ActiveRecord::Schema.define(:version => 20100426080915) do
 
   create_table "comments", :force => true do |t|
     t.integer  "page_id"
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "identity_id", :null => false
+  end
+
+  create_table "identities", :force => true do |t|
     t.integer  "user_id"
+    t.string   "provider",     :null => false
+    t.string   "name"
+    t.string   "display_name", :null => false
+    t.string   "url"
+    t.string   "profile_url"
+    t.string   "identifier",   :null => false
+    t.string   "secret"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "open_id_authentication_associations", :force => true do |t|
@@ -50,11 +63,10 @@ ActiveRecord::Schema.define(:version => 20100424073017) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "openid_identifier"
     t.string   "email"
-    t.string   "persistence_token",                   :null => false
-    t.integer  "login_count",          :default => 0, :null => false
-    t.integer  "failed_login_count",   :default => 0, :null => false
+    t.string   "persistence_token",                  :null => false
+    t.integer  "login_count",         :default => 0, :null => false
+    t.integer  "failed_login_count",  :default => 0, :null => false
     t.datetime "last_request_at"
     t.datetime "current_login_at"
     t.datetime "last_login_at"
@@ -62,16 +74,8 @@ ActiveRecord::Schema.define(:version => 20100424073017) do
     t.string   "last_login_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name"
-    t.string   "url"
-    t.integer  "facebook_uid"
-    t.string   "facebook_session_key"
-    t.string   "oauth_token"
-    t.string   "oauth_secret"
-    t.string   "twitter_username"
+    t.integer  "default_identity_id"
   end
-
-  add_index "users", ["oauth_token"], :name => "index_users_on_oauth_token"
 
   create_table "users_roles", :force => true do |t|
     t.integer "user_id", :null => false
