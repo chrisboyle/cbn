@@ -6,6 +6,7 @@ tmp/**/*
 public/stylesheets/main.css
 Capfile
 config/deploy.rb
+config/database.yml
 config/facebooker.yml
 config/twitter.yml
 .*.swp
