@@ -3,7 +3,7 @@
 	url = git://github.com/mreinsch/authlogic_openid.git
 [submodule "vendor/plugins/open_id_authentication"]
 	path = vendor/plugins/open_id_authentication
-	url = git://github.com/rails/open_id_authentication.git
+	url = git://github.com/dominiquebrezinski/open_id_authentication.git
 [submodule "vendor/plugins/authlogic_facebook_connect"]
 	path = vendor/plugins/authlogic_facebook_connect
 	url = git://github.com/agibralter/authlogic_facebook_connect.git
