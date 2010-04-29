@@ -8,7 +8,7 @@ class Identity < ActiveRecord::Base
 			when /^https?:\/\/([^.]+)\.livejournal\.com\/$/ then ['livejournal', $1]
 			when /^https?:\/\/([^.]+)\.insanejournal\.com\/$/ then ['insanejournal', $1]
 			when /^https?:\/\/([^.]+)\.dreamwidth\.org\/$/ then ['dreamwidth', $1]
-			when /^https?:\/\/(www\.)?google\.com\/accounts\// then ['google', display_name]
+			when /^https?:\/\/(?:www\.)?google\.com\/accounts\/o8\/id\?id=(.*)/ then ['google', display_name || $1]
 			else ['openid',sub(/^https?:\/\//,'').sub(/\/$/,'')]
 			end
 		else [nil,display_name]

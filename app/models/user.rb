@@ -5,7 +5,9 @@ class User < ActiveRecord::Base
 	belongs_to :default_identity, :class_name => 'Identity'
 
 	acts_as_authentic do |c|
-		c.openid_required_fields = ['fullname', 'http://schema.openid.net/namePerson', 'http://axschema.org/namePerson']
+		c.openid_required_fields = ['fullname', 'http://schema.openid.net/namePerson', 'http://axschema.org/namePerson',
+				'http://schema.openid.net/namePerson/last', 'http://axschema.org/namePerson/last',
+				'http://schema.openid.net/namePerson/first', 'http://axschema.org/namePerson/first']
 		c.openid_optional_fields = ['email',
 				'http://schema.openid.net/contact/email', 'http://axschema.org/contact/email',
 				'http://schema.openid.net/contact/web/blog', 'http://axschema.org/contact/web/blog',
@@ -42,15 +44,19 @@ class User < ActiveRecord::Base
 
 	def self.find_by_openid_identifier(ident)
 		i = Identity.find_by_provider_and_identifier('openid',ident)
+		@@last_openid_ident = i  # HACK...
 		i ? i.user : nil
 	end
 
 	def openid_identifier=(ident)
-		i = Identity.find_or_create_by_provider_and_identifier('openid', ident) do |i|
-			i.display_name = ident.sub(/^https?:\/\//,'').sub(/\/$/,'')
+		returning ident do
+			i = Identity.find_or_create_by_provider_and_identifier('openid', ident) do |i|
+				i.display_name = ident.sub(/^https?:\/\//,'').sub(/\/$/,'')
+			end
+			identities << i
+			@@last_openid_ident = i  # HACK...
+			default_identity ||= i
 		end
-		identities << i
-		default_identity ||= i
 	end
 
 	def before_connect(facebook_session)
@@ -61,10 +67,23 @@ class User < ActiveRecord::Base
 		reset_persistence_token
 	end
 
-	private
-
 	def map_openid_registration(r)
-		#email = r['http://schema.openid.net/contact/email'] || r['http://axschema.org/contact/email'] || r['email'] if email.blank?
-		email = r['email'] if email.blank?
+		email_ = r['http://schema.openid.net/contact/email'] || r['http://axschema.org/contact/email'] || r['email']
+		email = email_ if email_
+		if @@last_openid_ident
+			name = r['http://schema.openid.net/namePerson'] || r['http://axschema.org/namePerson'] || r['fullname']
+			if not name or name.blank?
+				first = r['http://schema.openid.net/namePerson/first'] || r['http://axschema.org/namePerson/first'] || r['firstname']
+				last  = r['http://schema.openid.net/namePerson/last' ] || r['http://axschema.org/namePerson/last' ] || r['lastname']
+				name  = [first,last].find_all{|e| e }.join(' ')
+			end
+			if name and not name.blank?
+				@@last_openid_ident.name = name
+				@@last_openid_ident.display_name = name
+				@@last_openid_ident.save
+			end
+			url_ = r['http://schema.openid.net/contact/web/blog'] || r['http://axschema.org/contact/web/blog'] ||r['http://schema.openid.net/contact/web/default'] || r['http://axschema.org/contact/web/default'] || r['url']
+			url = url_ if url_
+		end
 	end
 end
