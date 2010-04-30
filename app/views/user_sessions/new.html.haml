@@ -1,6 +1,4 @@
--content_for :head, javascript_include_tag('http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php')
 =titleh1 "Sign in"
-=fb_connect_javascript_tag
 =init_fb_connect "XFBML"
 .loginbuttons
 	-[ |
@@ -16,7 +14,11 @@
 		['Twitter',nil], |
 		['Yahoo','https://www.yahoo.com/'], |
 		].each do |p| |
-		%button{:onclick => login_button_action(*p)}>= login_button_content(p[0])
+		-if p[0]=='Facebook'
+			%button#fbbtn{:onclick=>login_button_action(*p), :disabled=>true, :title=>'Facebook requires Javascript'}>= login_button_content(p[0])
+			=update_page_tag {|p| p['fbbtn'].title='Loading Javascript from facebook.com...'}
+		-else
+			%button{:onclick => login_button_action(*p)}>= login_button_content(p[0])
 -form_for @user_session do |f|
 	=f.error_messages :header_message => "Could not sign in", :message => nil
 	.field
@@ -28,3 +30,5 @@
 		=f.label :remember_me
 	=hidden_field_tag 'auth_using_fb'
 	=hidden_field_tag 'login_with_oauth'
+=fb_connect_javascript_tag
+=update_page_tag {|p| p['fbbtn'].title=nil; p['fbbtn'].disabled=false }

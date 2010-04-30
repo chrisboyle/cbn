@@ -55,15 +55,16 @@ class User < ActiveRecord::Base
 			end
 			identities << i
 			@@last_openid_ident = i  # HACK...
-			default_identity ||= i
+			self.default_identity ||= i
 		end
 	end
 
 	def before_connect(facebook_session)
 		name = facebook_session.user.name
 		url = facebook_session.user.profile_url
-		identities << Identity.new(:name => name, :display_name => name, :url => url)
-		default_identity ||= identities[0]
+		i = Identity.new(:name => name, :display_name => name, :url => url)
+		identities << i
+		self.default_identity ||= i
 		reset_persistence_token
 	end
 

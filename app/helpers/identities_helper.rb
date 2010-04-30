@@ -16,6 +16,6 @@ module IdentitiesHelper
 	end
 
 	def ident_select(f,identities)
-		f.select :identity, identities.collect { |i| i.icon_and_text[1] }
+		f.select :identity, identities.collect { |i| [i.icon_and_text[1],i.id] }
 	end
 end

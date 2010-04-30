@@ -19,6 +19,9 @@
 			#identblock
 				-if current_user
 					=ident_html current_user.identity
+					|
+					=link_to 'Account', {:controller => :users, :action => :show, :id => 'current'}
+					|
 					=button_to 'Sign out', {:controller => :user_sessions, :action => :destroy}, :method => :delete
 				-else
 					=link_to 'Sign in', :controller => :user_sessions, :action => :new

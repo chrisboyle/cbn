@@ -1,0 +1,10 @@
+%h1= params[:id]=='current' ? "Your account" : "User #{@user.id}"
+
+%dl
+	%dt Identities
+	%dd= @user.identities.empty? ? 'none' : @user.identities.collect {|i| ident_html(i)}
+	%dt Email
+	%dd=h @user.email || 'none'
+	-if not @user.roles.empty?
+		%dt Special permissions
+		%dd=h @user.roles.collect(&:name).join(', ')
