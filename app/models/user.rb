@@ -38,8 +38,10 @@ class User < ActiveRecord::Base
 			i.name = profile['name']
 			i.display_name = profile['screen_name']
 		end
-		i.user ||= User.new(:default_identity => i)
-		i.user.reset_persistence_token
+		returning User.new(:default_identity => i) do |u|
+			i.user ||= u
+			u.reset_persistence_token
+		end
 	end
 
 	def self.find_by_openid_identifier(ident)
