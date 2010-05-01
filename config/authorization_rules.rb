@@ -30,6 +30,6 @@ authorization do
 		has_permission_on :comments, :to => :delete
 	end
 	role :admin do
-		has_permission_on [:users, :pages, :posts, :static_pages, :authorization_rules, :authorization_usages], :to => :manage
+		has_omnipotence
 	end
 end

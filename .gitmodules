@@ -13,3 +13,6 @@
 [submodule "vendor/plugins/exception_notification"]
 	path = vendor/plugins/exception_notification
 	url = git://github.com/Odaeus/exception_notification.git
+[submodule "vendor/plugins/declarative_authorization"]
+	path = vendor/plugins/declarative_authorization
+	url = git://github.com/stffn/declarative_authorization.git

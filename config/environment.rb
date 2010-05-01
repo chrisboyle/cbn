@@ -24,7 +24,6 @@ Rails::Initializer.run do |config|
 	# (also vendor/plugins/open_id_authentication)
 	config.gem "facebooker"
 	config.gem "oauth"
-	config.gem "declarative_authorization"
 
 	config.time_zone = 'London'
 end
