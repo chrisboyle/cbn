@@ -4,7 +4,7 @@ class Page < ActiveRecord::Base
 	validates_each :body do |record, attr, value|
 		begin
 			Haml::Engine.new(value, :format => :html5).render
-		rescue Haml::Error => e
+		rescue Exception => e
 			record.errors.add attr, "line #{e.line || 'unknown'}: #{e.message}"
 		end
 	end
