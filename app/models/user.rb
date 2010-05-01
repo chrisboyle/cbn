@@ -37,9 +37,9 @@ class User < ActiveRecord::Base
 		i = Identity.find_or_create_by_provider_and_identifier('twitter', profile['screen_name']) do |i|
 			i.name = profile['name']
 			i.display_name = profile['screen_name']
+			i.guess_urls
 		end
-		returning User.new(:default_identity => i) do |u|
-			i.user ||= u
+		i.user ||= User.new(:default_identity => i) do |u|
 			u.reset_persistence_token
 		end
 	end
@@ -54,6 +54,7 @@ class User < ActiveRecord::Base
 		returning ident do
 			i = Identity.find_or_create_by_provider_and_identifier('openid', ident) do |i|
 				i.display_name = ident.sub(/^https?:\/\//,'').sub(/\/$/,'')
+				i.guess_urls
 			end
 			identities << i
 			@@last_openid_ident = i  # HACK...
@@ -69,15 +70,20 @@ class User < ActiveRecord::Base
 		reset_persistence_token
 	end
 
+	def facebook_session_key=(val)
+		FacebookUser.session_key = val
+	end
+
 	def map_openid_registration(r)
 		email_ = r['http://schema.openid.net/contact/email'] || r['http://axschema.org/contact/email'] || r['email']
 		email = email_ if email_
 		if @@last_openid_ident
 			name = r['http://schema.openid.net/namePerson'] || r['http://axschema.org/namePerson'] || r['fullname']
+			name = name.to_s if name
 			if not name or name.blank?
 				first = r['http://schema.openid.net/namePerson/first'] || r['http://axschema.org/namePerson/first'] || r['firstname']
 				last  = r['http://schema.openid.net/namePerson/last' ] || r['http://axschema.org/namePerson/last' ] || r['lastname']
-				name  = [first,last].find_all{|e| e }.join(' ')
+				name  = [first,last].find_all{|e| e }.to_s
 			end
 			if name and not name.blank?
 				@@last_openid_ident.name = name
@@ -90,7 +96,7 @@ class User < ActiveRecord::Base
 	end
 
 	def build_facebook_user(opts={})
-		i = Identity.new(:provider => 'facebook', :identifier => opts[:facebook_uid], :secret => :facebook_session_key)
+		i = Identity.new(:provider => 'facebook', :identifier => opts[:facebook_uid], :secret => opts[:facebook_session_key])
 		self.identities << i
 		self.default_identity ||= i
 	end

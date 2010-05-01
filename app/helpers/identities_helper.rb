@@ -8,7 +8,7 @@ module IdentitiesHelper
 		if FileTest.exists?("#{RAILS_ROOT}/public#{imgpath}")
 			img = image_tag(imgpath)
 			if i.profile_url
-				img = link_to img, profile_url, :rel => 'nofollow'
+				img = link_to img, i.profile_url, :rel => 'nofollow'
 			end
 			text = img + text
 		end
