@@ -1,5 +1,6 @@
 class Page < ActiveRecord::Base
 	validates_presence_of :title, :body
+	validates_inclusion_of :type, :in => %w( StaticPage Post )
 	validates_each :body do |record, attr, value|
 		begin
 			Haml::Engine.new(value, :format => :html5).render

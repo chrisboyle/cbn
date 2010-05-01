@@ -10,8 +10,6 @@ class ApplicationController < ActionController::Base
 	# Scrub sensitive parameters from your log
 	filter_parameter_logging :password, :fb_sig_friends
 
-	alias_method :pages_path, :root_path
-
 	protected
 
 	def default_url_options(options = {})

@@ -65,10 +65,11 @@ class PagesController < ApplicationController
 	protected
 
 	def new_page_from_params
-		if params[:page]
-			t = params[:page].delete('type')
+		p = params[:page] || params[:static_page] || params[:post]
+		if p
+			t = p.delete('type')
 			raise "Treason uncloaked!" unless %w(Post StaticPage).include?(t)
-			@page = t.constantize.new(params[:page])
+			@page = t.constantize.new(p)
 		else
 			@page = Page.new
 		end
