@@ -34,7 +34,7 @@ class PagesController < ApplicationController
 				format.html { redirect_to(@page) }
 				format.xml  { render :xml => @page, :status => :created, :location => @page }
 			else
-				format.html { render :action => "new" }
+				format.html { render :action => :edit }
 				format.xml  { render :xml => @page.errors, :status => :unprocessable_entity }
 			end
 		end
@@ -47,7 +47,7 @@ class PagesController < ApplicationController
 				format.html { redirect_to(@page) }
 				format.xml  { head :ok }
 			else
-				format.html { render :action => "edit" }
+				format.html { render :action => :edit }
 				format.xml  { render :xml => @page.errors, :status => :unprocessable_entity }
 			end
 		end
