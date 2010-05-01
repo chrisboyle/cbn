@@ -83,7 +83,7 @@ class User < ActiveRecord::Base
 			if not name or name.blank?
 				first = r['http://schema.openid.net/namePerson/first'] || r['http://axschema.org/namePerson/first'] || r['firstname']
 				last  = r['http://schema.openid.net/namePerson/last' ] || r['http://axschema.org/namePerson/last' ] || r['lastname']
-				name  = [first,last].find_all{|e| e }.to_s
+				name  = [first,last].find_all{|e| e }.join(' ')
 			end
 			if name and not name.blank?
 				@@last_openid_ident.name = name
