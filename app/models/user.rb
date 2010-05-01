@@ -59,12 +59,11 @@ class User < ActiveRecord::Base
 		end
 	end
 
-	def before_connect(facebook_session)
-		name = facebook_session.user.name
-		url = facebook_session.user.profile_url
-		i = Identity.new(:name => name, :display_name => name, :url => url)
-		identities << i
-		self.default_identity ||= i
+	def before_connect(sess)
+		i = identities.to_a.find {|i| i.provider == 'facebook' and i.identifier == sess.user.uid}
+		i.display_name = sess.user.name
+		i.name         = sess.user.name
+		i.url          = sess.user.profile_url
 		reset_persistence_token
 	end
 
@@ -86,5 +85,11 @@ class User < ActiveRecord::Base
 			url_ = r['http://schema.openid.net/contact/web/blog'] || r['http://axschema.org/contact/web/blog'] ||r['http://schema.openid.net/contact/web/default'] || r['http://axschema.org/contact/web/default'] || r['url']
 			url = url_ if url_
 		end
+	end
+
+	def build_facebook_user(opts={})
+		i = Identity.new(:provider => 'facebook', :identifier => opts[:facebook_uid], :secret => :facebook_session_key)
+		self.identities << i
+		self.default_identity ||= i
 	end
 end

@@ -4,6 +4,7 @@ class UserSession < Authlogic::Session::Base
 	last_request_at_threshold 1.minute
 	facebook_auth_if :auth_using_fb
 	find_by_oauth_method :get_twitter_user_find_or_create
+	facebook_user_class FacebookUser
 
 	def self.oauth_consumer
 		OAuth::Consumer.new(TWITTER['token'], TWITTER['secret'], {
