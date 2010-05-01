@@ -3,7 +3,8 @@ class Page < ActiveRecord::Base
 	validates_inclusion_of :type, :in => %w( StaticPage Post )
 	validates_each :body do |record, attr, value|
 		begin
-			Haml::Engine.new(value, :format => :html5).render
+			base = ActionView::Base.new('/app/views/pages', {}, PagesController)
+			Haml::Engine.new(value, :format => :html5).render(base)
 		rescue Exception => e
 			record.errors.add attr, "line #{(e.respond_to? :line) && e.line || 'unknown'}: #{e.message}"
 		end
