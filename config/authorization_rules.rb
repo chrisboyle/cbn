@@ -12,7 +12,7 @@ authorization do
 	end
 	role :user do
 		includes :guest
-		has_permission_on :users, :to => :update do
+		has_permission_on :users, :to => [:read,:update] do
 			if_attribute :id => is { user.id }
 		end
 		has_permission_on :comments, :to => :create do

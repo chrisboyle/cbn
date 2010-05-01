@@ -45,6 +45,7 @@ class UsersController < ApplicationController
 		if params[:id] == 'current'
 			@user = current_user
 		else
+			permitted_to! :show, User.new
 			@user = User.find(params[:id])
 		end
 	end
