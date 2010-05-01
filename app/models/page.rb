@@ -5,7 +5,7 @@ class Page < ActiveRecord::Base
 		begin
 			Haml::Engine.new(value, :format => :html5).render
 		rescue Exception => e
-			record.errors.add attr, "line #{e.line || 'unknown'}: #{e.message}"
+			record.errors.add attr, "line #{(e.respond_to? :line) && e.line || 'unknown'}: #{e.message}"
 		end
 	end
 	has_many :comments
