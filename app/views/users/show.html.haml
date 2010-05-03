@@ -1,10 +1,36 @@
 %h1= params[:id]=='current' ? "Your account" : "User #{@user.id}"
 
-%dl
-	%dt Identities
-	%dd= @user.identities.empty? ? 'none' : @user.identities.collect {|i| ident_html(i)}
-	%dt Email
-	%dd=h @user.email || 'none'
-	-if not @user.roles.empty?
-		%dt Special permissions
-		%dd=h @user.roles.collect(&:name).join(', ')
+-form_for @user do |f|
+	%dl
+		%dt Identities
+		-if @user.identities.empty?
+			%dd none
+		-elsif @user.identities.count == 1
+			%dd= ident_html(@user.identities.first)
+		-else
+			-@user.identities.each do |i|
+				%dd
+					=f.radio_button(:default_identity_id, i.id)
+					%label{:for => "user_default_identity_id_#{i.id}"}>= ident_html(i, false)
+		%dt Email
+		%dd
+			=f.text_field :email
+			(for notifications, not yet implemented)
+		-if not @user.roles.empty?
+			%dt Special permissions
+			%dd=h @user.roles.collect(&:name).join(', ')
+
+%h2 Comments
+%p You have written #{pluralize @user.comments.count, 'comment'}.
+-if not @user.comments.empty?
+	=button_to 'Delete all comments'
+
+.dangerous
+	%h2 Delete account
+	%ul
+		-if not @user.comments.empty?
+			%li This will delete all your comments on this site.
+		%li This will delete this site's record of your account.
+		%li It won't delete anything on any other site.
+		%li You'll still be able to log in with the same identity, but that will be a new account.
+	=button_to 'Delete entire account'

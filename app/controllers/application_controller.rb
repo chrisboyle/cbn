@@ -25,13 +25,16 @@ class ApplicationController < ActionController::Base
 		if params[:year]
 			start = Time.local(params[:year], params[:month])
 			finish = start.end_of_month.end_of_day
-			@page = Page.first(:conditions => ['created_at > ? and created_at < ? and name = ?', start, finish, params[:name]]) or raise ActiveRecord::RecordNotFound
+			@page = Page.first(:conditions => ['created_at > ? and created_at < ? and name = ?', start, finish, params[:name]])
 		else
-			@page = Page.find_by_name(params[:name]) or raise ActiveRecord::RecordNotFound
+			@page = Page.find_by_name(params[:name])
+		end
+		if not @page and params[:controller] != 'comments'
+			raise ActiveRecord::RecordNotFound
 		end
 	end
 
-	def rescue_action(e)
+	def _rescue_action(e)
 		case e
 		when ActiveRecord::RecordNotFound
 			respond_to do |format|

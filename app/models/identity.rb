@@ -1,5 +1,6 @@
 class Identity < ActiveRecord::Base
 	belongs_to :user
+	has_many :comments
 
 	def icon_and_text
 		@icon_and_text ||= case provider

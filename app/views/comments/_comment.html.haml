@@ -4,7 +4,7 @@
 		=render :partial => 'pages/times', :format => 'html', :object => comment
 		.clear
 	.body
-		=simple_format h(comment.body)
+		=simple_format h(comment.body).gsub('  ',' &nbsp;')
 	-can_edit = permitted_to? :edit, comment
 	-can_del = permitted_to? :destroy, comment
 	-if can_edit or can_del

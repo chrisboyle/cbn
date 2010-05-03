@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
 	has_many :users_roles
 	has_many :roles, :through => :users_roles
 	has_many :identities
+	has_many :comments, :through => :identities
 	belongs_to :default_identity, :class_name => 'Identity'
 
 	acts_as_authentic do |c|

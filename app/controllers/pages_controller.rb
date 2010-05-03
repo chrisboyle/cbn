@@ -28,6 +28,7 @@ class PagesController < ApplicationController
 	end
 
 	def create
+		@page.renderscope = self
 		respond_to do |format|
 			if @page.save
 				flash[:notice] = 'Page was successfully created.'
@@ -41,6 +42,7 @@ class PagesController < ApplicationController
 	end
 
 	def update
+		Page.renderscope = self
 		respond_to do |format|
 			if @page.update_attributes(params[@page.class.name.underscore])
 				flash[:notice] = 'Page was successfully updated.'

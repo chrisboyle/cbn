@@ -13,7 +13,7 @@
 		=render :partial => @page.comments
 
 	#addcomment
-		-if permitted_to? :create, Comment.new(:page => @page)
+		-if permitted_to? :create, Comment.new(:page => @page, :identity => current_user.identity)
 			=render :partial => 'comments/new'
 
 		-elsif not current_user

@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
-	before_filter :load_page
-	filter_resource_access :nested_in => :pages
+	filter_resource_access :nested_in => :pages, :only => [:new,:create]
+	filter_resource_access :except => [:new,:create]
 
 	def index
 		@comments = Comment.all
@@ -13,7 +13,7 @@ class CommentsController < ApplicationController
 
 	def show
 		respond_to do |format|
-			format.html
+			format.html { redirect_to url_for(@comment.page)+"#comment_#{@comment.id}" }
 			format.xml  { render :xml => @comment }
 		end
 	end
@@ -57,10 +57,11 @@ class CommentsController < ApplicationController
 	end
 
 	def destroy
+		page = @comment.page
 		@comment.destroy
 
 		respond_to do |format|
-			format.html { redirect_to(comments_url) }
+			format.html { redirect_to page }
 			format.xml  { head :ok }
 		end
 	end
@@ -69,6 +70,7 @@ class CommentsController < ApplicationController
 
 	def new_comment_from_params
 		@comment = Comment.new(params[:comment])
-		@comment.identity = current_user && current_user.default_identity
+		@comment.page = @page
+		@comment.identity ||= current_user.identity
 	end
 end

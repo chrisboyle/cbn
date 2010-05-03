@@ -18,7 +18,7 @@
 
 			#identblock
 				-if current_user
-					=ident_html current_user.identity
+					=ident_html current_user.identity, false
 					|
 					=link_to 'Account', {:controller => :users, :action => :show, :id => 'current'}
 					|

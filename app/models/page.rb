@@ -1,12 +1,15 @@
 class Page < ActiveRecord::Base
 	validates_presence_of :title, :body
 	validates_inclusion_of :type, :in => %w( StaticPage Post )
+	class << self
+		attr_writer :renderscope
+	end
 	validates_each :body do |record, attr, value|
 		begin
-			base = ActionView::Base.new('/app/views/pages', {}, PagesController)
-			Haml::Engine.new(value, :format => :html5).render(base)
+			scope = @renderscope || ActionView::Base.new(['/app/views/pages','/app/views'], {}, PagesController)
+			Haml::Engine.new(value, :format => :html5).render(scope)
 		rescue Exception => e
-			record.errors.add attr, "line #{(e.respond_to? :line) && e.line || 'unknown'}: #{e.message}"
+			record.errors.add attr, "line #{(e.respond_to? :line) && e.line || 'unknown'}: #{e.message}".sub('%','% ')
 		end
 	end
 	has_many :comments
