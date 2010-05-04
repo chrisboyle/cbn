@@ -36,7 +36,7 @@ class CommentsController < ApplicationController
 				format.html { render :controller => :pages, :action => :show }
 				format.js do
 					render :update do |p|
-						p.replace :new_comment, :partial => 'comments/new'
+						p.replace :new_comment, :partial => 'comments/edit'
 					end
 				end
 			end
@@ -62,6 +62,11 @@ class CommentsController < ApplicationController
 
 		respond_to do |format|
 			format.html { redirect_to page }
+			format.js do
+				render :update do |p|
+					p["comment_#{@comment.id}"].fade
+				end
+			end
 			format.xml  { head :ok }
 		end
 	end
@@ -71,6 +76,6 @@ class CommentsController < ApplicationController
 	def new_comment_from_params
 		@comment = Comment.new(params[:comment])
 		@comment.page = @page
-		@comment.identity ||= current_user.identity
+		@comment.identity ||= current_user && current_user.identity
 	end
 end

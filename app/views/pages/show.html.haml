@@ -13,8 +13,8 @@
 		=render :partial => @page.comments
 
 	#addcomment
-		-if permitted_to? :create, Comment.new(:page => @page, :identity => current_user.identity)
-			=render :partial => 'comments/new'
+		-if permitted_to? :create, Comment.new(:page => @page, :identity => current_user && current_user.identity)
+			=render :partial => 'comments/edit'
 
 		-elsif not current_user
 			-# TODO just do the login form right here

@@ -10,7 +10,7 @@
 	-if can_edit or can_del
 		.controls
 			-if can_edit
-				=link_to 'Edit', edit_comment_path(comment)
+				-button_to_act :edit, comment
 			-if can_del
-				=link_to 'Destroy', comment, :method => :delete, :confirm => "Are you sure?"
+				-button_to_act :delete, comment
 
