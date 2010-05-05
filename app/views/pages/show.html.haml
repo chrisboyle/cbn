@@ -10,10 +10,13 @@
 
 -if @page.is_a? Post
 	#comments
-		=render :partial => @page.comments
+		=render :partial => @page.comments.find(:all, :conditions => (has_role? :admin) ? nil : {:deleted => false})
 
 	#addcomment
-		-if permitted_to? :create, Comment.new(:page => @page, :identity => current_user && current_user.identity)
+		-c = Comment.new
+		-c.page = @page
+		-c.identity = current_user.identity if current_user
+		-if permitted_to? :create, c
 			=render :partial => 'comments/edit'
 
 		-elsif not current_user

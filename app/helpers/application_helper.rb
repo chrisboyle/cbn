@@ -27,9 +27,9 @@ module ApplicationHelper
 		form_remote_tag :url => url,
 			:html => {:method => (action == :delete ? action : nil)},
 			:method => (action == :delete ? action : nil),
-			:confirm => (action == :delete ? 'Are you sure you want to delete this?' : nil) do |f|
-			concat(content_tag :button, label, :type => :submit)
-		end
+			:confirm => (action == :delete ? 'Are you sure you want to delete this?' : nil) do
+				concat(content_tag :button, label, :type => :submit)
+			end
 		end
 	end
 end

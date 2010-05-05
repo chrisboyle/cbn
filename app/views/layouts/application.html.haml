@@ -26,7 +26,7 @@
 				-else
 					=link_to 'Sign in', :controller => :user_sessions, :action => :new
 
-			#content
+			#content{:class => controller && controller.controller_name || nil}
 				-if flash[:notice]
 					.notice= flash[:notice]
 				-if flash[:warning]

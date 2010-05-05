@@ -8,7 +8,10 @@ end
 
 authorization do
 	role :guest do
-		has_permission_on [:pages,:posts,:static_pages,:comments], :to => :read
+		has_permission_on [:pages,:posts,:static_pages], :to => :read
+		has_permission_on :comments, :to => :read do
+			if_attribute :deleted => false
+		end
 	end
 	role :user do
 		includes :guest
@@ -16,6 +19,7 @@ authorization do
 			if_attribute :id => is { user.id }
 		end
 		has_permission_on :comments, :to => [:create,:update,:delete], :join_by => :and do
+			if_attribute :deleted => false
 			if_attribute :user => is { user }
 			if_permitted_to :read, :page
 		end

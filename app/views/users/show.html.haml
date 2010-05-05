@@ -1,4 +1,5 @@
-%h1= params[:id]=='current' ? "Your account" : "User #{@user.id}"
+-you = params[:id] == 'current'
+%h1= you ? "Your account" : "User #{@user.id}"
 
 -form_for @user do |f|
 	%dl
@@ -15,22 +16,29 @@
 		%dt Email
 		%dd
 			=f.text_field :email
-			(for notifications, not yet implemented)
+			.fieldnote (for notifications, not yet implemented)
 		-if not @user.roles.empty?
 			%dt Special permissions
 			%dd=h @user.roles.collect(&:name).join(', ')
 
 %h2 Comments
-%p You have written #{pluralize @user.comments.count, 'comment'}.
--if not @user.comments.empty?
-	=button_to 'Delete all comments'
+-comments = @user.comments.find(:all, :conditions => (has_role? :admin) ? nil : {:deleted => false})
+%p #{pluralize comments.count, 'comment'}.
+-# TODO update count on delete
+-if not comments.empty?
+	=render :partial => comments
+	=button_to 'Delete all comments', (url_for :action=>:destroy, :id => you ? 'current' : @user)+'/comments', :method => :delete, :confirm => "Are you sure you want to delete your #{pluralize comments.count, 'comment'}?"
 
 .dangerous
 	%h2 Delete account
 	%ul
-		-if not @user.comments.empty?
-			%li This will delete all your comments on this site.
 		%li This will delete this site's record of your account.
+		-if not @user.comments.empty?
+			%li This will not delete any comments, do that above if you want, before deleting your account.
 		%li It won't delete anything on any other site.
-		%li You'll still be able to log in with the same identity, but that will be a new account.
-	=button_to 'Delete entire account'
+		%li
+			Logging in with an identity from a deleted account will&hellip;
+			%ul
+				%li &hellip;still work, creating a new account.
+				%li &hellip;reclaim any comments previously created using the same identity.
+	=button_to 'Delete entire account', {:action => :destroy, :id => you ? 'current' : @user}, :method => :delete, :confirm => 'Are you sure you want to delete your account?'

@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
 	filter_resource_access :except => [:new,:create]
 
 	def index
-		@comments = Comment.all
+		@comments = (has_role? :admin) ? Comment.all : Comment.all(:conditions => {:deleted => false})
 
 		respond_to do |format|
 			format.html
@@ -57,11 +57,11 @@ class CommentsController < ApplicationController
 	end
 
 	def destroy
-		page = @comment.page
-		@comment.destroy
+		@comment.deleted = true
+		@comment.save
 
 		respond_to do |format|
-			format.html { redirect_to page }
+			format.html { redirect_to @comment.page }
 			format.js do
 				render :update do |p|
 					p["comment_#{@comment.id}"].fade

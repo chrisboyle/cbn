@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
 		end
 	end
 
-	def _rescue_action(e)
+	def rescue_action(e)
 		case e
 		when ActiveRecord::RecordNotFound
 			respond_to do |format|
@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
 
 	def permission_denied
 		if current_user
-			flash[:warning] = "Sorry, your current identity is not allowed to do that. Try another?"
+			flash[:warning] = "Sorry, your account is not allowed to do that. Try another?"
 		else
 			flash[:notice] = "To do that, I need to know who you are."
 		end

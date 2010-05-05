@@ -1,4 +1,4 @@
--div_for comment do
+-div_for comment, :class => (comment.deleted ? :deleted : nil) do
 	.meta
 		#{ident_html(comment.identity)}
 		=render :partial => 'pages/times', :format => 'html', :object => comment

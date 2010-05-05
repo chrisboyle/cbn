@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
 	has_many :identities
 	has_many :comments, :through => :identities
 	belongs_to :default_identity, :class_name => 'Identity'
+	attr_accessible :email
 
 	acts_as_authentic do |c|
 		c.openid_required_fields = ['fullname', 'http://schema.openid.net/namePerson', 'http://axschema.org/namePerson',

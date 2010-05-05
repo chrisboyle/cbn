@@ -4,6 +4,7 @@ class Comment < ActiveRecord::Base
 	validates_presence_of :body
 	validates_presence_of :identity
 	validates_presence_of :page
+	attr_accessible :body
 	def user
 		identity && identity.user
 	end
