@@ -22,6 +22,9 @@ class UsersController < ApplicationController
 	end
 
 	def update
+		if has_role? :admin
+			@user.role_ids = params[:user].delete(:role_ids) { |k| [] }
+		end
 		respond_to do |format|
 			if @user.update_attributes(params[:user])
 				flash[:notice] = 'Account successfully updated.'

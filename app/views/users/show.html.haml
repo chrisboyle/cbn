@@ -1,5 +1,5 @@
 -you = params[:id] == 'current'
-%h1= you ? "Your account" : "User #{@user.id}"
+=titleh1(you ? "Your account" : "User #{@user.id}")
 
 -form_for @user do |f|
 	=f.error_messages :message => nil, :object_name => 'account'
@@ -14,13 +14,27 @@
 				%dd
 					=f.radio_button(:default_identity_id, i.id)
 					%label{:for => "user_default_identity_id_#{i.id}"}>= render :partial => i, :locals => {:plain=>true}
+		%dd
+			%button{:disabled=>true} Add
+			%span.fieldnote (not yet implemented)
 		%dt Email
 		%dd
 			=f.text_field :email
 			.fieldnote (for notifications, not yet implemented)
-		-if not @user.roles.empty?
-			%dt Special permissions
-			%dd=h @user.roles.collect(&:name).join(', ')
+		-if has_role? :admin
+			%dt Permissions
+			%dd
+				-Role.all.each do |r|
+					%div
+						-box_id = "user_role_ids_#{r.id}"
+						=succeed label_tag(box_id,r.description) do
+							=check_box_tag 'user[role_ids][]', r.id, @user.roles.include?(r), :id => box_id
+		-elsif not @user.roles.empty?
+			%dt Permissions
+			%dd
+				%ul
+					-@user.roles.collect(&:description).each do |d|
+						%li= h d
 	=f.submit 'Save'
 
 %h2 Comments
@@ -42,4 +56,4 @@
 			%ul
 				%li &hellip;still work, creating a new account.
 				%li &hellip;reclaim any comments previously created using the same identity.
-	=button_to 'Delete entire account', {:action => :destroy, :id => you ? 'current' : @user}, :method => :delete, :confirm => 'Are you sure you want to delete your account?'
+	=button_to 'Delete account & sign out', {:action => :destroy, :id => you ? 'current' : @user}, :method => :delete, :confirm => 'Are you sure you want to delete your account?'
