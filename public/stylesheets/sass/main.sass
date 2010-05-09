@@ -55,8 +55,17 @@ hr
 	width: 100%
 	display: block
 
+.left
+	float: left
+
+.right
+	float: right
+
 .clear
 	clear: both
+
+.endmeta
+	clear: right
 
 h1, h2, h3, h4, h5
 	margin: 0
@@ -95,19 +104,16 @@ h1, h2, h3, h4, h5
 	.meta
 		border-bottom = 1px "solid" !borders
 		background = !borderfill
+		.times
+			display: inline
+			margin-right: 0.3em
 	.controls
 		border-top = 1px "solid" !borders
 		background = !borderfill
-	.userhtml
-		float: left
-	.times
-		float: right
 	.body
 		margin: 0.5em
 
-#new_comment
-	.comment
-		margin-bottom: 0
+form .comment
 	.body
 		margin: 0
 		background-color: #ffffff
@@ -201,6 +207,7 @@ h1, h2, h3, h4, h5
 		repeat: no-repeat
 
 .userhtml
+	white-space: nowrap
 	font-weight: bolder
 	span
 		vertical-align: middle
@@ -226,3 +233,6 @@ h1, h2, h3, h4, h5
 
 .users h2
 	margin-top: 1em
+
+.users form h2
+	margin-top: 0

@@ -1,11 +1,11 @@
 .hfeed
 	-if params[:is_root]
-		=render :partial => 'rootbanner'
+		=render 'rootbanner'
 	-else
 		%h1 Listing pages
 
 	.entries
-		=render :partial => @pages
+		=render @pages
 
 	-if permitted_to? :create, Page.new
 		=link_to 'New page', new_page_path

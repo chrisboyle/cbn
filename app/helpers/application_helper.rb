@@ -16,21 +16,24 @@ module ApplicationHelper
 		pages_path
 	end
 
-	def button_to_act(action, object)
+	def button_to_act(action, object, js_options = {})
 		label = action.to_s.capitalize
-		url = url_for(:controller => ActionController::RecordIdentifier.plural_class_name(object),
-					  :action => action.to_s.sub('delete','destroy'), :id => object)
-		case action
-		when :edit
-			concat(button_to label, url, :method => :get)
-		else
-		form_remote_tag :url => url,
-			:html => {:method => (action == :delete ? action : nil)},
-			:method => (action == :delete ? action : nil),
+		method, act_name = case action
+				when :delete then [:delete,:destroy]
+				when :edit   then [:get,:edit]
+				else              [:post,action]
+				end
+		bits = {:controller => ActionController::RecordIdentifier.plural_class_name(object),
+					  :action => act_name, :id => object}
+		url, jsurl = url_for(bits), url_for(bits.merge(js_options))
+		form_remote_tag :url => jsurl, :html => {:action => url, :method => method}, :method => method,
 			:confirm => (action == :delete ? 'Are you sure you want to delete this?' : nil) do
-				concat(content_tag :button, label, :type => :submit)
-			end
+			concat(content_tag :button, label, :type => :submit)
 		end
+	end
+
+	def visible_comments(user)
+		user.comments.find(:all, :conditions => (has_role? :admin) ? nil : {:deleted => false}, :order => 'updated_at DESC')
 	end
 end
 

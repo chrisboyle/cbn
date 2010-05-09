@@ -16,6 +16,8 @@ class ApplicationController < ActionController::Base
 		if options[:year].is_a?(Post)
 			page = options[:year]
 			options.merge!({:year => page.year, :month => page.month, :name => page.name})
+		elsif options[:id].is_a?(User) && options[:id]==current_user
+			options.merge!({:id => 'current'})
 		else
 			{}
 		end

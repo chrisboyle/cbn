@@ -1,0 +1,14 @@
+=titleh1 'Listing users'
+
+%table
+	%tr
+		%th Identities
+		%th Email
+
+	-@users.each do |user|
+		%tr
+			%td= render user.identities
+			%td= h user.email
+			%td= link_to 'Show', user
+			%td= link_to 'Edit', edit_user_path(user)
+			%td= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete

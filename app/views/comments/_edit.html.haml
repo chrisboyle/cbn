@@ -1,12 +1,22 @@
--remote_form_for [@page, @comment || Comment.new] do |f|
-	%h3 Add a comment
-	=f.error_messages :message => nil
-	.comment
-		.meta
-			=ident_select(f, current_user.identities)
-			.clear
-		.body<
-			~f.text_area :body, :cols => nil, :rows => 10
-	.fieldnote (HTML and other markup will not work)
-	.controls
-		=f.submit "Add comment"
+-is_edit = @comment && @comment.id
+%div{:id => is_edit ? "comment_#{@comment.id}" : "add_comment"}
+	-remote_form_for [@page, @comment || Comment.new] do |f|
+		-if params[:show_context]
+			=hidden_field_tag :show_context, true
+		=hidden_field_tag :_commit
+		-unless is_edit
+			%h3 Add a comment
+		=f.error_messages :message => nil
+		.comment
+			.meta
+				-if is_edit
+					=render @comment.identity
+				-else
+					=ident_select(f, current_user.identities)
+			.body<
+				~f.text_area :body, :cols => nil, :rows => 10
+			.controls
+				=f.submit is_edit ? 'Save' : 'Send', :onclick => 'this.form._commit.value="Save"'
+				-if is_edit
+					=f.submit 'Cancel', :onclick => 'this.form._commit.value="Cancel"'
+				%span.fieldnote (HTML and other markup will not work)

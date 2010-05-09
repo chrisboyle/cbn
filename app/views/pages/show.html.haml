@@ -1,5 +1,5 @@
 -title(@page.title)
-=render :partial => @page
+=render @page
 
 .controls
 	-if permitted_to? :edit, @page
@@ -10,19 +10,20 @@
 
 -if @page.is_a? Post
 	#comments
-		=render :partial => @page.comments.find(:all, :conditions => (has_role? :admin) ? nil : {:deleted => false})
+		=render @page.comments.find(:all, :conditions => (has_role? :admin) ? nil : {:deleted => false})
 
-	#addcomment
-		-c = Comment.new
-		-c.page = @page
-		-c.identity = current_user.identity if current_user
-		-if permitted_to? :create, c
-			=render :partial => 'comments/edit'
+	-c = Comment.new
+	-c.page = @page
+	-c.identity = current_user.identity if current_user
+	-if permitted_to? :create, c
+		=render 'comments/edit'
 
-		-elsif not current_user
+	-elsif not current_user
+		#add_comment
 			-# TODO just do the login form right here
 			=link_to 'Add a comment', new_post_comment_path
 
-		-else
+	-else
+		#add_comment
 			%hr/
 			.placeholder You can't add a comment on this post.

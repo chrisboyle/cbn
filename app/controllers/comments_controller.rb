@@ -34,23 +34,33 @@ class CommentsController < ApplicationController
 				format.js
 			else
 				format.html { render :controller => :pages, :action => :show }
-				format.js do
-					render :update do |p|
-						p.replace :new_comment, :partial => 'comments/edit'
-					end
-				end
+				format.js { render(:update) { |p| p.replace :add_comment, :partial => 'comments/edit' }}
 			end
+		end
+	end
+
+	def edit
+		respond_to do |format|
+			format.html
+			format.js { render(:update) { |p| p.replace "comment_#{@comment.id}", :partial => 'comments/edit' }}
 		end
 	end
 
 	def update
 		respond_to do |format|
-			if @comment.update_attributes(params[:comment])
-				flash[:notice] = 'Comment was successfully updated.'
-				format.html { redirect_to(@comment) }
+			if (params[:_commit] || params[:commit]) == 'Cancel'
+				format.html { redirect_to @comment }
+				format.js   { render(:update) { |p| p.replace "comment_#{@comment.id}", :partial => @comment }}
+			elsif @comment.update_attributes(params[:comment])
+				format.html do
+					flash[:notice] = 'Comment was successfully updated.'
+					redirect_to @comment
+				end
+				format.js   { render(:update) {|p| p.redirect_to(@comment) } }
 				format.xml  { head :ok }
 			else
 				format.html { render :action => "edit" }
+				format.js   { render(:update) { |p| p.replace "comment_#{@comment.id}", :partial => 'comments/edit' }}
 				format.xml  { render :xml => @comment.errors, :status => :unprocessable_entity }
 			end
 		end
@@ -65,6 +75,9 @@ class CommentsController < ApplicationController
 			format.js do
 				render :update do |p|
 					p["comment_#{@comment.id}"].fade
+					if params[:has_count]
+						p.replace 'comment_count', :partial => 'users/comment_count', :object => visible_comments(@comment.user)
+					end
 				end
 			end
 			format.xml  { head :ok }

@@ -2,17 +2,18 @@
 %h1= you ? "Your account" : "User #{@user.id}"
 
 -form_for @user do |f|
+	=f.error_messages :message => nil, :object_name => 'account'
 	%dl
 		%dt Identities
 		-if @user.identities.empty?
 			%dd none
 		-elsif @user.identities.count == 1
-			%dd= ident_html(@user.identities.first)
+			%dd= render :partial => @user.identities.first, :locals => {:plain=>true}
 		-else
 			-@user.identities.each do |i|
 				%dd
 					=f.radio_button(:default_identity_id, i.id)
-					%label{:for => "user_default_identity_id_#{i.id}"}>= ident_html(i, false)
+					%label{:for => "user_default_identity_id_#{i.id}"}>= render :partial => i, :locals => {:plain=>true}
 		%dt Email
 		%dd
 			=f.text_field :email
@@ -20,14 +21,14 @@
 		-if not @user.roles.empty?
 			%dt Special permissions
 			%dd=h @user.roles.collect(&:name).join(', ')
+	=f.submit 'Save'
 
 %h2 Comments
--comments = @user.comments.find(:all, :conditions => (has_role? :admin) ? nil : {:deleted => false})
-%p #{pluralize comments.count, 'comment'}.
--# TODO update count on delete
+-comments = visible_comments(@user)
+=render 'comment_count', :object => comments
 -if not comments.empty?
-	=render :partial => comments
-	=button_to 'Delete all comments', (url_for :action=>:destroy, :id => you ? 'current' : @user)+'/comments', :method => :delete, :confirm => "Are you sure you want to delete your #{pluralize comments.count, 'comment'}?"
+	=render comments
+	=button_to 'Delete all comments', (url_for :action=>:destroy, :id => you ? 'current' : @user)+'/comments', :method => :delete, :confirm => "Are you sure you want to delete all comments?"
 
 .dangerous
 	%h2 Delete account

@@ -16,15 +16,7 @@
 			#tree
 				=render :partial => 'pages/tree', :object => StaticPage.all
 
-			#identblock
-				-if current_user
-					=ident_html current_user.identity, false
-					|
-					=link_to 'Account', {:controller => :users, :action => :show, :id => 'current'}
-					|
-					=button_to 'Sign out', {:controller => :user_sessions, :action => :destroy}, :method => :delete
-				-else
-					=link_to 'Sign in', :controller => :user_sessions, :action => :new
+			=render 'user_sessions/identblock'
 
 			#content{:class => controller && controller.controller_name || nil}
 				-if flash[:notice]
