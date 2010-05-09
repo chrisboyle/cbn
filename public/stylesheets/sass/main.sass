@@ -24,7 +24,7 @@ body
 		color = !borders
 	min-height: 100%
 	margin: 0 auto 0
-	padding: 0 1em 0
+	padding: 0 0.5em 0 1em
 	max-width: 900px
 	min-width: 28em
 
@@ -65,15 +65,27 @@ hr
 	clear: both
 
 .endmeta
-	clear: right
+	clear: left
 
 h1, h2, h3, h4, h5
-	margin: 0
+	margin-top: 0
+	margin-bottom: 0
 
 #tree
-	float: left
+	float: right
+	clear: right
 	width: 10em
+	border:
+		style: solid
+		color = !borders
+		width: 1px 0px 1px 1px
+	margin-top: 1em
+	margin-right: -0.5em
+	padding-right: 0.5em
+	padding-left: 0.5em
+	height: 100%
 	ul
+		margin: 0
 		padding-left: 0
 		list-style-type: none
 		ul
@@ -88,11 +100,12 @@ h1, h2, h3, h4, h5
 
 #content
 	min-width: 14em
-	margin-left: 11em
+	margin-right: 11em
 	padding-bottom: 1em
+	padding-top: 1em
 
 .hentry
-	clear: right
+	clear: left
 	margin: 1em 0 1em
 
 .entry-content
@@ -127,12 +140,13 @@ form .comment
 	float: left
 
 #rootbanner
-	clear: right
 	margin-bottom: 1em
 	min-height: 90px
 	vertical-align: middle
 	h1
+		padding-top: 0.3em
 		white-space: nowrap
+		margin-left: inherit
 	address
 		display: inline
 		font-style: normal
@@ -161,7 +175,7 @@ form .comment
 
 .notice, .warning, .error
 	margin: 0.5em 0 0.5em
-	clear: right
+	clear: left
 
 .placeholder
 	font-style: italic
@@ -182,7 +196,7 @@ form .comment
 		margin: 0
 	margin: 1em 0 1em
 	border: 1px solid red
-	clear: right
+	clear: left
 
 .fieldWithErrors
 	display: inline

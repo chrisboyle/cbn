@@ -1,4 +1,4 @@
--div_for(page, :class => 'hentry') do
+.hentry[page]
 	%h2.entry-title= link_to_unless_current(page.title, page, :rel => 'bookmark')
 	-if page.is_a? Post
 		=render :partial => 'times', :format => 'html', :object => page

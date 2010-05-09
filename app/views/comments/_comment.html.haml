@@ -1,4 +1,4 @@
--div_for comment, :class => (comment.deleted ? :deleted : nil) do
+%div[comment]{:class => (comment.deleted ? :deleted : nil)}
 	.meta
 		.left= render comment.identity
 		.right

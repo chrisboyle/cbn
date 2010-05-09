@@ -1,9 +1,9 @@
 class CommentsController < ApplicationController
-	filter_resource_access :nested_in => :pages, :only => [:new,:create]
+	filter_resource_access :nested_in => :pages, :only => [:new,:create], :collection => []
 	filter_resource_access :except => [:new,:create]
 
 	def index
-		@comments = (has_role? :admin) ? Comment.all : Comment.all(:conditions => {:deleted => false})
+		@comments = (has_role? :admin) ? Comment.all : Comment.all(:conditions => {:deleted => false}, :order => 'updated_at DESC')
 
 		respond_to do |format|
 			format.html

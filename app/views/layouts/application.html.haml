@@ -13,10 +13,10 @@
 
 	%body
 		#page
+			=render 'user_sessions/identblock'
+
 			#tree
 				=render :partial => 'pages/tree', :object => StaticPage.all
-
-			=render 'user_sessions/identblock'
 
 			#content{:class => controller && controller.controller_name || nil}
 				-if flash[:notice]
