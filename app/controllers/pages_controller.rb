@@ -28,7 +28,7 @@ class PagesController < ApplicationController
 	end
 
 	def create
-		@page.renderscope = self
+		Page.renderscope = self
 		respond_to do |format|
 			if @page.save
 				flash[:notice] = 'Page was successfully created.'
