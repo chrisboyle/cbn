@@ -1,16 +1,22 @@
 %ul
-	-t = (tree.dup << Page.new(:name => 'blog')).sort {|a,b| a.name <=> b.name}
+	-t = (tree.dup << Page.new(:name => 'blog') << Page.new(:name => 'projects')).sort {|a,b| a.name <=> b.name}
 	-t.each do |page|
 		-if page.name=='blog'
 			%li#blogtree
 				=link_to BLOG_WORD, root_path
 				%ul
-					-months = Post.all.group_by {|p| p.created_at.strftime("%B %Y")}
-					-months.map do |month,posts|
+					-months = Post.all(:order => 'created_at DESC').group_by {|p| p.created_at.strftime("%B %Y")}
+					-months.each do |month,posts|
 						%li
 							=month
 							%ul
 								-posts.each do |post|
 									%li= link_to post.title, post
+		-elsif page.name=='projects'
+			%li#projecttree
+				=link_to 'Projects', projects_path
+				%ul
+					-Project.all(:order => :name).each do |p|
+						=link_to p.title, p
 		-else
 			%li= link_to page.title, page

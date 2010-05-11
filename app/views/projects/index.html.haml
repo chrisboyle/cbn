@@ -1,0 +1,7 @@
+=titleh1 'Projects'
+
+-@projects.each do |p|
+	=render p
+
+-if permitted_to? :create, :projects
+	=link_to 'New project', new_project_path

@@ -13,5 +13,6 @@ ActionController::Routing::Routes.draw do |map|
 	map.resource      :user_sessions, :as => 'session', :except => [:edit,:update]
 	map.connect       'logout', :controller => :user_sessions, :action => :destroy
 	map.resources     :comments, :except => [:new,:create]
+	map.resources     :projects
 	map.resources     :static_pages, :controller => :pages, :except => [:index,:create,:new], :member_path => ':name'
 end

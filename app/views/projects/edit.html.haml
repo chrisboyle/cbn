@@ -1,0 +1,24 @@
+=titleh1 (@project.id ? "Editing project" : "New project")
+
+-form_for @project do |f|
+	=f.error_messages
+
+	.field
+		=f.label :name
+		=f.text_field :name
+	.field
+		=f.label :title
+		=f.text_field :title
+	.field
+		=f.label :vcs, 'VCS URL'
+		=f.text_field :vcs
+	.field
+		.label
+			=f.label :summary
+		~f.text_area :summary, :rows => 5, :onkeydown => 'checkTab(this,event)'
+	.field
+		.label
+			=f.label :body
+		~f.text_area :body, :onkeydown => 'checkTab(this,event)'
+
+	.submit= f.submit(@project.id ? 'Update' : 'Create')

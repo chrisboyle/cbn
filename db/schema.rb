@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100504223358) do
+ActiveRecord::Schema.define(:version => 20100511175652) do
 
   create_table "comments", :force => true do |t|
     t.integer  "page_id"
@@ -55,6 +55,17 @@ ActiveRecord::Schema.define(:version => 20100504223358) do
     t.datetime "updated_at"
     t.string   "name"
     t.string   "type"
+  end
+
+  create_table "projects", :force => true do |t|
+    t.string   "name"
+    t.string   "title"
+    t.string   "summary"
+    t.text     "body"
+    t.string   "status"
+    t.string   "vcs"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "roles", :force => true do |t|

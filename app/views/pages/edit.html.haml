@@ -4,7 +4,7 @@
 -form_for @page do |f|
 	=f.error_messages
 
-	%p
+	.field
 		=f.select :type, %w(Post StaticPage) unless @page.id
 		=f.text_field :name
 
@@ -15,7 +15,4 @@
 		.label
 			=f.label :body
 		~f.text_area :body, :onkeydown => 'checkTab(this,event)'
-	%p= f.submit(@page.id ? 'Update' : 'Create')
-
-=link_to 'Show', @page if @page.id
-=link_to 'Back', root_path
+	.submit= f.submit(@page.id ? 'Update' : 'Create')

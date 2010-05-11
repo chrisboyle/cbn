@@ -8,7 +8,7 @@ end
 
 authorization do
 	role :guest do
-		has_permission_on [:pages,:posts,:static_pages], :to => :read
+		has_permission_on [:pages,:posts,:static_pages,:projects], :to => :read
 		has_permission_on :comments, :to => :read do
 			if_attribute :deleted => false
 		end
