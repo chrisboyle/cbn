@@ -18,6 +18,8 @@ class ApplicationController < ActionController::Base
 			options.merge!({:year => page.year, :month => page.month, :name => page.name})
 		elsif options[:id].is_a?(User) && options[:id]==current_user
 			options.merge!({:id => 'current'})
+		elsif options[:id].is_a?(ActsAsTaggableOn::Tag)
+			options.merge!({:id => options[:id].name})
 		else
 			{}
 		end

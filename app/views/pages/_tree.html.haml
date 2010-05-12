@@ -20,3 +20,7 @@
 						=link_to p.title, p
 		-else
 			%li= link_to page.title, page
+
+%hr
+
+.tags= render :partial => 'tags/tags', :object => ActsAsTaggableOn::Tag.all

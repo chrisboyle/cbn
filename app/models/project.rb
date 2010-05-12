@@ -1,5 +1,7 @@
 class Project < ActiveRecord::Base
+	acts_as_taggable
+
 	def to_param
-		return name
+		name
 	end
 end

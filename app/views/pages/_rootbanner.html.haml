@@ -33,5 +33,4 @@
 		['serverfault','Server Fault: cmb','http://serverfault.com/users/5708/chris-boyle'], |
 		['superuser','Super User: cmb','http://superuser.com/users/4211/chris-boyle'], |
 		].each do |i,t,u| |
-			%a{:href=> u, :rel => 'me', :title => t}
-				=image_tag("sprites/fav_#{i}.png")
+			=link_to image_tag("sprites/fav_#{i}.png"), u, :rel => 'me', :title => t

@@ -1,0 +1,3 @@
+-unless tags.empty?
+	Tags:
+=tags.collect{ |t| (render 'tags/tag', :object => t).strip }.join(', ')

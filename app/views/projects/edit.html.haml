@@ -13,6 +13,9 @@
 		=f.label :vcs, 'VCS URL'
 		=f.text_field :vcs
 	.field
+		=f.label :tag_list
+		=f.text_field :tag_list
+	.field
 		.label
 			=f.label :summary
 		~f.text_area :summary, :rows => 5, :onkeydown => 'checkTab(this,event)'

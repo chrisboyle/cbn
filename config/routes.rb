@@ -14,5 +14,6 @@ ActionController::Routing::Routes.draw do |map|
 	map.connect       'logout', :controller => :user_sessions, :action => :destroy
 	map.resources     :comments, :except => [:new,:create]
 	map.resources     :projects
+	map.resources     :acts_as_taggable_on_tags, :as => :tags, :only => [:index,:show], :controller => :tags
 	map.resources     :static_pages, :controller => :pages, :except => [:index,:create,:new], :member_path => ':name'
 end

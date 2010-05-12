@@ -8,7 +8,7 @@ end
 
 authorization do
 	role :guest do
-		has_permission_on [:pages,:posts,:static_pages,:projects], :to => :read
+		has_permission_on [:pages,:posts,:static_pages,:projects,:tags], :to => :read
 		has_permission_on :comments, :to => :read do
 			if_attribute :deleted => false
 		end
@@ -32,7 +32,7 @@ authorization do
 		has_permission_on :comments, :to => :delete
 	end
 	role :admin do
-		has_permission_on [:users,:pages,:posts,:static_pages,:projects], :to => :manage
+		has_permission_on [:users,:pages,:posts,:static_pages,:projects,:tags], :to => :manage
 		has_permission_on :comments, :to => [:create,:read,:delete]
 	end
 end

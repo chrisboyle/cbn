@@ -16,3 +16,6 @@
 [submodule "vendor/plugins/declarative_authorization"]
 	path = vendor/plugins/declarative_authorization
 	url = git://github.com/stffn/declarative_authorization.git
+[submodule "vendor/plugins/acts_as_taggable_on"]
+	path = vendor/plugins/acts_as_taggable_on
+	url = git://github.com/mbleigh/acts-as-taggable-on.git

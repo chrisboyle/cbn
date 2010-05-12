@@ -1,6 +1,7 @@
 %div[project]
 	%h2.entry-title= link_to_unless_current project.title, project
-	=render :partial => 'body', :format => 'html', :object => (current_page?(project) || project.summary.blank?) ? project.body : project.summary
+	.tags= render :partial => 'tags/tags', :object => project.tags
+	=render :partial => 'projects/body', :format => 'html', :object => (current_page?(project) || project.summary.blank?) ? project.body : project.summary
 	.controls
 		-if permitted_to? :edit, project
 			=link_to 'Edit', edit_project_path(project)
