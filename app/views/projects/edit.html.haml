@@ -16,6 +16,9 @@
 		=f.label :tag_list
 		=f.text_field :tag_list
 	.field
+		-picker_opts = {:order=>[:year,:month], :include_blank=>true, :use_month_numbers=>true}
+		Timescale #{f.date_select :start, picker_opts} - #{f.date_select :end, picker_opts} (#{f.select :status, Project::STATUSES})
+	.field
 		.label
 			=f.label :summary
 		~f.text_area :summary, :rows => 5, :onkeydown => 'checkTab(this,event)'

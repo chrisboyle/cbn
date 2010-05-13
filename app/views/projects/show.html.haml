@@ -1,2 +1,7 @@
 -title(@project.title)
 =render @project
+.controls
+	-if permitted_to? :edit, @project
+		=link_to 'Edit', edit_project_path(@project)
+	-if permitted_to? :delete, @project
+		=link_to 'Destroy', @project, :confirm => 'Are you sure?', :method => :delete

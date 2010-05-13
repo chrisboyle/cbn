@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100511221217) do
+ActiveRecord::Schema.define(:version => 20100513205455) do
 
   create_table "comments", :force => true do |t|
     t.integer  "page_id"
@@ -66,6 +66,8 @@ ActiveRecord::Schema.define(:version => 20100511221217) do
     t.string   "vcs"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "start"
+    t.date     "end"
   end
 
   create_table "roles", :force => true do |t|
