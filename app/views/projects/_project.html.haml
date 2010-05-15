@@ -1,7 +1,9 @@
-%div[project]
-	%h2.entry-title= link_to_unless_current project.title, project
-	.timescale #{project.start and project.start.strftime('%B %Y') or "unknown"} - #{project.end and project.end.strftime('%B %Y') or "present"} (#{project.status})
-	.tags= render :partial => 'tags/tags', :object => project.tags
-	-if project.vcs
-		.vcs= project.vcs
-	=render :partial => 'projects/body', :format => 'html', :object => (current_page?(project) || project.summary.blank?) ? project.body : project.summary
+-is_current = current_page? project
+-cache project.cache_key + (is_current ? '-c' : '') do
+	%div[project]
+		%h2.entry-title= link_to_unless_current project.title, project
+		.timescale #{project.start and project.start.strftime('%B %Y') or "unknown"} - #{project.end and project.end.strftime('%B %Y') or "present"} (#{project.status})
+		.tags= render :partial => 'tags/tags', :object => project.tags
+		-if project.vcs
+			.vcs= project.vcs
+		=render :partial => 'projects/body', :format => 'html', :object => (is_current || project.summary.blank?) ? project.body : project.summary

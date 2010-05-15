@@ -1,12 +1,13 @@
 %div[comment]{:class => (comment.deleted ? 'deleted' : nil)}
-	.meta
-		.left= render comment.identity
-		.right
-			&nbsp;
-			=render :partial => 'pages/times', :format => 'html', :object => comment
-		.endmeta
-	.body
-		=simple_format h(comment.body).gsub('  ',' &nbsp;')
+	-cache comment do
+		.meta
+			.left= render comment.identity
+			.right
+				&nbsp;
+				=render :partial => 'pages/times', :format => 'html', :object => comment
+			.endmeta
+		.body
+			=simple_format h(comment.body).gsub('  ',' &nbsp;')
 	-can_edit = permitted_to? :edit, comment
 	-can_del = permitted_to? :destroy, comment
 	-show_context = params[:show_context] || !(current_page?(comment.page) || current_page?(comment) || current_page?([comment.page, Comment.new]))

@@ -2,6 +2,7 @@ class Tag < ActsAsTaggableOn::Tag; end  # use a sensible ivar name
 
 class TagsController < ApplicationController
 	filter_resource_access :context => :tags
+	cache_sweeper :tree_sweeper
 
 	def index
 		@tags = Tag.all(:order => :name)

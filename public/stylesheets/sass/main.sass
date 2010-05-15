@@ -2,6 +2,7 @@
 !borders = #0077bb
 !borderfill = #88ddff
 !font = "FreeSans", "DejaVu Sans", "Liberation Sans", "sans-serif"
+!fontsize = 12pt
 
 html, body
 	height: 100%
@@ -10,6 +11,7 @@ html, body
 
 body
 	font-family = !font
+	font-size = !fontsize
 	color: #000000
 	background: #ffffff
 	margin: 0px
@@ -34,13 +36,10 @@ body
 p
 	margin: 0 0 1em 0
 
-pre
-	font-size: 130%
-	white-space: pre-wrap
-
 textarea
 	width: 98%
 	font-family = !font
+	font-size = !fontsize
 	background-color: #ffffff
 	color: #000000
 	outline-offset: -2px
@@ -70,6 +69,9 @@ hr
 h1, h2, h3, h4, h5
 	margin-top: 0
 	margin-bottom: 0
+
+button, input[type="button"], input[type="submit"]
+	cursor: pointer
 
 #tree
 	float: right
@@ -157,7 +159,7 @@ form .comment
 	margin-bottom: 0.5em
 	font-style: italic
 
-.times
+.times, .timescale
 	color: #444444
 	font-size: 80%
 
@@ -203,6 +205,9 @@ form .comment
 	*
 		border: 2px solid red !important
 
+pre
+	white-space: pre-wrap
+
 .CodeRay .code
 	pre
 		margin: 0
@@ -230,12 +235,21 @@ form .comment
 		top: -0.2ex
 
 .loginbuttons
-	max-width: 40em
+	max-width: 50em
+	margin-bottom: 0.5em
 	button
-		min-width: 10em
+		height: 2.2em
+		min-width: 11em
 		padding-bottom: 2px
+		margin: 0.3em
 		span
 			vertical-align: middle
+
+#user_session_openid_identifier, #user_session_submit
+	font-size: 120%
+
+#user_session_openid_identifier
+	width: 20em
 
 .controls
 	form, .button-to, .button-to div

@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
 	filter_resource_access :nested_in => :pages, :only => [:new,:create], :collection => []
 	filter_resource_access :except => [:new,:create]
+	cache_sweeper :fragment_sweeper, :only => [:update,:destroy]
 
 	def index
 		@comments = (has_role? :admin) ? Comment.all : Comment.all(:conditions => {:deleted => false}, :order => 'updated_at DESC')
@@ -88,7 +89,7 @@ class CommentsController < ApplicationController
 
 	def new_comment_from_params
 		@comment = Comment.new(params[:comment])
+		@comment.identity_id = (params[:comment].delete(:identity_id) {|k| nil}) || (current_user && current_user.identity_id)
 		@comment.page = @page
-		@comment.identity ||= current_user && current_user.identity
 	end
 end

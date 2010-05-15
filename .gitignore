@@ -11,5 +11,6 @@ config/facebooker.yml
 config/twitter.yml
 .*.swp
 public/images/auto_sprite.png
+public/javascripts/all.js
 public/stylesheets/auto_sprite.css
-
+public/stylesheets/all.css

@@ -1,6 +1,7 @@
 .hentry[page]
 	%h2.entry-title= link_to_unless_current(page.title, page, :rel => 'bookmark')
-	-if page.is_a? Post
-		=render :partial => 'pages/times', :format => 'html', :object => page
-		.tags= render :partial => 'tags/tags', :object => page.tags
-	=render :partial => 'pages/body', :format => 'html', :object => page.body
+	-cache page do
+		-if page.is_a? Post
+			=render :partial => 'pages/times', :format => 'html', :object => page
+			.tags= render :partial => 'tags/tags', :object => page.tags
+		=render :partial => 'pages/body', :format => 'html', :object => page.body

@@ -12,6 +12,7 @@
 	#comments
 		=render @page.comments.find(:all, :conditions => (has_role? :admin) ? nil : {:deleted => false})
 
+	%hr/
 	-c = Comment.new
 	-c.page = @page
 	-c.identity = current_user.identity if current_user
@@ -20,10 +21,9 @@
 
 	-elsif not current_user
 		#add_comment
-			-# TODO just do the login form right here
-			=link_to 'Add a comment', new_post_comment_path
+			%h3 Add a comment using&hellip;
+			=render :partial => 'user_sessions/new'
 
 	-else
 		#add_comment
-			%hr/
 			.placeholder You can't add a comment on this post.

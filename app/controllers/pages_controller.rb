@@ -1,5 +1,7 @@
 class PagesController < ApplicationController
 	filter_resource_access
+	cache_sweeper :fragment_sweeper, :only => [:update,:destroy]
+	cache_sweeper :tree_sweeper
 
 	def index
 		@pages = Post.all
