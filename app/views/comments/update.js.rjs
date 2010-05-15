@@ -1,0 +1,2 @@
+page.replace dom_id(@comment), :partial => @comment
+page[@comment].visual_effect :highlight, :endcolor => '#bbeeff'

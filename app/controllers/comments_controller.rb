@@ -13,7 +13,7 @@ class CommentsController < ApplicationController
 
 	def show
 		respond_to do |format|
-			format.html { redirect_to url_for(@comment.page)+"#comment_#{@comment.id}" }
+			format.html { redirect_to url_for(@comment.page)+"#"+dom_id(@comment) }
 			format.xml  { render :xml => @comment }
 		end
 	end
@@ -42,7 +42,7 @@ class CommentsController < ApplicationController
 	def edit
 		respond_to do |format|
 			format.html
-			format.js { render(:update) { |p| p.replace "comment_#{@comment.id}", :partial => 'comments/edit' }}
+			format.js { render(:update) { |p| p.replace dom_id(@comment), :partial => 'comments/edit' }}
 		end
 	end
 
@@ -50,17 +50,17 @@ class CommentsController < ApplicationController
 		respond_to do |format|
 			if (params[:_commit] || params[:commit]) == 'Cancel'
 				format.html { redirect_to @comment }
-				format.js   { render(:update) { |p| p.replace "comment_#{@comment.id}", :partial => @comment }}
+				format.js   { render(:update) {|p| p.replace dom_id(@comment), :partial => @comment }}
 			elsif @comment.update_attributes(params[:comment])
 				format.html do
 					flash[:notice] = 'Comment was successfully updated.'
 					redirect_to @comment
 				end
-				format.js   { render(:update) {|p| p.redirect_to(@comment) } }
+				format.js
 				format.xml  { head :ok }
 			else
 				format.html { render :action => "edit" }
-				format.js   { render(:update) { |p| p.replace "comment_#{@comment.id}", :partial => 'comments/edit' }}
+				format.js   { render(:update) { |p| p.replace dom_id(@comment), :partial => 'comments/edit' }}
 				format.xml  { render :xml => @comment.errors, :status => :unprocessable_entity }
 			end
 		end
@@ -74,7 +74,7 @@ class CommentsController < ApplicationController
 			format.html { redirect_to @comment.page }
 			format.js do
 				render :update do |p|
-					p["comment_#{@comment.id}"].fade
+					p[@comment].fade
 					if params[:has_count]
 						p.replace 'comment_count', :partial => 'users/comment_count', :object => visible_comments(@comment.user)
 					end

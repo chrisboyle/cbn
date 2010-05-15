@@ -1,4 +1,4 @@
 page.insert_html :bottom, :comments, :partial => @comment
-page[@comment].visual_effect :highlight
+page[@comment].visual_effect :highlight, :endcolor => '#bbeeff'
 @comment = Comment.new(:page => @page)
 page.replace :new_comment, :partial => 'comments/edit'

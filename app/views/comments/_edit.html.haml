@@ -1,5 +1,5 @@
 -is_edit = @comment && @comment.id
-%div{:id => is_edit ? "comment_#{@comment.id}" : "add_comment"}
+%div{:id => is_edit ? dom_id(@comment) : "add_comment"}
 	-remote_form_for [@page, @comment || Comment.new] do |f|
 		-if params[:show_context]
 			=hidden_field_tag :show_context, true
