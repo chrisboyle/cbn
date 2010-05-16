@@ -6,7 +6,7 @@
 			-title = yield :title
 			=(title ? (title+" - ") : "") + SITE_NAME
 		%link{:rel => 'shortcut icon', :href => image_path('favicon.png'), :type => 'image/png'}
-		=auto_discovery_link_tag :atom, feed_path(:atom) if controller.controller_name == 'pages'
+		=auto_discovery_link_tag :atom, feed_path if controller.controller_name == 'pages'
 		=stylesheet_link_tag :all, :recursive => true, :cache => true
 		=javascript_include_tag :all, :cache => true
 		=yield :head

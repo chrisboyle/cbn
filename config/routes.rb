@@ -4,7 +4,7 @@ ActionController::Routing::Routes.draw do |map|
 	map.resources     :posts, :controller => :pages, :except => [:index,:create,:new], :member_path => ':year/:month/:name', :member_path_requirements => {:year => /\d{4}/, :month => /\d{2}/} do |p|
 		p.resources   :comments, :only => [:index,:create,:new]
 	end
-	map.feed          'feed.:format', :controller => :pages, :action => :index, :conditions => {:method => :get}
+	map.feed          'feed', :controller => :pages, :action => :index, :format => 'atom', :conditions => {:method => :get}
 	map.new_page      'new.:format', :controller => :pages, :action => :new, :conditions => {:method => :get}
 	map.resources     :users, :except => [:new,:create] do |u|
 		u.comments    'comments', :conditions => {:method => :get}, :controller => :users, :action => 'index_comments'
