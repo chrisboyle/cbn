@@ -11,6 +11,7 @@ class UserSessionsController < ApplicationController
 				params[:user_session]['openid_identifier'] = 'http://'+openid
 			end
 		end
+		session[:next] = params[:next] if params[:next]
 		@user_session = UserSession.new(params[:user_session])
 		@user_session.save do |result|
 			if result
@@ -26,7 +27,7 @@ class UserSessionsController < ApplicationController
 		@user_session = UserSession.find
 		@user_session.destroy if @user_session
 		flash[:notice] = "Successfully signed out."
-		redirect_to root_url
+		redirect_to :back
 	end
 
 	def show

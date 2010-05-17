@@ -20,6 +20,7 @@
 			%button{:onclick => login_button_action(*p)}>= login_button_content(p[0])
 -form_for (@user_session || UserSession.new) do |f|
 	=f.error_messages :header_message => "Could not sign in", :message => nil
+	=hidden_field_tag :next, current_page?(:controller => :user_sessions, :action => :new) ? request.referer : request.request_uri
 	.field{:style => 'margin-left:3em'}<
 		=f.check_box :remember_me
 		=f.label :remember_me

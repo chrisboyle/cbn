@@ -61,10 +61,10 @@ class ApplicationController < ActionController::Base
 		else
 			session.delete(:next)
 		end
-		loginpage = url_for :controller => :user_sessions, :action => :new
+		login_page = url_for :controller => :user_sessions, :action => :new
 		respond_to do |format|
-			format.html { redirect_to loginpage }
-			format.js { render(:update) {|p| p.redirect_to loginpage }}
+			format.html { redirect_to login_page }
+			format.js { render(:update) {|p| p.redirect_to login_page }}
 			format.all { render :file => "#{RAILS_ROOT}/public/403.html", :status => '403 Forbidden' }
 		end
 	end
