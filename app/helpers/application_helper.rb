@@ -19,8 +19,8 @@ module ApplicationHelper
 	def button_to_act(action, object, js_options = {})
 		label = action.to_s.capitalize
 		method, act_name = case action
-				when :delete then [:delete,:destroy]
-				when :edit   then [:get,:edit]
+				when :delete      then [:delete,:destroy]
+				when :edit,:reply then [:get,action]
 				else              [:post,action]
 				end
 		bits = {:controller => ActionController::RecordIdentifier.plural_class_name(object),

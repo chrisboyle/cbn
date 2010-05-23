@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100513205455) do
+ActiveRecord::Schema.define(:version => 20100518213857) do
 
   create_table "comments", :force => true do |t|
     t.integer  "page_id"
@@ -18,6 +18,9 @@ ActiveRecord::Schema.define(:version => 20100513205455) do
     t.datetime "updated_at"
     t.integer  "identity_id",                    :null => false
     t.boolean  "deleted",     :default => false, :null => false
+    t.integer  "parent_id"
+    t.integer  "lft"
+    t.integer  "rgt"
   end
 
   create_table "identities", :force => true do |t|

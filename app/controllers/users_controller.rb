@@ -10,10 +10,6 @@ class UsersController < ApplicationController
 		end
 	end
 
-	def index_comments
-		redirect_to @user
-	end
-
 	def show
 		respond_to do |format|
 			format.html

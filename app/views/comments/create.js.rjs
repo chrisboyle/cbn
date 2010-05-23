@@ -1,4 +1,9 @@
-page.insert_html :bottom, :comments, :partial => @comment
+parent = @comment.parent
+page.insert_html :bottom, (parent ? "replies_to_#{dom_id(parent)}" : :comments), :partial => @comment
 page[@comment].visual_effect :highlight, :endcolor => '#bbeeff'
 @comment = Comment.new(:page => @page)
-page.replace :new_comment, :partial => 'comments/edit'
+if parent
+	page["reply_to_#{dom_id(parent)}"].remove
+else
+	page.replace :add_comment, :partial => 'comments/edit'
+end

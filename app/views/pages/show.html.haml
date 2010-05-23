@@ -10,13 +10,10 @@
 
 -if @page.is_a? Post
 	#comments
-		=render @page.comments.find(:all, :conditions => (has_role? :admin) ? nil : {:deleted => false})
+		=render @page.comments.roots(:order => :created_at).visible_to(current_user)
 
 	%hr/
-	-c = Comment.new
-	-c.page = @page
-	-c.identity = current_user.identity if current_user
-	-if permitted_to? :create, c
+	-if permitted_to? :create, @page.comment_from(current_user)
 		=render 'comments/edit'
 
 	-elsif not current_user

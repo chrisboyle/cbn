@@ -19,4 +19,11 @@ class Page < ActiveRecord::Base
 	def month
 		'%02d' % created_at.month
 	end
+
+	def comment_from(user)
+		returning Comment.new do |c|
+			c.page = self
+			c.identity = user.identity if user
+		end
+	end
 end

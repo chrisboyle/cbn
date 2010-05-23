@@ -7,12 +7,12 @@ ActionController::Routing::Routes.draw do |map|
 	map.feed          'feed', :controller => :pages, :action => :index, :format => 'atom', :conditions => {:method => :get}
 	map.new_page      'new.:format', :controller => :pages, :action => :new, :conditions => {:method => :get}
 	map.resources     :users, :except => [:new,:create] do |u|
-		u.comments    'comments', :conditions => {:method => :get}, :controller => :users, :action => 'index_comments'
+		u.resources   :comments, :only => :index
 		u.connect     'comments', :conditions => {:method => :delete}, :controller => :users, :action => 'delete_comments'
 	end
 	map.resource      :user_sessions, :as => 'session', :except => [:edit,:update]
 	map.connect       'logout', :controller => :user_sessions, :action => :destroy
-	map.resources     :comments, :except => [:new,:create]
+	map.resources     :comments, :except => [:new,:create], :member => {:reply => :get}
 	map.resources     :projects
 	map.resources     :acts_as_taggable_on_tags, :as => :tags, :only => [:index,:show], :controller => :tags
 	map.resources     :static_pages, :controller => :pages, :except => [:index,:create,:new], :member_path => ':name'

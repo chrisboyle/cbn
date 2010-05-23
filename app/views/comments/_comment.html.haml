@@ -1,22 +1,30 @@
+-show_context = params[:show_context] || !(current_page?(comment.page) || current_page?(comment) || current_page?([comment.page, Comment.new]))
 %div[comment]{:class => (comment.deleted ? 'deleted' : nil)}
 	-cache comment do
 		.meta
-			.left= render comment.identity
 			.right
 				&nbsp;
 				=render :partial => 'pages/times', :format => 'html', :object => comment
+			.left= render comment.identity
 			.endmeta
 		.body
 			=simple_format h(comment.body).gsub('  ',' &nbsp;')
+	-can_reply = (not show_context) and permitted_to? :create, comment.page.comment_from(current_user)
 	-can_edit = permitted_to? :edit, comment
 	-can_del = permitted_to? :destroy, comment
-	-show_context = params[:show_context] || !(current_page?(comment.page) || current_page?(comment) || current_page?([comment.page, Comment.new]))
-	-if can_edit or can_del or show_context
+	-if can_reply or can_edit or can_del or show_context
 		.controls
+			-if can_reply
+				-button_to_act :reply, comment, :show_context => show_context || nil
 			-if can_edit
 				-button_to_act :edit, comment, :show_context => show_context || nil
 			-if can_del
 				-button_to_act :delete, comment, :has_count => show_context || nil
 			-if show_context
 				=link_to 'Context', comment
+
+-unless show_context
+	%div[comment,:replies_to]
+		-comment.children(:order => :created_at).visible_to(current_user).each do |c|
+			=render c
 

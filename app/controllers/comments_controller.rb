@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
 	cache_sweeper :fragment_sweeper, :only => [:update,:destroy]
 
 	def index
-		@comments = (has_role? :admin) ? Comment.all : Comment.all(:conditions => {:deleted => false}, :order => 'updated_at DESC')
+		@comments = Comment.visible_to(current_user).all(:order => 'updated_at DESC')
 
 		respond_to do |format|
 			format.html
@@ -26,16 +26,33 @@ class CommentsController < ApplicationController
 		end
 	end
 
+	def reply
+		@page = @comment.page
+		p = @comment
+		@comment = @page.comment_from(current_user)
+		@comment.parent = p
+	end
+
 	def create
 		if not @comment.identity then raise "Anonymous comments are not allowed" end
 		respond_to do |format|
-			if @comment.save
+			if (params[:_commit] || params[:commit]) == 'Cancel'
+				format.html { redirect_to @comment.page }
+				format.js do
+					if @comment.parent
+						t = "reply_to_#{dom_id(@comment.parent)}"
+						render(:update) {|p| p.visual_effect :blind_up, t, :afterFinish => p.literal("function(){$('#{t}').remove()}")}
+					else
+						render :nothing => true
+					end
+				end
+			elsif @comment.save
 				#flash[:notice] = 'Comment was successfully created.'
 				format.html { redirect_to @page }
 				format.js
 			else
 				format.html { render :controller => :pages, :action => :show }
-				format.js { render(:update) { |p| p.replace :add_comment, :partial => 'comments/edit' }}
+				format.js { render(:update) { |p| p.replace( (@comment.parent_id ? "reply_to_#{dom_id(@comment.parent)}" : :add_comment), :partial => 'comments/edit') }}
 			end
 		end
 	end
@@ -75,7 +92,7 @@ class CommentsController < ApplicationController
 			format.html { redirect_to @comment.page }
 			format.js do
 				render :update do |p|
-					p[@comment].fade
+					p.visual_effect :blind_up, dom_id(@comment), :afterFinish => p.literal("function(){$('#{dom_id(@comment)}').remove()}")
 					if params[:has_count]
 						p.replace 'comment_count', :partial => 'users/comment_count', :object => visible_comments(@comment.user)
 					end
@@ -88,8 +105,8 @@ class CommentsController < ApplicationController
 	protected
 
 	def new_comment_from_params
+		params[:comment][:identity_id] ||= (current_user && current_user.identity_id)
 		@comment = Comment.new(params[:comment])
-		@comment.identity_id = (params[:comment].delete(:identity_id) {|k| nil}) || (current_user && current_user.identity_id)
 		@comment.page = @page
 	end
 end

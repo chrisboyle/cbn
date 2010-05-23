@@ -30,6 +30,9 @@ class User < ActiveRecord::Base
 		email
 	end
 
+	def identity_id
+		default_identity_id || identity_ids.first
+	end
 	def identity
 		default_identity || identities.first
 	end

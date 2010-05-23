@@ -19,6 +19,10 @@ authorization do
 			if_attribute :user => is { user }
 			if_permitted_to :read, :page
 		end
+		has_permission_on :comments, :to => :reply, :join_by => :and do
+			if_attribute :deleted => false
+			if_permitted_to :read, :page
+		end
 	end
 	role :user do
 		includes :guest, :commenter
