@@ -1,4 +1,3 @@
--without_replies ||= false
 -show_context = params[:show_context] || !(current_page?(comment.page) || current_page?(comment) || current_page?([comment.page, Comment.new]))
 %div[comment]{:class => (comment.deleted ? 'deleted' : nil)}
 	-if comment.deleted and not has_role? :admin
@@ -14,7 +13,7 @@
 				.endmeta
 			.body
 				=simple_format h(comment.body).gsub('  ',' &nbsp;')
-		-can_reply = (not comment.deleted) and (not show_context) and permitted_to? :create, comment.page.comment_from(current_user)
+		-can_reply = ((not comment.deleted) and (not show_context) and permitted_to? :create, comment.page.comment_from(current_user))
 		-can_edit = permitted_to? :edit, comment
 		-can_del = permitted_to? :destroy, comment
 		-if can_reply or can_edit or can_del or show_context
@@ -27,9 +26,3 @@
 					-button_to_act :delete, comment, :has_count => show_context || nil
 				-if show_context
 					=link_to 'Context', comment
-
--unless without_replies or show_context
-	%div[comment,:replies_to]
-		-comment.children(:order => :created_at).select {|c| c.is_visible_to?(current_user)}.each do |c|
-			=render c
-

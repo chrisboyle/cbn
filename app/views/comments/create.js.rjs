@@ -1,5 +1,5 @@
 parent = @comment.parent
-page.insert_html :bottom, (parent ? "replies_to_#{dom_id(parent)}" : :comments), :partial => @comment
+page.insert_html :bottom, (parent ? "replies_to_#{dom_id(parent)}" : :comments), :partial => 'comments/comment_and_replies', :object => @comment
 page[@comment].visual_effect :highlight, :endcolor => '#bbeeff'
 @comment = Comment.new(:page => @page)
 if parent

@@ -10,7 +10,7 @@
 
 -if @page.is_a? Post
 	#comments
-		=render @page.comments.roots(:order => :created_at).select {|c| c.is_visible_to? current_user}
+		=render :partial => 'comments/comment_and_replies', :collection => @page.comments.roots(:order => :created_at).select {|c| c.is_visible_to? current_user}
 
 	%hr/
 	-if permitted_to? :create, @page.comment_from(current_user)
