@@ -68,7 +68,7 @@ class CommentsController < ApplicationController
 		respond_to do |format|
 			if (params[:_commit] || params[:commit]) == 'Cancel'
 				format.html { redirect_to @comment }
-				format.js   { render(:update) {|p| p.replace dom_id(@comment), :partial => @comment }}
+				format.js   { render(:update) {|p| p.replace dom_id(@comment), :partial => @comment, :locals => {:without_replies => true}}}
 			elsif @comment.update_attributes(params[:comment])
 				format.html do
 					flash[:notice] = 'Comment was successfully updated.'
@@ -92,7 +92,19 @@ class CommentsController < ApplicationController
 			format.html { redirect_to @comment.page }
 			format.js do
 				render :update do |p|
-					p.visual_effect :blind_up, dom_id(@comment), :afterFinish => p.literal("function(){$('#{dom_id(@comment)}').remove()}")
+					if @comment.is_visible_to? current_user
+						p.replace dom_id(@comment), :partial => @comment, :locals => {:without_replies => true}
+						p[@comment].visual_effect :highlight, :endcolor => '#bbeeff'
+					else
+						c = @comment
+						while c.parent and not c.parent.is_visible_to? current_user do
+							c = c.parent
+						end
+						i = dom_id(c)
+						r = "replies_to_#{i}"
+						p.visual_effect :blind_up, i, :afterFinish => p.literal("function(){$('#{i}').remove()}")
+						p.visual_effect :blind_up, r, :afterFinish => p.literal("function(){$('#{r}').remove()}")
+					end
 					if params[:has_count]
 						p.replace 'comment_count', :partial => 'users/comment_count', :object => visible_comments(@comment.user)
 					end

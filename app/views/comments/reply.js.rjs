@@ -1,7 +1,7 @@
 target = "reply_to_#{dom_id(@comment.parent)}"
 page << "if ($('#{target}')) {"
 	page[target].visual_effect :scroll_to
-	page.select("##{target} .body").first.visual_effect :highlight
+	page.select("##{target} .body").first.visual_effect :highlight, :endcolor => '#bbeeff'
 	page.select("##{target} textarea").first.focus
 page << "} else {"
 	page.insert_html :bottom, "replies_to_#{dom_id(@comment.parent)}", :partial => 'comments/edit'

@@ -7,9 +7,16 @@ class Comment < ActiveRecord::Base
 	# This could be done with using_access_control(:include_read) but this is faster
 	named_scope :visible_to, lambda {|user| {:conditions => (user and user.role_symbols.include? :admin) ? nil : {:deleted => false}}}
 
+	def is_visible_to?(user)
+		(not deleted) or (user and user.role_symbols.include? :admin) or descendants.any? {|c| not c.deleted}
+	end
+
 	validates_presence_of :body
 	validates_presence_of :identity
 	validates_presence_of :page
+	validate do |c|
+		errors.add_to_base("Invalid parent comment") if c.parent and c.parent.page_id != c.page_id
+	end
 
 	def user
 		identity && identity.user
