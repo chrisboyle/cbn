@@ -40,10 +40,15 @@ class ApplicationController < ActionController::Base
 
 	def rescue_action(e)
 		case e
-		when ActiveRecord::RecordNotFound
-			respond_to do |format|
-				format.html { render :file => "#{RAILS_ROOT}/public/404.html", :status => '404 Not Found' } 
-				format.xml  { render :nothing => true, :status => '404 Not Found' } 
+		when ActiveRecord::RecordNotFound, ActionController::RoutingError
+			b = File.basename(request.request_uri)
+			if not b.include? '/' and FileTest.exists?("#{RAILS_ROOT}/public/download/#{b}")
+				redirect_to "/download/#{b}", :status => :moved_permanently
+			else
+				respond_to do |format|
+					format.html { render :file => "#{RAILS_ROOT}/public/404.html", :status => '404 Not Found' } 
+					format.xml  { render :nothing => true, :status => '404 Not Found' } 
+				end
 			end
 		else
 			super
