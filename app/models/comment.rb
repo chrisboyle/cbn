@@ -8,7 +8,11 @@ class Comment < ActiveRecord::Base
 	named_scope :visible_to, lambda {|user| {:conditions => (user and user.role_symbols.include? :admin) ? nil : {:deleted => false}}}
 
 	def is_visible_to?(user)
-		(not deleted) or (user and user.role_symbols.include? :admin) or descendants.any? {|c| not c.deleted}
+		(user and user.role_symbols.include? :admin) or (approved and (not deleted or descendants.any? {|c| not c.deleted}))
+	end
+
+	def parent_deleted
+		parent ? parent.deleted : false
 	end
 
 	validates_presence_of :body

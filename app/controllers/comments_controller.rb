@@ -84,6 +84,25 @@ class CommentsController < ApplicationController
 		end
 	end
 
+	def approve
+		set_approved(true)
+	end
+
+	def trust
+		u = @comment.user
+		u.roles << Role.find_by_name('known')
+		u.save!
+		u.comments.each {|c| c.approved = true; c.save! }
+		respond_to do |format|
+			format.html { redirect_to @comment }
+			format.js { render(:update) {|p| p.redirect_to @comment }}
+		end
+	end
+
+	def disapprove
+		set_approved(false)
+	end
+
 	def destroy
 		@comment.deleted = true
 		@comment.save
@@ -122,5 +141,24 @@ class CommentsController < ApplicationController
 		params[:comment][:identity_id] ||= (current_user && current_user.identity_id)
 		@comment = Comment.new(params[:comment])
 		@comment.page = @page
+	end
+
+	def set_approved(a)
+		begin
+			# hack: this doesn't count as an edit
+			Comment.record_timestamps = false
+			@comment.approved = a
+			respond_to do |format|
+				if @comment.save
+					format.html { redirect_to @comment }
+					format.js   { render(:update) {|p| p.replace dom_id(@comment), :partial => @comment}}
+				else
+					format.html { flash[:error] = 'Failed to update comment'; redirect_to @comment }
+					format.js   { render(:update) {|p| p.alert 'Failed to update comment' }}
+				end
+			end
+		ensure
+			Comment.record_timestamps = true
+		end
 	end
 end

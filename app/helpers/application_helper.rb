@@ -23,11 +23,12 @@ module ApplicationHelper
 				when :edit,:reply then [:get,action]
 				else              [:post,action]
 				end
+		confirm = js_options.delete(:confirm)
 		bits = {:controller => ActionController::RecordIdentifier.plural_class_name(object),
 					  :action => act_name, :id => object}
 		url, jsurl = url_for(bits), url_for(bits.merge(js_options))
-		form_remote_tag :url => jsurl, :html => {:action => url, :method => method}, :method => method,
-			:confirm => (action == :delete ? 'Are you sure you want to delete this?' : nil) do
+		form_remote_tag :url => jsurl, :html => {:action => url, :method => method},
+				:method => method, :confirm => confirm do
 			concat(content_tag :button, label, :type => :submit)
 		end
 	end

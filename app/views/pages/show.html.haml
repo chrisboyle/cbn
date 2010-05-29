@@ -13,7 +13,8 @@
 		=render :partial => 'comments/comment_and_replies', :collection => @page.comments.roots(:order => :created_at).select {|c| c.is_visible_to? current_user}
 
 	%hr/
-	-if permitted_to? :create, @page.comment_from(current_user)
+	-@comment = @page.comment_from(current_user)
+	-if permitted_to? :create, @comment
 		=render 'comments/edit'
 
 	-elsif not current_user

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100518213857) do
+ActiveRecord::Schema.define(:version => 20100527211827) do
 
   create_table "comments", :force => true do |t|
     t.integer  "page_id"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20100518213857) do
     t.integer  "parent_id"
     t.integer  "lft"
     t.integer  "rgt"
+    t.boolean  "approved",    :default => false, :null => false
   end
 
   create_table "identities", :force => true do |t|

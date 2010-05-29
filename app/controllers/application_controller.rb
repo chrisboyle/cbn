@@ -55,6 +55,12 @@ class ApplicationController < ActionController::Base
 		end
 	end
 
+	def no_cache
+		response.headers['Pragma'] = 'no-cache'
+		response.headers['Expires'] = '0'
+		response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate, pre-check=0, post-check=0'
+	end
+
 	def permission_denied
 		if current_user
 			flash[:warning] = "Sorry, your account is not allowed to do that. Try another?"
@@ -72,6 +78,7 @@ class ApplicationController < ActionController::Base
 			format.js { render(:update) {|p| p.redirect_to login_page }}
 			format.all { render :file => "#{RAILS_ROOT}/public/403.html", :status => '403 Forbidden' }
 		end
+		no_cache
 	end
 
 	private

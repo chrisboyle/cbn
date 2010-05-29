@@ -1,7 +1,7 @@
 parent = @comment.parent
-page.insert_html :bottom, (parent ? "replies_to_#{dom_id(parent)}" : :comments), :partial => 'comments/comment_and_replies', :object => @comment
+page.insert_html :bottom, (parent ? "replies_to_#{dom_id(parent)}" : :comments), :partial => ((has_role? :admin or @comment.approved) ? 'comments/comment_and_replies' : 'comments/will_be_here'), :object => @comment
 page[@comment].visual_effect :highlight, :endcolor => '#bbeeff'
-@comment = Comment.new(:page => @page)
+@comment = @page.comment_from(current_user)
 if parent
 	page["reply_to_#{dom_id(parent)}"].remove
 else

@@ -4,7 +4,7 @@ class Role < ActiveRecord::Base
 	def description
 		{
 			'admin'     => 'Administrator',
-			'moderator' => 'Delete comments',
+			'moderator' => 'Approve comments',
 			'known'     => 'Publish comments immediately',
 		}.fetch(name, name)
 	end

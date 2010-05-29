@@ -1,14 +1,18 @@
--is_edit = @comment && @comment.id
--is_reply = @comment && @comment.parent
+-is_edit = @comment.id
+-is_reply = @comment.parent
 %div{:id => is_edit ? dom_id(@comment) : is_reply ? "reply_to_#{dom_id(@comment.parent)}" : "add_comment"}
-	-remote_form_for [@page, @comment || Comment.new], :html => {:id => nil} do |f|
-		-if @comment and @comment.parent_id
+	-remote_form_for [@page, @comment], :html => {:id => nil} do |f|
+		-if @comment.parent_id
 			=f.hidden_field :parent_id
 		-if params[:show_context]
 			=hidden_field_tag :show_context, true
 		=hidden_field_tag :_commit
 		-if not is_edit and not is_reply
 			%h3 Add a comment
+			-if @comment.approved
+				.notice Your comment will be public immediately.
+			-else
+				.notice Your comment will not be public until it has been approved (may happen very quickly if I'm awake).
 		=f.error_messages :message => nil
 		.comment
 			.meta
@@ -19,7 +23,7 @@
 			.body<
 				~f.text_area :body, :cols => nil, :rows => 10
 			.controls
-				=f.submit is_edit ? 'Save' : 'Send', :onclick => 'this.form._commit.value="Save"'
+				=f.submit is_edit ? 'Save' : @comment.approved ? 'Send' : 'Send to moderator', :onclick => 'this.form._commit.value="Save"'
 				-if is_edit or is_reply
 					=f.submit 'Cancel', :onclick => 'this.form._commit.value="Cancel"'
 				%span.fieldnote (HTML and other markup will not work)

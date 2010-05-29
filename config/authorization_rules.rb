@@ -9,19 +9,22 @@ end
 authorization do
 	role :guest do
 		has_permission_on [:pages,:posts,:static_pages,:projects,:tags], :to => :read
-		has_permission_on :comments, :to => :read do
-			if_attribute :deleted => false
+		has_permission_on :comments, :to => :read, :join_by => :and do
+			if_permitted_to :read, :page
+			if_attribute :deleted => false, :approved => true
 		end
 	end
 	role :commenter do
-		has_permission_on :comments, :to => [:create,:update,:delete], :join_by => :and do
-			if_attribute :deleted => false
-			if_attribute :user => is { user }
+		has_permission_on :comments, :to => :create, :join_by => :and do
 			if_permitted_to :read, :page
+			if_attribute :user => is { user }, :deleted => false, :parent_deleted => false, :approved => is { user.role_symbols.include? :known }
 		end
-		has_permission_on :comments, :to => :reply, :join_by => :and do
-			if_attribute :deleted => false
+		has_permission_on :comments, :to => [:update,:delete], :join_by => :and do
 			if_permitted_to :read, :page
+			if_attribute :user => is { user }, :deleted => false, :approved => true
+		end
+		has_permission_on :comments, :to => :reply do
+			if_permitted_to :read
 		end
 	end
 	role :user do
@@ -31,12 +34,13 @@ authorization do
 		end
 	end
 	role :known do
-		includes :user
 	end
 	role :moderator do
-		includes :known
-		has_permission_on :comments, :to => :delete do
-			if_attribute :deleted => false
+		has_permission_on :comments, :to => [:approve,:trust] do
+			if_attribute :deleted => false, :approved => false
+		end
+		has_permission_on :comments, :to => :disapprove do
+			if_attribute :deleted => false, :approved => true
 		end
 	end
 	role :admin do

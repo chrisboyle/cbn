@@ -24,6 +24,7 @@ class Page < ActiveRecord::Base
 		returning Comment.new do |c|
 			c.page = self
 			c.identity = user.identity if user
+			c.approved = user.role_symbols.include? :known if user
 		end
 	end
 end
