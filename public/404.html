@@ -1,30 +1,59 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
+<html lang="en-GB" xml:lang="en-GB" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html;charset=UTF-8" http-equiv="content-type" />
+    <title></title>
+    <style type="text/css">
+html, body {
+  height: 100%;
+  padding: 0;
+  margin: 0; }
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+body {
+  font-family: FreeSans, DejaVu Sans, Liberation Sans, sans-serif;
+  font-size: 12pt;
+  color: #000000;
+  background: #ffffff;
+  margin: 0px;
+  height: 100%;
+  line-height: 1.3; }
 
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-  <title>The page you were looking for doesn't exist (404)</title>
-	<style type="text/css">
-		body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
-		div.dialog {
-			width: 25em;
-			padding: 0 4em;
-			margin: 4em auto 0 auto;
-			border: 1px solid #ccc;
-			border-right-color: #999;
-			border-bottom-color: #999;
-		}
-		h1 { font-size: 100%; color: #f00; line-height: 1.5em; }
-	</style>
-</head>
+#page {
+  background: #ffffff;
+  border-width: 0px 1px 0px 1px;
+  border-style: solid;
+  border-color: #ff0000;
+  min-height: 100%;
+  margin: 0 auto 0;
+  padding: 0 0.5em 0 1em;
+  max-width: 900px;
+  min-width: 28em; }
 
-<body>
-  <!-- This file lives in public/404.html -->
-  <div class="dialog">
-    <h1>The page you were looking for doesn't exist.</h1>
-    <p>You may have mistyped the address or the page may have moved.</p>
-  </div>
-</body>
+* html #page {
+  height: 100%; }
+
+h1, h2, h3, h4, h5 {
+  margin-top: 0;
+  margin-bottom: 0; }
+
+.xkcd, .attr {
+  text-align: center; }
+    </style>
+  </head>
+  <body onload="document.getElementById('searchinput').focus()">
+    <div id="page">
+      <h1>404 File Not Found</h1>
+      <p>In May 2010 I took this site apart and put it back together. There may have been parts left over. If you think this request should have worked, <a href="mailto:chris@boyle.name">email me</a>.</p>
+      <p>You could try searching this site using Google:</p>
+      <form class="searchForm" method="get" action="http://www.google.co.uk/search">
+        <div id="searchbox">
+          <input type="hidden" name="as_sitesearch" value="chris.boyle.name" />
+          <input type="text" name="q" class="search" id="searchinput" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div class="xkcd"><img src="/images/xkcd_98.jpg" title="#pugglewumper Tashari got me some ink pens!  I&#39;ve been experimenting with them." alt="xkcd #98: Fall Apart" /></div>
+      <div class="attr"><a href="http://xkcd.com/98/">(xkcd)</a></div>
+    </div>
+  </body>
 </html>
