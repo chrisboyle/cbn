@@ -45,15 +45,12 @@ class ApplicationController < ActionController::Base
 			if not b.include? '/' and FileTest.exists?("#{RAILS_ROOT}/public/download/#{b}")
 				redirect_to "/download/#{b}", :status => :moved_permanently
 			else
-				respond_to do |format|
-					format.html { render :file => "#{RAILS_ROOT}/public/404.html", :status => '404 Not Found' } 
-					format.xml  { render :nothing => true, :status => '404 Not Found' } 
-				end
+				super(e)
 			end
 		when Authorization::NotAuthorized
 			permission_denied
 		else
-			super
+			super(e)
 		end
 	end
 
