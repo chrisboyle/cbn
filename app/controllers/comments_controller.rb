@@ -122,7 +122,7 @@ class CommentsController < ApplicationController
 						p[@comment].visual_effect :highlight, :endcolor => '#bbeeff'
 					else
 						c = @comment
-						if params[:has_count]
+						if params[:context]
 							tree = dom_id(c)
 						else
 							while c.parent and not c.parent.is_visible_to? current_user do
@@ -132,7 +132,7 @@ class CommentsController < ApplicationController
 						end
 						p.visual_effect :blind_up, tree, :afterFinish => p.literal("function(){$('#{tree}').remove()}")
 					end
-					if params[:has_count]
+					if params[:context] == 'user'
 						p.replace 'comment_count', :partial => 'users/comment_count', :object => @comment.user.comments.visible_to(current_user)
 					end
 				end
@@ -147,6 +147,7 @@ class CommentsController < ApplicationController
 		params[:comment][:identity_id] ||= (current_user && current_user.identity_id)
 		@comment = Comment.new(params[:comment])
 		@comment.page = @page
+		@comment.approved = current_user.role_symbols.include? :known
 	end
 
 	def set_approved(a)

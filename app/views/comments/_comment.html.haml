@@ -16,7 +16,9 @@
 		-acts = [:reply,:edit,:delete,:approve,:trust,:disapprove]
 		-confirms = { :delete => 'Really delete this?', :trust => 'Really approve all current and future posts from this user?' }
 		-allowed = acts.select {|act| (act == :reply) ? (comment.approved and not context and not comment.deleted) : (permitted_to? act, comment) }
-		-if allowed.any?
+		-if allowed.any? or context
 			.controls
 				-allowed.collect do |act|
 					-button_to_act act, comment, :context => context, :confirm => confirms[act]
+				-if context
+					=link_to 'Context', comment

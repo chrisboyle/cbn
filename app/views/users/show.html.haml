@@ -42,7 +42,7 @@
 =render 'comment_count', :object => comments
 -if not comments.empty?
 	=render comments, :context => 'user'
-	=button_to 'Delete all comments', (url_for :action=>:destroy, :id => you ? 'current' : @user)+'/comments', :method => :delete, :confirm => "Are you sure you want to delete all comments?"
+	=button_to 'Delete all comments', (url_for :action=>:destroy, :id => you ? 'current' : @user)+'/comments', :method => :delete, :confirm => "Really delete all your comments?"
 
 .dangerous
 	%h2 Delete account

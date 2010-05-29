@@ -30,7 +30,7 @@ authorization do
 	end
 	role :user do
 		includes :guest, :commenter
-		has_permission_on :users, :to => [:show,:update,:delete] do
+		has_permission_on :users, :to => [:show,:update,:delete,:delete_comments] do
 			if_attribute :id => is { user.id }
 		end
 	end
