@@ -6,5 +6,5 @@
 	=succeed link_to_unless no_link, text, identity.url, {:rel => 'nofollow'} do
 		-if FileTest.exists?("#{RAILS_ROOT}/public#{imgpath}")
 			=link_to_unless no_profile, image_tag(imgpath), identity.profile_url, {:rel => 'nofollow'}
--if has_role? :admin and identity.user != current_user and not current_page? :controller => :users, :action => :index
+-if has_role? :admin and identity.user and identity.user != current_user and not current_page? :controller => :users, :action => :index
 	=link_to "(edit)", identity.user

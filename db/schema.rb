@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100527211827) do
+ActiveRecord::Schema.define(:version => 20100529213529) do
 
   create_table "comments", :force => true do |t|
     t.integer  "page_id"
@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(:version => 20100527211827) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "identities", ["provider", "identifier"], :name => "index_identities_on_provider_and_identifier", :unique => true
 
   create_table "open_id_authentication_associations", :force => true do |t|
     t.integer "issued"
