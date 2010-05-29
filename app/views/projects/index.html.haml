@@ -1,7 +1,9 @@
 =titleh1 'Projects'
 
--@projects.each do |p|
-	=render p
+-if @projects.empty?
+	.placeholder No projects yet
+-else
+	=render @projects
 
 -if permitted_to? :create, :projects
 	=link_to 'New project', new_project_path

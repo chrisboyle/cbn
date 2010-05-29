@@ -5,7 +5,10 @@
 		%h1 Listing pages
 
 	.entries
-		=render @pages
+		-if @pages.empty?
+			.placeholder No pages or posts yet
+		-else
+			=render @pages
 
 	-if permitted_to? :create, Page.new
 		=link_to 'New page', new_page_path
