@@ -47,7 +47,7 @@ class UsersController < ApplicationController
 
 	def load_user
 		if params[:id] == 'current'
-			@user = current_user
+			@user = current_user or raise Authorization::NotAuthorized
 		else
 			permitted_to! :show, User.new  # can't even access yourself by id
 			@user = User.find(params[:id])

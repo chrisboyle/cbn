@@ -5,7 +5,7 @@ class Comment < ActiveRecord::Base
 	acts_as_nested_set :scope => :page_id
 
 	# This could be done with using_access_control(:include_read) but this is faster
-	named_scope :visible_to, lambda {|user| {:conditions => (user and user.role_symbols.include? :admin) ? nil : {:deleted => false}}}
+	named_scope :visible_to, lambda {|user| {:conditions => (user and user.role_symbols.include? :admin) ? nil : {:deleted => false, :approved => true}}}
 
 	def is_visible_to?(user)
 		(user and user.role_symbols.include? :admin) or (approved and (not deleted or descendants.any? {|c| not c.deleted}))

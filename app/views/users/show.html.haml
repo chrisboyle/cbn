@@ -38,10 +38,10 @@
 	=f.submit 'Save'
 
 %h2 Comments
--comments = visible_comments(@user)
+-comments = @user.comments.visible_to(current_user)
 =render 'comment_count', :object => comments
 -if not comments.empty?
-	=render comments
+	=render comments, :context => 'user'
 	=button_to 'Delete all comments', (url_for :action=>:destroy, :id => you ? 'current' : @user)+'/comments', :method => :delete, :confirm => "Are you sure you want to delete all comments?"
 
 .dangerous

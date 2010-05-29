@@ -65,7 +65,7 @@ class ApplicationController < ActionController::Base
 		if current_user
 			flash[:warning] = "Sorry, your account is not allowed to do that. Try another?"
 		else
-			flash[:notice] = "To do that, I need to know who you are."
+			flash[:notice] ||= "To do that, I need to know who you are."
 		end
 		if request.request_method == :get
 			session[:next] = request.request_uri

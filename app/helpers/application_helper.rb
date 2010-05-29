@@ -32,10 +32,6 @@ module ApplicationHelper
 			concat(content_tag :button, label, :type => :submit)
 		end
 	end
-
-	def visible_comments(user)
-		user.comments.find(:all, :conditions => (has_role? :admin) ? nil : {:deleted => false}, :order => 'updated_at DESC')
-	end
 end
 
 class Time

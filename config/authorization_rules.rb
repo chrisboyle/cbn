@@ -23,8 +23,9 @@ authorization do
 			if_permitted_to :read, :page
 			if_attribute :user => is { user }, :deleted => false, :approved => true
 		end
-		has_permission_on :comments, :to => :reply do
+		has_permission_on :comments, :to => :reply, :join_by => :and do
 			if_permitted_to :read
+			if_attribute :deleted => false  # not implied by previous line for admins
 		end
 	end
 	role :user do
@@ -36,11 +37,14 @@ authorization do
 	role :known do
 	end
 	role :moderator do
-		has_permission_on :comments, :to => [:approve,:trust] do
+		has_permission_on :comments, :to => :approve do
 			if_attribute :deleted => false, :approved => false
 		end
 		has_permission_on :comments, :to => :disapprove do
 			if_attribute :deleted => false, :approved => true
+		end
+		has_permission_on :comments, :to => :trust do
+			if_attribute :user => { :role_symbols => does_not_contain { :known } }, :deleted => false
 		end
 	end
 	role :admin do

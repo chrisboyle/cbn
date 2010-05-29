@@ -1,6 +1,5 @@
 -comment = comment_and_replies
 %div[comment,:replies_and]
 	=render comment
-	%div[comment,:replies_to]
-		=render :partial => 'comments/comment_and_replies', :collection => comment.children(:order => :created_at).select {|c| c.is_visible_to?(current_user)}
+	%div[comment,:replies_to]= render :partial => 'comments/comment_and_replies', :collection => comment.children(:order => :created_at).select {|c| c.is_visible_to?(current_user)}
 

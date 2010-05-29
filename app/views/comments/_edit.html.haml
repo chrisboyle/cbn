@@ -1,13 +1,11 @@
 -is_edit = @comment.id
--is_reply = @comment.parent
+-is_reply = @comment.parent and not is_edit
 %div{:id => is_edit ? dom_id(@comment) : is_reply ? "reply_to_#{dom_id(@comment.parent)}" : "add_comment"}
 	-remote_form_for [@page, @comment], :html => {:id => nil} do |f|
-		-if @comment.parent_id
-			=f.hidden_field :parent_id
-		-if params[:show_context]
-			=hidden_field_tag :show_context, true
+		=f.hidden_field :parent_id if is_reply
+		=hidden_field_tag :context, params[:context] if params[:context]
 		=hidden_field_tag :_commit
-		-if not is_edit and not is_reply
+		-if not is_edit
 			%h3 Add a comment
 			-if @comment.approved
 				.notice Your comment will be public immediately.

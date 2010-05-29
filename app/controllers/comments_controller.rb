@@ -31,6 +31,7 @@ class CommentsController < ApplicationController
 		p = @comment
 		@comment = @page.comment_from(current_user)
 		@comment.parent = p
+		no_cache
 	end
 
 	def create
@@ -104,14 +105,19 @@ class CommentsController < ApplicationController
 	end
 
 	def destroy
-		@comment.deleted = true
-		@comment.save
+		if @comment.deleted
+			@comment.destroy
+			deleted = true
+		else
+			@comment.update_attribute :deleted, true
+			deleted = false
+		end
 
 		respond_to do |format|
 			format.html { redirect_to @comment.page }
 			format.js do
 				render :update do |p|
-					if @comment.is_visible_to? current_user
+					if @comment.is_visible_to? current_user and not deleted
 						p.replace dom_id(@comment), :partial => @comment
 						p[@comment].visual_effect :highlight, :endcolor => '#bbeeff'
 					else
@@ -127,7 +133,7 @@ class CommentsController < ApplicationController
 						p.visual_effect :blind_up, tree, :afterFinish => p.literal("function(){$('#{tree}').remove()}")
 					end
 					if params[:has_count]
-						p.replace 'comment_count', :partial => 'users/comment_count', :object => visible_comments(@comment.user)
+						p.replace 'comment_count', :partial => 'users/comment_count', :object => @comment.user.comments.visible_to(current_user)
 					end
 				end
 			end

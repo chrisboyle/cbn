@@ -1,4 +1,4 @@
--show_context = params[:show_context] || !(current_page?(comment.page) || current_page?(comment) || current_page?([comment.page, Comment.new]))
+-context ||= params[:context]
 %div[comment]{:class => [('deleted' if comment.deleted), ('disapproved' unless comment.approved)].join(' ')}
 	-if comment.deleted and not has_role? :admin
 		.body.placeholder
@@ -13,25 +13,10 @@
 				.endmeta
 			.body
 				=simple_format h(comment.body).gsub('  ',' &nbsp;')
-		-can_reply = (not show_context) and permitted_to? :reply, comment
-		-can_edit = permitted_to? :edit, comment
-		-can_del = permitted_to? :destroy, comment
-		-can_approve = permitted_to? :approve, comment
-		-can_trust = permitted_to? :trust, comment
-		-can_disapprove = permitted_to? :disapprove, comment
-		-if can_reply or can_edit or can_del or show_context
+		-acts = [:reply,:edit,:delete,:approve,:trust,:disapprove]
+		-confirms = { :delete => 'Really delete this?', :trust => 'Really approve all current and future posts from this user?' }
+		-allowed = acts.select {|act| (act == :reply) ? (comment.approved and not context and not comment.deleted) : (permitted_to? act, comment) }
+		-if allowed.any?
 			.controls
-				-if can_reply
-					-button_to_act :reply, comment, :show_context => show_context || nil
-				-if can_edit
-					-button_to_act :edit, comment, :show_context => show_context || nil
-				-if can_del
-					-button_to_act :delete, comment, :confirm => 'Are you sure you want to delete this?', :has_count => show_context || nil
-				-if can_approve
-					-button_to_act :approve, comment, :show_context => show_context || nil
-				-if can_trust
-					-button_to_act :trust, comment, :confirm => 'Approve all this user\'s current and future comments?', :show_context => show_context || nil
-				-if can_disapprove
-					-button_to_act :disapprove, comment, :show_context => show_context || nil
-				-if show_context
-					=link_to 'Context', comment
+				-allowed.collect do |act|
+					-button_to_act act, comment, :context => context, :confirm => confirms[act]
