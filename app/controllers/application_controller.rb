@@ -50,6 +50,8 @@ class ApplicationController < ActionController::Base
 					format.xml  { render :nothing => true, :status => '404 Not Found' } 
 				end
 			end
+		when Authorization::NotAuthorized
+			permission_denied
 		else
 			super
 		end
@@ -61,6 +63,7 @@ class ApplicationController < ActionController::Base
 		response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate, pre-check=0, post-check=0'
 	end
 
+	# called by filter_access_to and by rescue_action
 	def permission_denied
 		if current_user
 			flash[:warning] = "Sorry, your account is not allowed to do that. Try another?"
