@@ -4,6 +4,6 @@
 		|
 		=link_to 'Account', {:controller => :users, :action => :show, :id => 'current'}
 		|
-		=button_to 'Sign out', {:controller => :user_sessions, :action => :destroy}, :method => :delete
+		=button_to 'Sign out', {:controller => :user_sessions, :action => :destroy, :next => current_page?(:controller => :users, :action => :show, :id => 'current') ? root_path : nil}, :method => :delete
 	-else
 		=link_to 'Sign in', :controller => :user_sessions, :action => :new
