@@ -18,10 +18,10 @@
 		=render 'comments/edit'
 
 	-elsif not current_user
-		#add_comment
+		#new_comment
 			%h3 Add a comment using&hellip;
 			=render :partial => 'user_sessions/new'
 
 	-else
-		#add_comment
+		#new_comment
 			.placeholder You can't add a comment on this post.

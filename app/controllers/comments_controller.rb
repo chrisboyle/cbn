@@ -2,12 +2,16 @@ class CommentsController < ApplicationController
 	filter_resource_access :nested_in => :pages, :only => [:new,:create], :collection => []
 	filter_resource_access :except => [:new,:create]
 	cache_sweeper :fragment_sweeper, :only => [:update,:destroy]
+	before_filter :load_user
 
 	def index
-		@comments = (@page ? @page.comments : Comment).visible_to(current_user).all(:order => 'updated_at DESC')
+		@comments = (@page ? @page.comments : @user ? @user.comments : Comment).visible_to(current_user).all(:order => 'updated_at DESC')
 
 		respond_to do |format|
-			format.html { redirect_to :controller => :pages, :action => :show, :anchor => 'comments' }
+			format.html do
+				redirect_to :controller => :pages, :action => :show, :anchor => 'comments' if @page
+				redirect_to :controller => :users, :action => :show, :id => @user.id, :anchor => 'comments' if @user
+			end
 			format.xml  { render :xml => @comments }
 		end
 	end
@@ -21,7 +25,7 @@ class CommentsController < ApplicationController
 
 	def new
 		respond_to do |format|
-			format.html { redirect_to :controller => :pages, :action => :show, :anchor => 'add_comment' }
+			format.html { redirect_to :controller => :pages, :action => :show, :anchor => 'new_comment' }
 			format.xml  { render :xml => @comment }
 		end
 	end
@@ -53,7 +57,7 @@ class CommentsController < ApplicationController
 				format.js
 			else
 				format.html { render :controller => :pages, :action => :show }
-				format.js { render(:update) { |p| p.replace( (@comment.parent_id ? "reply_to_#{dom_id(@comment.parent)}" : :add_comment), :partial => 'comments/edit') }}
+				format.js { render(:update) { |p| p.replace( (@comment.parent_id ? "reply_to_#{dom_id(@comment.parent)}" : :new_comment), :partial => 'comments/edit') }}
 			end
 		end
 	end

@@ -81,6 +81,16 @@ class ApplicationController < ActionController::Base
 		no_cache
 	end
 
+	def load_user
+		i = params[:user_id] || params[:id]
+		if i == 'current'
+			@user = current_user or raise Authorization::NotAuthorized
+		else
+			permitted_to! :show, User.new  # can't even access yourself by id
+			@user = i ? User.find(i) : nil
+		end
+	end
+
 	private
 	def current_user_session
 		return @current_user_session if defined?(@current_user_session)

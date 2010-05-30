@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
 	filter_resource_access :additional_member => :delete_comments
+	cache_sweeper :fragment_sweeper, :only => :delete_comments
 
 	def index
 		@users = User.all
@@ -48,18 +49,6 @@ class UsersController < ApplicationController
 		respond_to do |format|
 			format.html { flash[:notice] = 'Comments successfully deleted.'; redirect_to @user }
 			format.xml  { head :ok }
-		end
-	end
-
-	protected
-
-	def load_user
-		i = params[:user_id] || params[:id]
-		if i == 'current'
-			@user = current_user or raise Authorization::NotAuthorized
-		else
-			permitted_to! :show, User.new  # can't even access yourself by id
-			@user = User.find(i)
 		end
 	end
 end
