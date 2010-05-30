@@ -1,12 +1,11 @@
 ActionController::Routing::Routes.draw do |map|
 	map.root          :controller => :pages, :action => :index, :is_root => true, :conditions => {:method => :get}
-	map.pages         '', :controller => :pages, :action => :create, :conditions => {:method => :post}
+	map.resources     :pages, :only => [:new,:create]
 	map.resources     :posts, :controller => :pages, :except => [:index,:create,:new], :member_path => ':year/:month/:name', :member_path_requirements => {:year => /\d{4}/, :month => /\d{2}/} do |p|
 		p.resources   :comments, :only => [:index,:create,:new]
 	end
 	map.feed          'feed', :controller => :pages, :action => :index, :format => 'atom', :conditions => {:method => :get}
-	map.new_page      'new.:format', :controller => :pages, :action => :new, :conditions => {:method => :get}
-	map.resources     :users, :except => [:new,:create] do |u|
+	map.resources     :users, :except => [:new,:create,:edit] do |u|
 		u.resources   :comments, :only => :index
 		u.connect     'comments', :conditions => {:method => :delete}, :controller => :users, :action => 'delete_comments'
 	end
