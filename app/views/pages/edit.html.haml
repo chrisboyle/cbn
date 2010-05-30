@@ -11,9 +11,10 @@
 	.field
 		=f.label :title
 		=f.text_field :title
-	.field
-		=f.label :tag_list
-		=f.text_field :tag_list
+	-if @page.is_a? Post
+		.field
+			=f.label :tag_list
+			=f.text_field :tag_list
 	.field
 		.label
 			=f.label :body
