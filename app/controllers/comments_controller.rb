@@ -4,10 +4,10 @@ class CommentsController < ApplicationController
 	cache_sweeper :fragment_sweeper, :only => [:update,:destroy]
 
 	def index
-		@comments = Comment.visible_to(current_user).all(:order => 'updated_at DESC')
+		@comments = (@page ? @page.comments : Comment).visible_to(current_user).all(:order => 'updated_at DESC')
 
 		respond_to do |format|
-			format.html
+			format.html { redirect_to :controller => :pages, :action => :show, :anchor => 'comments' }
 			format.xml  { render :xml => @comments }
 		end
 	end
@@ -21,7 +21,7 @@ class CommentsController < ApplicationController
 
 	def new
 		respond_to do |format|
-			format.html { redirect_to :controller => :pages, :action => :show, :anchor => 'addcomment' }
+			format.html { redirect_to :controller => :pages, :action => :show, :anchor => 'add_comment' }
 			format.xml  { render :xml => @comment }
 		end
 	end
@@ -144,6 +144,7 @@ class CommentsController < ApplicationController
 	protected
 
 	def new_comment_from_params
+		params[:comment] ||= {}
 		params[:comment][:identity_id] ||= (current_user && current_user.identity_id)
 		@comment = Comment.new(params[:comment])
 		@comment.page = @page
