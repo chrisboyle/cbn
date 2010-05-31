@@ -10,31 +10,42 @@
 		-elsif @user.identities.count == 1
 			%dd= render :partial => @user.identities.first, :locals => {:plain=>true}
 		-else
+			%dd.fieldnote (choose default)
 			-@user.identities.each do |i|
 				%dd
 					=f.radio_button(:default_identity_id, i.id)
 					%label{:for => "user_default_identity_id_#{i.id}"}>= render :partial => i, :locals => {:plain=>true}
 		%dd
 			%button{:disabled=>true} Add
-			%span.fieldnote (not yet implemented)
-		%dt Email
-		%dd
-			=f.text_field :email
-			.fieldnote (for notifications, not yet implemented)
+			%span.fieldnote (not yet implemented, admin can do this manually)
 		-if has_role? :admin
 			%dt Permissions
 			%dd
 				-Role.all.each do |r|
 					%div
 						-box_id = "user_role_ids_#{r.id}"
-						=succeed label_tag(box_id,r.description) do
+						=succeed label_tag(box_id,[r.description].flatten.join(', ')) do
 							=check_box_tag 'user[role_ids][]', r.id, @user.roles.include?(r), :id => box_id
 		-elsif not @user.roles.empty?
 			%dt Permissions
 			%dd
 				%ul
-					-@user.roles.collect(&:description).each do |d|
+					-@user.roles.collect(&:description).flatten.each do |d|
 						%li= h d
+		%dt Email
+		%dd
+			=f.text_field :email
+			-if you and not permitted_to? :receive, :notifications
+				.notice I won't ask you to confirm the address, but no mail will be sent until I approve your account.
+			-[ |
+				[:mail_on_edit, 'when a post I commented on is edited'], |
+				[:mail_on_reply, 'when someone replies directly to one of my comments'], |
+				[:mail_on_thread, 'when someone replies anywhere in the thread under one of my comments'], |
+				[:mail_on_post, 'when there is a new post'], |
+					].each do |k,v| |
+				%div
+					=succeed f.label k, v do
+						=f.check_box k
 	=f.submit 'Save'
 
 #comments
@@ -43,7 +54,7 @@
 	=render 'comment_count', :object => comments
 	-if not comments.empty?
 		=render comments, :context => 'user'
-		=button_to 'Delete all comments', (url_for :action=>:destroy, :id => you ? 'current' : @user)+'/comments', :method => :delete, :confirm => "Really delete all your comments?"
+		#delete_all_comments= button_to 'Delete all comments', (url_for :action=>:destroy, :id => you ? 'current' : @user)+'/comments', :method => :delete, :confirm => "Really delete all your comments?"
 
 .dangerous
 	%h2 Delete account

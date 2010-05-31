@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
 	filter_resource_access :nested_in => :pages, :only => [:new,:create], :collection => []
 	filter_resource_access :except => [:new,:create]
 	cache_sweeper :fragment_sweeper, :only => [:update,:destroy]
-	before_filter :load_user
+	before_filter :load_user, :only => :index
 
 	def index
 		@comments = (@page ? @page.comments : @user ? @user.comments : Comment).visible_to(current_user).all(:order => 'updated_at DESC')
@@ -18,7 +18,7 @@ class CommentsController < ApplicationController
 
 	def show
 		respond_to do |format|
-			format.html { redirect_to url_for(@comment.page)+"#"+dom_id(@comment) }
+			format.html { redirect_to comment_frag_url(@comment) }
 			format.xml  { render :xml => @comment }
 		end
 	end
@@ -52,7 +52,7 @@ class CommentsController < ApplicationController
 					end
 				end
 			elsif @comment.save
-				#flash[:notice] = 'Comment was successfully created.'
+				notify_comment(@comment, comment_frag_url(@comment))
 				format.html { redirect_to @page }
 				format.js
 			else
@@ -91,6 +91,7 @@ class CommentsController < ApplicationController
 
 	def approve
 		set_approved(true)
+		notify_comment(@comment, comment_frag_url(@comment))
 	end
 
 	def trust
@@ -121,7 +122,7 @@ class CommentsController < ApplicationController
 			format.html { redirect_to @comment.page }
 			format.js do
 				render :update do |p|
-					if @comment.is_visible_to? current_user and not deleted
+					if @comment.is_visible_to? current_user and not deleted and not params[:context]
 						p.replace dom_id(@comment), :partial => @comment
 						p[@comment].visual_effect :highlight, :endcolor => '#bbeeff'
 					else
@@ -137,7 +138,11 @@ class CommentsController < ApplicationController
 						p.visual_effect :blind_up, tree, :afterFinish => p.literal("function(){$('#{tree}').remove()}")
 					end
 					if params[:context] == 'user'
-						p.replace 'comment_count', :partial => 'users/comment_count', :object => @comment.user.comments.visible_to(current_user)
+						remaining = @comment.user.comments.visible_to(current_user)
+						p.replace 'comment_count', :partial => 'users/comment_count', :object => remaining
+						if remaining.empty?
+							p['delete_all_comments'].remove
+						end
 					end
 				end
 			end
@@ -146,6 +151,10 @@ class CommentsController < ApplicationController
 	end
 
 	protected
+
+	def comment_frag_url(c)
+		return url_for(c.page)+'#'+dom_id(c)
+	end
 
 	def new_comment_from_params
 		params[:comment] ||= {}
@@ -171,6 +180,30 @@ class CommentsController < ApplicationController
 			end
 		ensure
 			Comment.record_timestamps = true
+		end
+	end
+
+	def notify_comment(c, u)
+		if c.approved
+			if c.parent
+				mailed = {}
+				if c.parent.user != c.user and c.parent.user.mail_on_reply
+					Mailer.deliver_reply(c, c.parent.user.email, u) if c.parent.user.mailable?
+					mailed[c.parent.user] = true
+				end
+				t = c.parent
+				while t do
+					if t.user != c.user and not mailed[t.user] and t.user.mail_on_thread
+						Mailer.deliver_reply(c, t.user.email, u) if t.user.mailable?
+						mailed[t.user] = true
+					end
+					t = t.parent
+				end
+			end
+		else
+			(Role.find_by_name('moderator').users.collect &:email).each do |e|
+				Mailer.deliver_moderator(c, e, u) unless e.blank?
+			end
 		end
 	end
 end

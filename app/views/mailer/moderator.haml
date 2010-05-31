@@ -1,0 +1,7 @@
+A comment on "#{@comment.page.title}" requires moderation at chris.boyle.name:
+=""
+-it = @comment.identity.icon_and_text
+\[#{it[0]}] #{it[1]} wrote:
+=@comment.body.gsub(/^/,'> ')
+=""
+=@link

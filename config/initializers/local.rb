@@ -1,5 +1,7 @@
 AUTHOR_NAME = SITE_NAME = 'Chris Boyle'
 BLOG_WORD = 'Blog'
+MAIL_FROM = 'blog@chris.boyle.name'
+BCC = 'blog@chris.boyle.name'
 
 TWITTER = YAML.load(File.read("#{RAILS_ROOT}/config/twitter.yml"))
 

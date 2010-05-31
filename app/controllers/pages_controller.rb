@@ -4,7 +4,7 @@ class PagesController < ApplicationController
 	cache_sweeper :tree_sweeper
 
 	def index
-		@pages = Post.all
+		@pages = Post.all(:order => 'created_at DESC')
 
 		respond_to do |format|
 			format.html # index.html.haml
@@ -32,6 +32,11 @@ class PagesController < ApplicationController
 	def create
 		respond_to do |format|
 			if @page.save
+				if @page.is_a? Post
+					(User.find_all_by_mail_on_post(true).collect &:email).each do |e|
+						Mailer.deliver_post(@page, e, url_for(@page)) if e
+					end
+				end
 				flash[:notice] = 'Page was successfully created.'
 				format.html { redirect_to(@page) }
 				format.xml  { render :xml => @page, :status => :created, :location => @page }
@@ -45,6 +50,11 @@ class PagesController < ApplicationController
 	def update
 		respond_to do |format|
 			if @page.update_attributes(params[@page.class.name.underscore])
+				if @page.is_a? Post
+					(@page.comments.collect &:user).uniq.each do |u|
+						Mailer.deliver_edit(@page, u.email, url_for(@page)) if u.mail_on_edit and u.mailable?
+					end
+				end
 				flash[:notice] = 'Page was successfully updated.'
 				format.html { redirect_to(@page) }
 				format.xml  { head :ok }

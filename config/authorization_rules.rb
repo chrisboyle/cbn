@@ -17,7 +17,7 @@ authorization do
 	role :commenter do
 		has_permission_on :comments, :to => :create, :join_by => :and do
 			if_permitted_to :read, :page
-			if_attribute :user => is { user }, :deleted => false, :parent_deleted => false, :approved => is { user.role_symbols.include? :known }
+			if_attribute :user => is { user }, :deleted => false, :parent_deleted => false, :approved => is { engine.permit? :skip_moderation, :context => :comments, :user => user }
 		end
 		has_permission_on :comments, :to => [:update,:delete], :join_by => :and do
 			if_permitted_to :read, :page
@@ -35,6 +35,8 @@ authorization do
 		end
 	end
 	role :known do
+		has_permission_on :comments, :to => :skip_moderation
+		has_permission_on :notifications, :to => :receive
 	end
 	role :moderator do
 		has_permission_on :comments, :to => :approve do

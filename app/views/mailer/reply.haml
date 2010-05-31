@@ -1,0 +1,7 @@
+There's a new reply to your comment on "#{@comment.page.title}" at chris.boyle.name:
+=""
+-it = @comment.identity.icon_and_text
+\[#{it[0]}] #{it[1]} wrote:
+=@comment.body.gsub(/^/,'> ')
+=""
+=@link

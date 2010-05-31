@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100529213529) do
+ActiveRecord::Schema.define(:version => 20100530212037) do
 
   create_table "comments", :force => true do |t|
     t.integer  "page_id"
@@ -101,9 +101,9 @@ ActiveRecord::Schema.define(:version => 20100529213529) do
 
   create_table "users", :force => true do |t|
     t.string   "email"
-    t.string   "persistence_token",                  :null => false
-    t.integer  "login_count",         :default => 0, :null => false
-    t.integer  "failed_login_count",  :default => 0, :null => false
+    t.string   "persistence_token",                      :null => false
+    t.integer  "login_count",         :default => 0,     :null => false
+    t.integer  "failed_login_count",  :default => 0,     :null => false
     t.datetime "last_request_at"
     t.datetime "current_login_at"
     t.datetime "last_login_at"
@@ -112,6 +112,10 @@ ActiveRecord::Schema.define(:version => 20100529213529) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "default_identity_id"
+    t.boolean  "mail_on_edit",        :default => true,  :null => false
+    t.boolean  "mail_on_reply",       :default => true,  :null => false
+    t.boolean  "mail_on_thread",      :default => false, :null => false
+    t.boolean  "mail_on_post",        :default => false, :null => false
   end
 
   create_table "users_roles", :force => true do |t|

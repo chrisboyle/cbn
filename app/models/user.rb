@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
 	has_many :identities
 	has_many :comments, :through => :identities
 	belongs_to :default_identity, :class_name => 'Identity'
-	attr_accessible :email
+	attr_accessible :email, :mail_on_edit, :mail_on_reply, :mail_on_thread, :mail_on_post
 
 	acts_as_authentic do |c|
 		c.openid_required_fields = ['fullname', 'http://schema.openid.net/namePerson', 'http://axschema.org/namePerson',
@@ -28,6 +28,10 @@ class User < ActiveRecord::Base
 
 	def login
 		email
+	end
+
+	def mailable?
+		not email.blank? and Authorization::Engine.instance.permit? :receive, :context => :notifications, :user => self
 	end
 
 	def identity_id

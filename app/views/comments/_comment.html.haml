@@ -21,4 +21,4 @@
 				-allowed.collect do |act|
 					-button_to_act act, comment, :context => context, :confirm => confirms[act]
 				-if context
-					=link_to 'Context', comment
+					=link_to 'Context', url_for(comment.page)+'#'+dom_id(comment)

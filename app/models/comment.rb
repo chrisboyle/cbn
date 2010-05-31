@@ -19,7 +19,7 @@ class Comment < ActiveRecord::Base
 	validates_presence_of :identity
 	validates_presence_of :page
 	validate do |c|
-		errors.add_to_base("Invalid parent comment") if c.parent and c.parent.page_id != c.page_id
+		errors.add_to_base("Invalid parent comment") if c.parent and (c.parent.page_id != c.page_id or c.parent_id == c.id)
 	end
 
 	def user

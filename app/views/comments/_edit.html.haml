@@ -6,7 +6,8 @@
 		=hidden_field_tag :context, params[:context] if params[:context]
 		=hidden_field_tag :_commit
 		-if not is_edit
-			%h3 Add a comment
+			-if not is_reply
+				%h3 Add a comment
 			-if @comment.approved
 				.notice Your comment will be public immediately.
 			-else
@@ -25,3 +26,5 @@
 				-if is_edit or is_reply
 					=f.submit 'Cancel', :onclick => 'this.form._commit.value="Cancel"'
 				%span.fieldnote (HTML and other markup will not work)
+		-if current_user.email.blank?
+			=link_to 'Set up email notifications', {:controller => :users, :action => :show, :id => 'current'}

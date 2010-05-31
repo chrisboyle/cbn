@@ -5,7 +5,7 @@ class Role < ActiveRecord::Base
 		{
 			'admin'     => 'Administrator',
 			'moderator' => 'Approve comments',
-			'known'     => 'Publish comments immediately',
+			'known'     => ['Publish comments immediately','Receive notification emails'],
 		}.fetch(name, name)
 	end
 end
