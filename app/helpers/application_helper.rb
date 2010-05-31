@@ -32,6 +32,10 @@ module ApplicationHelper
 			concat(content_tag :button, label, :type => :submit)
 		end
 	end
+
+	def tag_path(t)
+		acts_as_taggable_on_tag_path(t)
+	end
 end
 
 class Time

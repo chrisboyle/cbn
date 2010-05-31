@@ -1,5 +1,8 @@
 =titleh1 'Tags'
 
+-if @tags.empty?
+	.placeholder No tags yet
+
 %ul
 	-@tags.each do |t|
 		%li= link_to t.name, t
