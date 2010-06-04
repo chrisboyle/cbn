@@ -1,12 +1,11 @@
 -title(@page.title)
 =render @page
 
-.controls
+.controls.pagecontrols
 	-if permitted_to? :edit, @page
-		=link_to 'Edit', edit_page_path(@page)
-		|
+		=button_to 'Edit', edit_page_path(@page), :method => :get
 	-if permitted_to? :destroy, @page
-		=link_to 'Destroy', @page, :method => :delete, :confirm => "Are you sure?"
+		=button_to 'Delete', @page, :method => :delete, :confirm => "Are you sure?"
 
 -if @page.is_a? Post
 	#comments

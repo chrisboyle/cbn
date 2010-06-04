@@ -1,5 +1,9 @@
-.hentry[page]
-	%h2.entry-title= link_to_unless_current(page.title, page, :rel => 'bookmark')
+%div[page]{:class => (current_page? page) ? nil : 'hentry'}
+	-title = link_to_unless_current(page.title, page, :rel => 'bookmark')
+	-if current_page? page
+		%h1= title
+	-else
+		%h2.entry-title= title
 	-cache page do
 		-if page.is_a? Post
 			=render :partial => 'pages/times', :format => 'html', :object => page
