@@ -15,6 +15,7 @@ class UserSessionsController < ApplicationController
 		@user_session = UserSession.new(params[:user_session])
 		@user_session.save do |result|
 			if result
+				cookies[:secure_cookies_exist] = { :value => true, :httponly => true }
 				flash[:notice] = "Successfully signed in."
 				redirect_to session.delete(:next) || root_url
 			else
@@ -27,6 +28,7 @@ class UserSessionsController < ApplicationController
 		@user_session = UserSession.find
 		@user_session.destroy if @user_session
 		flash[:notice] = "Successfully signed out."
+		cookies.delete :secure_cookies_exist
 		redirect_to(params[:next] || :back)
 	end
 
@@ -38,6 +40,8 @@ class UserSessionsController < ApplicationController
 		end
 	end
 
+	protected
+
 	# Wrapper to record changes to sreg/ax data on second and subsequent logins
 	def authenticate_with_open_id(identifier = nil, options = {}, &block)
 		wrapped = lambda { |result, openid_identifier, registration|
@@ -47,5 +51,9 @@ class UserSessionsController < ApplicationController
 			@user_session.attempted_record.map_openid_registration(registration)
 		}
 		super(identifier, options, &wrapped)
+	end
+
+	def ssl_required?
+		true
 	end
 end

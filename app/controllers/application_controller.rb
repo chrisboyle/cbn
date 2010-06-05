@@ -3,6 +3,8 @@
 
 class ApplicationController < ActionController::Base
 	include ExceptionNotification::Notifiable
+	include SslRequirement
+
 	helper :all # include all helpers, all the time
 	helper_method :current_user
 	protect_from_forgery # See ActionController::RequestForgeryProtection for details
@@ -11,6 +13,10 @@ class ApplicationController < ActionController::Base
 	filter_parameter_logging :password, :fb_sig_friends
 
 	protected
+
+	def ssl_required?
+		cookies[:secure_cookies_exist] || super
+	end
 
 	def default_url_options(options = {})
 		if options[:year].is_a?(Post)

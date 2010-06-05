@@ -51,4 +51,10 @@ class UsersController < ApplicationController
 			format.xml  { head :ok }
 		end
 	end
+
+	protected
+
+	def ssl_required?
+		true
+	end
 end

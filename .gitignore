@@ -9,6 +9,7 @@ config/deploy.rb
 config/database.yml
 config/facebooker.yml
 config/twitter.yml
+config/initializers/session_store.rb
 .*.swp
 public/images/auto_sprite.png
 public/javascripts/all.js
