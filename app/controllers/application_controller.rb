@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
 	helper :all # include all helpers, all the time
 	helper_method :current_user
 	protect_from_forgery # See ActionController::RequestForgeryProtection for details
+	before_filter :canonicalise
 
 	# Scrub sensitive parameters from your log
 	filter_parameter_logging :password, :fb_sig_friends
@@ -97,6 +98,13 @@ class ApplicationController < ActionController::Base
 		else
 			permitted_to! :show, User.new  # can't even access yourself by id
 			@user = i ? User.find(i) : nil
+		end
+	end
+
+	def canonicalise
+		p = request.path.sub(/\/+\Z/, '').sub(/\.html\Z/,'')
+		if p != request.path and not p.blank?
+			redirect_to p, :status => 301
 		end
 	end
 
