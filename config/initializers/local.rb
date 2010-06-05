@@ -3,6 +3,7 @@ BLOG_WORD = 'Blog'
 MAIL_FROM = 'blog@chris.boyle.name'
 BCC = 'blog@chris.boyle.name'
 
+GOOGLE_ANALYTICS = YAML.load(File.read("#{RAILS_ROOT}/config/google_analytics.yml"))
 TWITTER = YAML.load(File.read("#{RAILS_ROOT}/config/twitter.yml"))
 
 require 'resource_hacks_hack'
