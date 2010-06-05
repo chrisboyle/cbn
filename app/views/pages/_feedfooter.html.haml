@@ -1,2 +1,3 @@
-%div{:style=>'font-size:80%'}
-	Comments preferred at #{link_to post_url(feedfooter), post_url(feedfooter)} using OpenID/Facebook/Twitter (comments elsewhere are unlikely to reach me).
+%p{:style=>'font-size:80%'}
+	-u = post_url(feedfooter, :secure => false, :host => request.host)
+	Comments preferred at #{link_to u, u} using OpenID/Facebook/Twitter (comments elsewhere are unlikely to reach me).

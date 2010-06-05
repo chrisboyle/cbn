@@ -8,4 +8,4 @@
 		-if page.is_a? Post
 			=render :partial => 'pages/times', :format => 'html', :object => page
 			.tags= render :partial => 'tags/tags', :object => page.tags
-		=render :partial => 'pages/body', :format => 'html', :object => page.body
+		.entry-content= render :partial => 'pages/body', :format => 'html', :object => page.body

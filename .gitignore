@@ -1,8 +1,8 @@
 db/*.sqlite3
 doc/api
 doc/app
-log/*.log
-tmp/**/*
+log
+tmp
 public/stylesheets/main.css
 Capfile
 config/deploy.rb
@@ -17,3 +17,5 @@ public/javascripts/all.js
 public/stylesheets/auto_sprite.css
 public/stylesheets/all.css
 public/download
+public/system
+REVISION
