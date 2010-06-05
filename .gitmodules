@@ -24,4 +24,4 @@
 	url = git://github.com/collectiveidea/awesome_nested_set.git
 [submodule "vendor/plugins/ssl_requirement"]
 	path = vendor/plugins/ssl_requirement
-	url = git://github.com/yardstick/ssl_requirement.git
+	url = git://github.com/chewi/ssl_requirement.git

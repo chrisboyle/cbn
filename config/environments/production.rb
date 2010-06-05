@@ -29,4 +29,7 @@ config.action_view.cache_template_loading            = true
 
 config.after_initialize do
 	ActionController::Base.session_options[:secure] = true
+
+	# Temporary while not yet launched
+	SslRequirement.ssl_ports = {'chris.boyle.name' => 4431 }
 end

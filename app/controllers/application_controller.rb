@@ -17,6 +17,9 @@ class ApplicationController < ActionController::Base
 	def ssl_required?
 		cookies[:secure_cookies_exist] || super
 	end
+	def ssl_allowed?
+		true
+	end
 
 	def default_url_options(options = {})
 		if options[:year].is_a?(Post)
