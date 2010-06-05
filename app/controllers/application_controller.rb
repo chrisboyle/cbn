@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
 		cookies[:secure_cookies_exist] || super
 	end
 	def ssl_allowed?
-		true
+		cookies[:secure_cookies_exist].blank?
 	end
 
 	def default_url_options(options = {})
