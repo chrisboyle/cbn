@@ -14,7 +14,8 @@
 		].each do |p| |
 		-if p[0]=='Facebook'
 			%button#fbbtn{:onclick=>login_button_action(*p), :disabled=>true, :title=>'Facebook requires Javascript'}>= login_button_content(p[0])
-			=update_page_tag {|p| p['fbbtn'].title='Loading Javascript from facebook.com...'}
+			:javascript
+				document.getElementById('fbbtn').title = 'Loading Javascript...';
 		-else
 			%button{:onclick => login_button_action(*p)}>= login_button_content(p[0])
 -s = @user_session || UserSession.new
@@ -30,5 +31,6 @@
 		=f.submit "Sign in", :disable_with => 'Signing in&hellip;'
 	=hidden_field_tag 'auth_using_fb'
 	=hidden_field_tag 'login_with_oauth'
-=fb_connect_javascript_tag
--init_fb_connect "XFBML" do concat update_page {|p| p['fbbtn'].title=nil; p['fbbtn'].disabled=false }; end
+=content_for :js do
+	=fb_connect_javascript_tag
+	-init_fb_connect "XFBML" do concat update_page {|p| p['fbbtn'].title=nil; p['fbbtn'].disabled=false }; end
