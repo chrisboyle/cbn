@@ -11,6 +11,9 @@ Rails::Initializer.run do |config|
 	# isn't, or chaos will result
 	config.load_once_paths += %W( #{RAILS_ROOT}/lib )
 
+	# Smaller JS/CSS
+	config.gem "smurf"
+
 	# Pretty code samples
 	config.gem "coderay"
 	config.gem "haml-coderay"
