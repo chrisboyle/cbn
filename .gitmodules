@@ -25,3 +25,6 @@
 [submodule "vendor/plugins/ssl_requirement"]
 	path = vendor/plugins/ssl_requirement
 	url = git://github.com/chewi/ssl_requirement.git
+[submodule "vendor/plugins/auto_sprite"]
+	path = vendor/plugins/auto_sprite
+	url = git://github.com/chrisboyle/auto_sprite.git

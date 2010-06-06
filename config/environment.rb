@@ -11,9 +11,6 @@ Rails::Initializer.run do |config|
 	# isn't, or chaos will result
 	config.load_once_paths += %W( #{RAILS_ROOT}/lib )
 
-	# Cause a lot fewer http requests
-	config.gem "auto_sprite"
-
 	# Pretty code samples
 	config.gem "coderay"
 	config.gem "haml-coderay"
