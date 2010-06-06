@@ -2,6 +2,9 @@ AUTHOR_NAME = SITE_NAME = 'Chris Boyle'
 BLOG_WORD = 'Blog'
 MAIL_FROM = 'blog@chris.boyle.name'
 BCC = 'blog@chris.boyle.name'
+if Rails.env.production?
+	ENV['HOSTNAME'] = 'chris.boyle.name'
+end
 
 GOOGLE_ANALYTICS = YAML.load(File.read("#{RAILS_ROOT}/config/google_analytics.yml"))
 TWITTER = YAML.load(File.read("#{RAILS_ROOT}/config/twitter.yml"))

@@ -103,7 +103,9 @@ class ApplicationController < ActionController::Base
 
 	def canonicalise
 		p = request.path.sub(/\/+\Z/, '').sub(/\.html\Z/,'')
-		if p != request.path and not p.blank?
+		if ENV['HOSTNAME'] and request.host != ENV['HOSTNAME']
+			redirect_to 'http%s://%s:%d%s' % [request.ssl? ? 's' : '', ENV['HOSTNAME'], request.port, p]
+		elsif p != request.path and not p.blank?
 			redirect_to p, :status => 301
 		end
 	end
