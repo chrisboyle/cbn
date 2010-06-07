@@ -1,4 +1,6 @@
 class UserSessionsController < ApplicationController
+	ssl_exceptions  # none (SSL for all actions)
+
 	def new
 		@user_session = UserSession.new
 	end
