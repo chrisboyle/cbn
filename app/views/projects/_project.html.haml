@@ -2,7 +2,7 @@
 -cache project.cache_key + (is_current ? '-c' : '') do
 	%div[project]{:class => is_current ? nil : 'hentry'}
 		%h2.entry-title= link_to_unless_current project.title, project
-		.timescale #{project.start and project.start.strftime('%B %Y') or "unknown"} - #{project.end and project.end.strftime('%B %Y') or "present"} (#{project.status})
+		.timescale #{project.start ? project.start.strftime('%B %Y') : 'unknown'} - #{project.end ? project.end.strftime('%B %Y') : 'present'} (#{project.status})
 		.tags= render :partial => 'tags/tags', :object => project.tags
 		-if project.vcs
 			.vcs= project.vcs

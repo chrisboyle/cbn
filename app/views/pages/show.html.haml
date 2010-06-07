@@ -5,7 +5,7 @@
 	-if permitted_to? :edit, @page
 		=button_to 'Edit', edit_page_path(@page), :method => :get
 	-if permitted_to? :destroy, @page
-		=button_to 'Delete', @page, :method => :delete, :confirm => "Are you sure?"
+		=button_to 'Delete', @page, :method => :delete, :confirm => "Really delete this page?"
 
 -if @page.is_a? Post
 	#comments
