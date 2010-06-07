@@ -1,6 +1,6 @@
 class FacebookUser
 	def self.find(first,opts={})
-		i = Identity.find_by_provider_and_identifier('facebook',opts[:conditions][:facebook_uid])
+		i = Identity.find_by_provider_and_identifier('facebook',opts[:conditions][:facebook_uid].to_s)
 		@@last_ident = i if i
 		i ? i.user : nil
 	end
