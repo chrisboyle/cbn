@@ -28,3 +28,6 @@
 [submodule "vendor/plugins/auto_sprite"]
 	path = vendor/plugins/auto_sprite
 	url = git://github.com/chrisboyle/auto_sprite.git
+[submodule "vendor/plugins/rails_xss"]
+	path = vendor/plugins/rails_xss
+	url = git://github.com/rails/rails_xss.git
