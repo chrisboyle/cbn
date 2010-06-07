@@ -32,5 +32,5 @@
 	=hidden_field_tag 'auth_using_fb'
 	=hidden_field_tag 'login_with_oauth'
 =content_for :js do
-	=fb_connect_javascript_tag
+	!=fb_connect_javascript_tag
 	-init_fb_connect "XFBML" do concat update_page {|p| p['fbbtn'].title=nil; p['fbbtn'].disabled=false }; end

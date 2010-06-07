@@ -16,10 +16,13 @@ class ApplicationController < ActionController::Base
 	protected
 
 	def ssl_required?
-		cookies[:secure_cookies_exist] || super
+		cookies[:secure_cookies_exist] || controller_name=='user_sessions' || super
 	end
+
+	# N.B. This is whether SSL is optional, so must return *false* to force SSL
 	def ssl_allowed?
-		cookies[:secure_cookies_exist].blank?
+		debugger
+		cookies[:secure_cookies_exist].blank? && controller_name!='user_sessions'
 	end
 
 	def default_url_options(options = {})
