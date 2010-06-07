@@ -111,7 +111,7 @@ class User < ActiveRecord::Base
 	end
 
 	def build_facebook_user(opts={})
-		i = Identity.find_or_create_by_provider_and_identifier('facebook', opts[:facebook_uid]) do |i|
+		i = Identity.find_or_create_by_provider_and_identifier('facebook', opts[:facebook_uid].to_s) do |i|
 			i.secret = opts[:facebook_session_key]
 		end
 		self.identities << i
