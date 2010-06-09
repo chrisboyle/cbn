@@ -13,6 +13,7 @@ require 'resource_hacks_hack'
 require 'authlogic_oauth_hacks'
 require 'authlogic_secure_cookies'
 require 'openid_force_ui_ext_hack'
+require 'session_silent_read'
 
 Haml::Template.options[:attr_wrapper] = '"'
 Haml::Filters::CodeRay.encoder_options[:line_numbers] = :inline

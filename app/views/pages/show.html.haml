@@ -16,11 +16,15 @@
 	-if permitted_to? :create, @comment
 		=render 'comments/edit'
 
-	-elsif not current_user
+	-elsif current_user
+		#new_comment
+			.placeholder You can't add a comment on this post.
+
+	-elsif request.ssl?
 		#new_comment
 			%h3 Add a comment using&hellip;
 			=render :partial => 'user_sessions/new'
 
 	-else
 		#new_comment
-			.placeholder You can't add a comment on this post.
+			=link_to 'Add a comment', new_post_comment_path

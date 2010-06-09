@@ -21,7 +21,6 @@ class ApplicationController < ActionController::Base
 
 	# N.B. This is whether SSL is optional, so must return *false* to force SSL
 	def ssl_allowed?
-		debugger
 		cookies[:secure_cookies_exist].blank? && controller_name!='user_sessions'
 	end
 
@@ -85,7 +84,7 @@ class ApplicationController < ActionController::Base
 		else
 			session.delete(:next)
 		end
-		login_page = url_for :controller => :user_sessions, :action => :new
+		login_page = url_for :controller => :user_sessions, :action => :new, :secure => true, :host => request.host
 		respond_to do |format|
 			format.html { redirect_to login_page }
 			format.js { render(:update) {|p| p.redirect_to login_page }}

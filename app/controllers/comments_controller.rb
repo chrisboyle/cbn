@@ -161,7 +161,7 @@ class CommentsController < ApplicationController
 		params[:comment][:identity_id] ||= (current_user && current_user.identity_id)
 		@comment = Comment.new(params[:comment])
 		@comment.page = @page
-		@comment.approved = current_user.role_symbols.include? :known
+		@comment.approved = current_user && current_user.role_symbols.include?(:known)
 	end
 
 	def set_approved(a)
