@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
 	helper_method :current_user
 	protect_from_forgery # See ActionController::RequestForgeryProtection for details
 	before_filter :canonicalise
+	after_filter :x_ua_compatible
 
 	# Scrub sensitive parameters from your log
 	filter_parameter_logging :password, :fb_sig_friends
@@ -110,6 +111,10 @@ class ApplicationController < ActionController::Base
 		elsif p != request.path and not p.blank?
 			redirect_to p, :status => 301
 		end
+	end
+
+	def x_ua_compatible
+		response.headers['X-UA-Compatible'] = 'IE=edge'
 	end
 
 	private
