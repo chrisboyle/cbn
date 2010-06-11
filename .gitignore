@@ -1,8 +1,7 @@
+.bundle
 db/*.sqlite3
-doc/api
-doc/app
-log
-tmp
+log/*.log
+tmp/**/*
 public/stylesheets/main.css
 Capfile
 config/deploy.rb

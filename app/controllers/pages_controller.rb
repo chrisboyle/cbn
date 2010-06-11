@@ -34,7 +34,7 @@ class PagesController < ApplicationController
 			if @page.save
 				if @page.is_a? Post
 					(User.find_all_by_mail_on_post(true).collect &:email).each do |e|
-						Mailer.deliver_post(@page, e, url_for(@page)) if e
+						Mailer.post(@page, e, url_for(@page)).deliver if e
 					end
 				end
 				flash[:notice] = 'Page was successfully created.'
@@ -52,7 +52,7 @@ class PagesController < ApplicationController
 			if @page.update_attributes(params[@page.class.name.underscore])
 				if @page.is_a? Post
 					(@page.comments.collect &:user).uniq.each do |u|
-						Mailer.deliver_edit(@page, u.email, url_for(@page)) if u.mail_on_edit and u.mailable?
+						Mailer.edit(@page, u.email, url_for(@page)).deliver if u.mail_on_edit and u.mailable?
 					end
 				end
 				flash[:notice] = 'Page was successfully updated.'

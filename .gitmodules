@@ -12,7 +12,7 @@
 	url = git://github.com/logankoester/authlogic_oauth.git
 [submodule "vendor/plugins/exception_notification"]
 	path = vendor/plugins/exception_notification
-	url = git://github.com/chrisboyle/exception_notification.git
+	url = git://github.com/rails/exception_notification
 [submodule "vendor/plugins/declarative_authorization"]
 	path = vendor/plugins/declarative_authorization
 	url = git://github.com/stffn/declarative_authorization.git
@@ -24,7 +24,7 @@
 	url = git://github.com/collectiveidea/awesome_nested_set.git
 [submodule "vendor/plugins/ssl_requirement"]
 	path = vendor/plugins/ssl_requirement
-	url = git://github.com/chewi/ssl_requirement.git
+	url = git://github.com/bartt/ssl_requirement
 [submodule "vendor/plugins/auto_sprite"]
 	path = vendor/plugins/auto_sprite
 	url = git://github.com/chrisboyle/auto_sprite.git

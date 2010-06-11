@@ -1,10 +1,9 @@
 -icon, text = *identity.icon_and_text
--imgpath = "/images/sprites/user_#{icon}.png"
 -plain ||= false
 -no_link, no_profile = (plain or not identity.url), (plain or not identity.profile_url)
 %span.identity<
 	=succeed link_to_unless no_link, text, identity.url, {:rel => 'nofollow'} do
-		-if FileTest.exists?("#{RAILS_ROOT}/public#{imgpath}")
-			=link_to_unless no_profile, image_tag(imgpath), identity.profile_url, {:rel => 'nofollow'}
+		-if Rails.root.join(Rails.public_path,'images','sprites',"user_#{icon}.png").exist?
+			=link_to_unless no_profile, image_tag("/images/sprites/user_#{icon}.png"), identity.profile_url, {:rel => 'nofollow'}
 -if has_role? :admin and identity.user and identity.user != current_user and not current_page? :controller => :users, :action => :index
 	=link_to "(edit)", identity.user

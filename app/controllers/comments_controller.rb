@@ -188,13 +188,13 @@ class CommentsController < ApplicationController
 			if c.parent
 				mailed = {}
 				if c.parent.user != c.user and c.parent.user.mail_on_reply
-					Mailer.deliver_reply(c, c.parent.user.email, u) if c.parent.user.mailable?
+					Mailer.reply(c, c.parent.user.email, u).deliver if c.parent.user.mailable?
 					mailed[c.parent.user] = true
 				end
 				t = c.parent
 				while t do
 					if t.user != c.user and not mailed[t.user] and t.user.mail_on_thread
-						Mailer.deliver_reply(c, t.user.email, u) if t.user.mailable?
+						Mailer.reply(c, t.user.email, u).deliver if t.user.mailable?
 						mailed[t.user] = true
 					end
 					t = t.parent
@@ -202,7 +202,7 @@ class CommentsController < ApplicationController
 			end
 		else
 			(Role.find_by_name('moderator').users.collect &:email).each do |e|
-				Mailer.deliver_moderator(c, e, u) unless e.blank?
+				Mailer.moderator(c, e, u).deliver unless e.blank?
 			end
 		end
 	end

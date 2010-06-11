@@ -5,7 +5,7 @@ class Page < ActiveRecord::Base
 		begin
 			contr = PagesController.new()
 			contr.response = ActionController::Response.new()
-			scope = ActionView::Base.new(["#{RAILS_ROOT}/app/views/pages","#{RAILS_ROOT}/app/views"], {}, contr)
+			scope = ActionView::Base.new([Rails.root.join(%w(app views pages)), Rails.root.join(%w(app views))], {}, contr)
 			scope.template_format = 'html'
 			Haml::Engine.new(value, :format => :html5).render(scope)
 		rescue Exception => e

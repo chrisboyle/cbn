@@ -2,17 +2,14 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-	include ExceptionNotification::Notifiable
 	include SslRequirement
 
+	layout 'application'
 	helper :all # include all helpers, all the time
 	helper_method :current_user
 	protect_from_forgery # See ActionController::RequestForgeryProtection for details
 	before_filter :canonicalise
 	after_filter :x_ua_compatible
-
-	# Scrub sensitive parameters from your log
-	filter_parameter_logging :password, :fb_sig_friends
 
 	protected
 
@@ -55,7 +52,7 @@ class ApplicationController < ActionController::Base
 		case e
 		when ActiveRecord::RecordNotFound, ActionController::RoutingError
 			b = File.basename(request.request_uri)
-			if not b.include? '/' and FileTest.exists?("#{RAILS_ROOT}/public/download/#{b}")
+			if not b.include? '/' and Rails.root.join(Rails.public_path,'download',b).exist?
 				redirect_to "/download/#{b}", :status => :moved_permanently
 			else
 				super(e)
@@ -89,7 +86,7 @@ class ApplicationController < ActionController::Base
 		respond_to do |format|
 			format.html { redirect_to login_page }
 			format.js { render(:update) {|p| p.redirect_to login_page }}
-			format.all { render :file => "#{RAILS_ROOT}/public/403.html", :status => '403 Forbidden' }
+			format.all { render :file => Rails.root.join(Rails.public_path,'403.html'), :status => '403 Forbidden' }
 		end
 		no_cache
 	end

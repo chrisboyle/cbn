@@ -1,4 +1,5 @@
 AUTHOR_NAME = SITE_NAME = 'Chris Boyle'
+EMAIL_SITE_NAME = 'chris.boyle.name'
 BLOG_WORD = 'Blog'
 MAIL_FROM = 'blog@chris.boyle.name'
 BCC = 'blog@chris.boyle.name'
@@ -32,7 +33,5 @@ require 'session_silent_read'
 Haml::Template.options[:attr_wrapper] = '"'
 Haml::Filters::CodeRay.encoder_options[:line_numbers] = :inline
 ActionMailer::Base.delivery_method = :sendmail
-ExceptionNotification::Notifier.exception_recipients = %w(chris@boyle.name)
-ExceptionNotification::Notifier.sender_address = "\"Rails exception\" <rails-exception@chris.boyle.name>"
 OpenIdAuthentication.store = OpenIdAuthentication::DbStore.new
 OpenID.fetcher.ca_file = "/etc/ssl/certs/ca-certificates.crt"

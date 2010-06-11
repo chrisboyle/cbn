@@ -1,35 +1,32 @@
 class Mailer < ActionMailer::Base
 	include ActionView::Helpers::TextHelper
+	default :from => MAIL_FROM, :bcc => BCC
 
 	def reply(comment, to, link)
-		from MAIL_FROM
-		bcc BCC
-		recipients to
-		subject "New comment on chris.boyle.name: #{truncate(comment.body.gsub(/\n+/,'  '), :length => 40)}"
-		body :comment => comment, :link => link
+		@comment = comment
+		@link = link
+		mail(:to => to,
+			 :subject => "New comment on #{EMAIL_SITE_NAME}: #{truncate(comment.body.gsub(/\n+/,'  '), :length => 40)}")
 	end
 
 	def moderator(comment, to, link)
-		from MAIL_FROM
-		#bcc BCC
-		recipients to
-		subject "Moderation required on chris.boyle.name: #{truncate(comment.body.gsub(/\n+/,'  '), :length => 40)}"
-		body :comment => comment, :link => link
+		@comment = comment
+		@link = link
+		mail(:to => to, :bcc => nil,
+			:subject => "Moderation required on #{EMAIL_SITE_NAME}: #{truncate(comment.body.gsub(/\n+/,'  '), :length => 40)}")
 	end
 
 	def post(post, to, link)
-		from MAIL_FROM
-		bcc BCC
-		recipients to
-		subject "New post on chris.boyle.name: #{post.title}"
-		body :post => post, :link => link
+		@post = post
+		@link = link
+		mail(:to => to,
+			:subject => "New post on #{EMAIL_SITE_NAME}: #{post.title}")
 	end
 
 	def edit(post, to, link)
-		from MAIL_FROM
-		bcc BCC
-		recipients to
-		subject "Changes to a post on chris.boyle.name: #{post.title}"
-		body :post => post, :link => link
+		@post = post
+		@link = link
+		mail(:to => to,
+			:subject => "Changes to a post on #{EMAIL_SITE_NAME}: #{post.title}")
 	end
 end

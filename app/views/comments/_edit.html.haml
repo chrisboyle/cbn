@@ -1,7 +1,7 @@
 -is_edit = @comment.id
 -is_reply = @comment.parent and not is_edit
 %div{:id => is_edit ? dom_id(@comment) : is_reply ? "reply_to_#{dom_id(@comment.parent)}" : "new_comment"}
-	-remote_form_for [@page, @comment], :html => {:id => nil} do |f|
+	-form_for [@page, @comment], :html => {:id => nil}, :remote => true do |f|
 		=f.hidden_field :parent_id if is_reply
 		=hidden_field_tag :context, params[:context] if params[:context]
 		=hidden_field_tag :_commit

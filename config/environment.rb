@@ -1,29 +1,5 @@
-# Be sure to restart your server when you modify this file
+# Load the rails application
+require File.expand_path('../application', __FILE__)
 
-# Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.3.8' unless defined? RAILS_GEM_VERSION
-
-# Bootstrap the Rails environment, frameworks, and default configuration
-require File.join(File.dirname(__FILE__), 'boot')
-
-Rails::Initializer.run do |config|
-	# The OpenID DbStore classes should not be reloaded when vendor/plugins
-	# isn't, or chaos will result
-	config.load_once_paths += %W( #{RAILS_ROOT}/lib )
-
-	# Smaller JS/CSS
-	config.gem "smurf"
-
-	# Pretty code samples
-	config.gem "coderay"
-	config.gem "haml-coderay"
-
-	# Authentication
-	config.gem "authlogic"
-	config.gem "ruby-openid", :lib => "openid"
-	# (also vendor/plugins/open_id_authentication)
-	config.gem "facebooker"
-	config.gem "oauth"
-
-	config.time_zone = 'London'
-end
+# Initialize the rails application
+Cbn::Application.initialize!

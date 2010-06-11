@@ -1,18 +1,25 @@
-ActionController::Routing::Routes.draw do |map|
-	map.root          :controller => :pages, :action => :index, :is_root => true, :conditions => {:method => :get}
-	map.resources     :pages, :only => [:new,:create]
-	map.resources     :posts, :controller => :pages, :except => [:index,:create,:new], :member_path => ':year/:month/:name', :member_path_requirements => {:year => /\d{4}/, :month => /\d{2}/} do |p|
-		p.resources   :comments, :only => [:index,:create,:new]
+Cbn::Application.routes.draw do |map|
+	root :to => 'pages#index', :via => :get, :is_root => true
+	resources :pages, :only => [:new,:create]
+	resources :posts, :controller => :pages, :except => [:index,:create,:new], :member_path => ':year/:month/:name', :member_path_requirements => {:year => /\d{4}/, :month => /\d{2}/} do
+		resources :comments, :only => [:index,:create,:new]
 	end
-	map.feed          'feed', :controller => :pages, :action => :index, :format => 'atom', :conditions => {:method => :get}
-	map.resources     :users, :except => [:new,:create,:edit] do |u|
-		u.resources   :comments, :only => :index
-		u.connect     'comments', :conditions => {:method => :delete}, :controller => :users, :action => 'delete_comments'
+	get '/feed' => 'pages#index', :format => 'atom'
+	resources :users, :except => [:new,:create,:edit] do
+		resources :comments, :only => :index
+		resources :comments, :only => :delete, :controller => :users, :action => :delete_comments
 	end
-	map.resource      :user_sessions, :as => 'session', :except => [:edit,:update]
-	map.connect       'logout', :controller => :user_sessions, :action => :destroy
-	map.resources     :comments, :except => [:new,:create], :member => {:reply => :get, :approve => :post, :trust => :post, :disapprove => :post}
-	map.resources     :projects
-	map.resources     :acts_as_taggable_on_tags, :as => :tags, :only => [:index,:show], :controller => :tags
-	map.resources     :static_pages, :controller => :pages, :except => [:index,:create,:new], :member_path => ':name'
+	resource :session, :as => :user_session, :controller => :user_sessions, :except => [:edit,:update]
+	match '/logout' => 'user_sessions#destroy'
+	resources :comments, :except => [:new,:create] do
+		member do
+			get :reply
+			post :approve
+			post :trust
+			post :disapprove
+		end
+	end
+	resources :projects
+	resources :acts_as_taggable_on_tags, :as => :tags, :only => [:index,:show], :controller => :tags
+	resources :static_pages, :controller => :pages, :except => [:index,:create,:new], :member_path => ':name'
 end
