@@ -5,6 +5,20 @@ BCC = 'blog@chris.boyle.name'
 if Rails.env.production?
 	ENV['HOSTNAME'] = 'chris.boyle.name'
 end
+LOGIN_BUTTONS = [
+	['AOL','https://www.aol.com/'],
+	['Blogger','http://username.blogspot.com/'],
+	['Dreamwidth','http://username.dreamwidth.org/'],
+	['Facebook',nil],
+	['Flickr','http://flickr.com/username/'],
+	['Google','https://www.google.com/accounts/o8/id'],
+	['Insanejournal','http://username.insanejournal.com/'],
+	['Livejournal','http://username.livejournal.com/'],
+	['Wordpress','http://username.wordpress.com/'],
+	['Twitter',nil],
+	['Yahoo','https://www.yahoo.com/'],
+]
+
 
 GOOGLE_ANALYTICS = YAML.load(File.read("#{RAILS_ROOT}/config/google_analytics.yml"))
 TWITTER = YAML.load(File.read("#{RAILS_ROOT}/config/twitter.yml"))

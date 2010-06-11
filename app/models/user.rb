@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
 	end
 
 	def mailable?
-		not email.blank? and Authorization::Engine.instance.permit? :receive, :context => :notifications, :user => self
+		email.present? and Authorization::Engine.instance.permit? :receive, :context => :notifications, :user => self
 	end
 
 	def identity_id
@@ -95,12 +95,12 @@ class User < ActiveRecord::Base
 		if @@last_openid_ident
 			name = r['http://schema.openid.net/namePerson'] || r['http://axschema.org/namePerson'] || r['fullname']
 			name = name.to_s if name
-			if not name or name.blank?
+			if name.blank?
 				first = r['http://schema.openid.net/namePerson/first'] || r['http://axschema.org/namePerson/first'] || r['firstname']
 				last  = r['http://schema.openid.net/namePerson/last' ] || r['http://axschema.org/namePerson/last' ] || r['lastname']
 				name  = [first,last].find_all{|e| e }.join(' ')
 			end
-			if name and not name.blank?
+			if name.present?
 				@@last_openid_ident.name = name
 				@@last_openid_ident.display_name = name
 				@@last_openid_ident.save

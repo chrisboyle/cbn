@@ -12,14 +12,28 @@ class UserSessionsController < ApplicationController
 			end
 		end
 		session[:next] = params[:next] if params[:next]
+		login_with = params.keys.find{|x| x[0..10]=='login_with_'}
+		login_with = login_with[11..-1] if login_with
 		@user_session = UserSession.new(params[:user_session])
+		if login_with and not %w(facebook oauth).include? login_with
+			# An OpenID button was clicked without JS
+			site, url = LOGIN_BUTTONS.find {|x| x[0].downcase == login_with }
+			if url
+				@user_session.openid_identifier = url
+				if /username/.match url
+					@username_prompt = true
+					render 'new'
+					return
+				end
+			end
+		end
 		@user_session.save do |result|
 			if result
 				cookies[:secure_cookies_exist] = { :value => true, :httponly => true }
 				flash[:notice] = "Successfully signed in."
 				redirect_to session.delete(:next) || root_url
 			else
-				render :action => 'new'
+				render 'new'
 			end
 		end
 	end

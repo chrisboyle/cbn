@@ -2,7 +2,7 @@ class UserSession < Authlogic::Session::Base
 	auto_register
 	# Don't spam the DB
 	last_request_at_threshold 1.minute
-	facebook_auth_if :auth_using_fb
+	facebook_auth_if :login_with_facebook?
 	find_by_oauth_method :get_twitter_user_find_or_create
 	facebook_user_class FacebookUser
 
@@ -14,7 +14,7 @@ class UserSession < Authlogic::Session::Base
 
 	private
 
-	def auth_using_fb
-		controller.params[:auth_using_fb].present?
+	def login_with_facebook?
+		controller.params[:login_with_facebook].present?
 	end
 end

@@ -108,7 +108,7 @@ class ApplicationController < ActionController::Base
 		p = request.path.sub(/\/+\Z/, '').sub(/\.html\Z/,'')
 		if ENV['HOSTNAME'] and request.host != ENV['HOSTNAME']
 			redirect_to 'http%s://%s:%d%s' % [request.ssl? ? 's' : '', ENV['HOSTNAME'], request.port, p]
-		elsif p != request.path and not p.blank?
+		elsif p.present? && p != request.path
 			redirect_to p, :status => 301
 		end
 	end
