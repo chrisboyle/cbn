@@ -1,5 +1,5 @@
 class TreeSweeper < ActionController::Caching::Sweeper
-	observe Page, Post, StaticPage, Project, ActsAsTaggableOn::Tag
+	observe Post, StaticPage, Project, ActsAsTaggableOn::Tag
 
 	def after_save(record)
 		expire_fragment 'tree'

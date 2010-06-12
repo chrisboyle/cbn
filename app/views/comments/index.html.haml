@@ -1,2 +1,5 @@
 =titleh1 'Recent comments'
-=render @comments, :context => 'recent'
+-if @comments.empty?
+	.placeholder No comments yet
+-else
+	=render @comments, :context => 'recent'

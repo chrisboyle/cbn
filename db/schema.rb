@@ -9,10 +9,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100530212037) do
+ActiveRecord::Schema.define(:version => 20100612143723) do
 
   create_table "comments", :force => true do |t|
-    t.integer  "page_id"
+    t.integer  "post_id"
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -54,13 +54,12 @@ ActiveRecord::Schema.define(:version => 20100530212037) do
     t.string  "salt",       :null => false
   end
 
-  create_table "pages", :force => true do |t|
-    t.string   "title"
-    t.text     "body"
+  create_table "posts", :force => true do |t|
+    t.string   "name",       :null => false
+    t.string   "title",      :null => false
+    t.text     "body",       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name"
-    t.string   "type"
   end
 
   create_table "projects", :force => true do |t|
@@ -78,6 +77,14 @@ ActiveRecord::Schema.define(:version => 20100530212037) do
 
   create_table "roles", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "static_pages", :force => true do |t|
+    t.string   "name",       :null => false
+    t.string   "title",      :null => false
+    t.text     "body",       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

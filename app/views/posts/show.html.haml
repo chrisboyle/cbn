@@ -1,0 +1,29 @@
+-title(@post.title)
+=render @post
+
+.controls.pagecontrols
+	-if permitted_to? :edit, @post
+		=button_to 'Edit', edit_post_path(@post), :method => :get
+	-if permitted_to? :destroy, @post
+		=button_to 'Delete', @post, :method => :delete, :confirm => "Really delete this post?"
+
+#comments
+	=render :partial => 'comments/comment_and_replies', :collection => @post.comments.roots(:order => :created_at).select {|c| c.is_visible_to? current_user}
+
+%hr/
+-@comment = @post.comment_from(current_user)
+-if permitted_to? :create, @comment
+	=render 'comments/edit'
+
+-elsif current_user
+	#new_comment
+		.placeholder You can't add a comment on this post.
+
+-elsif request.ssl?
+	#new_comment
+		%h3 Add a comment using&hellip;
+		=render :partial => 'user_sessions/new'
+
+-else
+	#new_comment
+		=link_to 'Add a comment', new_post_comment_path

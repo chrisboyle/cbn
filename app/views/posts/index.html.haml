@@ -1,0 +1,14 @@
+.hfeed
+	-if params[:is_root]
+		=render 'common/rootbanner'
+	-else
+		%h1 Listing posts
+
+	.entries
+		-if @posts.empty?
+			.placeholder No posts yet
+		-else
+			=render @posts
+
+	-if permitted_to? :create, Post.new
+		=button_to 'New post', new_post_path, :method => :get

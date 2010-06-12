@@ -1,15 +1,15 @@
 class CommentsController < ApplicationController
-	filter_resource_access :nested_in => :pages, :only => [:new,:create], :collection => []
+	filter_resource_access :nested_in => :posts, :only => [:new,:create], :collection => []
 	filter_resource_access :except => [:new,:create]
 	cache_sweeper :fragment_sweeper, :only => [:update,:destroy]
 
 	def index
 		load_user if params[:user_id]
-		@comments = (@page ? @page.comments : @user ? @user.comments : Comment).visible_to(current_user).all(:order => 'updated_at DESC')
+		@comments = (@post ? @post.comments : @user ? @user.comments : Comment).visible_to(current_user).all(:order => 'updated_at DESC')
 
 		respond_to do |format|
 			format.html do
-				redirect_to :controller => :pages, :action => :show, :anchor => 'comments' if @page
+				redirect_to :controller => :posts, :action => :show, :anchor => 'comments' if @post
 				redirect_to :controller => :users, :action => :show, :id => (@user == current_user ? 'current' : @user.id), :anchor => 'comments' if @user
 			end
 			format.xml  { render :xml => @comments }
@@ -25,15 +25,15 @@ class CommentsController < ApplicationController
 
 	def new
 		respond_to do |format|
-			format.html { redirect_to :controller => :pages, :action => :show, :anchor => 'new_comment' }
+			format.html { redirect_to :controller => :posts, :action => :show, :anchor => 'new_comment' }
 			format.xml  { render :xml => @comment }
 		end
 	end
 
 	def reply
-		@page = @comment.page
+		@post = @comment.post
 		p = @comment
-		@comment = @page.comment_from(current_user)
+		@comment = @post.comment_from(current_user)
 		@comment.parent = p
 		no_cache
 	end
@@ -42,7 +42,7 @@ class CommentsController < ApplicationController
 		if not @comment.identity then raise "Anonymous comments are not allowed" end
 		respond_to do |format|
 			if (params[:_commit] || params[:commit]) == 'Cancel'
-				format.html { redirect_to @comment.page }
+				format.html { redirect_to @comment.post }
 				format.js do
 					if @comment.parent
 						t = "reply_to_#{dom_id(@comment.parent)}"
@@ -53,10 +53,10 @@ class CommentsController < ApplicationController
 				end
 			elsif @comment.save
 				notify_comment(@comment, comment_frag_url(@comment))
-				format.html { redirect_to @page }
+				format.html { redirect_to @post }
 				format.js
 			else
-				format.html { render :controller => :pages, :action => :show }
+				format.html { render :controller => :posts, :action => :show }
 				format.js { render(:update) { |p| p.replace( (@comment.parent_id ? "reply_to_#{dom_id(@comment.parent)}" : :new_comment), :partial => 'comments/edit') }}
 			end
 		end
@@ -119,7 +119,7 @@ class CommentsController < ApplicationController
 		end
 
 		respond_to do |format|
-			format.html { redirect_to @comment.page }
+			format.html { redirect_to @comment.post }
 			format.js do
 				render :update do |p|
 					if @comment.is_visible_to? current_user and not deleted and not params[:context]
@@ -153,14 +153,14 @@ class CommentsController < ApplicationController
 	protected
 
 	def comment_frag_url(c)
-		return url_for(c.page)+'#'+dom_id(c)
+		return url_for(c.post)+'#'+dom_id(c)
 	end
 
 	def new_comment_from_params
 		params[:comment] ||= {}
 		params[:comment][:identity_id] ||= (current_user && current_user.identity_id)
 		@comment = Comment.new(params[:comment])
-		@comment.page = @page
+		@comment.post = @post
 		@comment.approved = current_user && current_user.role_symbols.include?(:known)
 	end
 

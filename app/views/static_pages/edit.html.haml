@@ -1,0 +1,17 @@
+=titleh1 (@static_page.id ? "Editing page" : "New page")
+
+-form_for @static_page do |f|
+	=f.error_messages
+
+	.field
+		=f.label :name
+		=f.text_field :name
+
+	.field
+		=f.label :title
+		=f.text_field :title
+	.field
+		.label
+			=f.label :body
+		~f.text_area :body, :onkeydown => 'checkTab(this,event)'
+	.submit= f.submit(@static_page.id ? 'Update' : 'Create')

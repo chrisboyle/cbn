@@ -1,0 +1,72 @@
+class PostsController < ApplicationController
+	filter_resource_access
+	cache_sweeper :fragment_sweeper, :only => [:update,:destroy]
+	cache_sweeper :tree_sweeper
+
+	def index
+		@posts = Post.all(:order => 'created_at DESC')
+
+		respond_to do |format|
+			format.html # index.html.haml
+			format.xml  { render :xml => @posts }
+			format.json { render :json => @posts }
+			format.atom
+		end
+	end
+
+	def show
+		respond_to do |format|
+			format.html
+			format.xml  { render :xml => @post }
+			format.json { render :json => @post }
+		end
+	end
+
+	def new
+		respond_to do |format|
+			format.html { render :edit  }
+			format.xml  { render :xml => @post }
+		end
+	end
+
+	def create
+		respond_to do |format|
+			if @post.save
+				(User.find_all_by_mail_on_post(true).collect &:email).each do |e|
+					Mailer.deliver_post(@post, e, url_for(@post)) if e
+				end
+				flash[:notice] = 'Page was successfully created.'
+				format.html { redirect_to(@post) }
+				format.xml  { render :xml => @post, :status => :created, :location => @post }
+			else
+				format.html { render :action => :edit }
+				format.xml  { render :xml => @post.errors, :status => :unprocessable_entity }
+			end
+		end
+	end
+
+	def update
+		respond_to do |format|
+			if @post.update_attributes(params[@post.class.name.underscore])
+				(@post.comments.collect &:user).uniq.each do |u|
+					Mailer.deliver_edit(@post, u.email, url_for(@post)) if u.mail_on_edit and u.mailable?
+				end
+				flash[:notice] = 'Page was successfully updated.'
+				format.html { redirect_to(@post) }
+				format.xml  { head :ok }
+			else
+				format.html { render :action => :edit }
+				format.xml  { render :xml => @post.errors, :status => :unprocessable_entity }
+			end
+		end
+	end
+
+	def destroy
+		@post.destroy
+
+		respond_to do |format|
+			format.html { redirect_to root_url }
+			format.xml  { head :ok }
+		end
+	end
+end

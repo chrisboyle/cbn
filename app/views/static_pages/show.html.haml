@@ -1,0 +1,8 @@
+-title(@static_page.title)
+=render @static_page
+
+.controls.pagecontrols
+	-if permitted_to? :edit, @static_page
+		=button_to 'Edit', edit_static_page_path(@static_page), :method => :get
+	-if permitted_to? :destroy, @static_page
+		=button_to 'Delete', @static_page, :method => :delete, :confirm => "Really delete this page?"

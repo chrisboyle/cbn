@@ -1,1 +1,8 @@
-=render :controller => 'pages', :partial => 'page', :format => 'html', :object => static_page
+%div[static_page]{:class => (current_page? static_page) ? nil : 'hentry'}
+	-title = link_to_unless_current(static_page.title, static_page, :rel => 'bookmark')
+	-if current_page? static_page
+		%h1= title
+	-else
+		%h2.entry-title= title
+	-cache static_page do
+		.entry-content= render :partial => 'common/body', :format => 'html', :object => static_page.body

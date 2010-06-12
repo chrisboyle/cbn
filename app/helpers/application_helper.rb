@@ -9,13 +9,6 @@ module ApplicationHelper
 		content_tag(:h1, t)
 	end
 
-	def posts_path
-		pages_path
-	end
-	def static_pages_path
-		pages_path
-	end
-
 	def button_to_act(action, object, js_options = {})
 		label = action.to_s.capitalize
 		method, act_name = case action

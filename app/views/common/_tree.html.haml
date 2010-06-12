@@ -1,6 +1,6 @@
 -cache 'tree' do
 	%ul
-		-t = (tree.dup << Page.new(:name => 'blog') << Page.new(:name => 'projects')).sort {|a,b| a.name <=> b.name}
+		-t = (tree.dup << StaticPage.new(:name => 'blog') << StaticPage.new(:name => 'projects')).sort {|a,b| a.name <=> b.name}
 		-t.each do |page|
 			-if page.name=='blog'
 				%li#blogtree
@@ -22,6 +22,8 @@
 							%li= link_to p.title, p
 			-else
 				%li= link_to page.title, page
+		-if permitted_to? :create, StaticPage.new
+			%li= button_to 'New page', new_static_page_path, :method => :get
 
 	-tags = ActsAsTaggableOn::Tag.all
 	-unless tags.empty?

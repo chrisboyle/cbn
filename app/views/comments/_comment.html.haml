@@ -8,7 +8,7 @@
 			.meta
 				.right
 					&nbsp;
-					=render :partial => 'pages/times', :format => 'html', :object => comment
+					=render :partial => 'common/times', :format => 'html', :object => comment
 				.left= render comment.identity
 				.endmeta
 			.body
@@ -21,4 +21,4 @@
 				-allowed.collect do |act|
 					-button_to_act act, comment, :context => context, :confirm => confirms[act]
 				-if context
-					=link_to 'Context', url_for(comment.page)+'#'+dom_id(comment)
+					=link_to 'Context', url_for(comment.post)+'#'+dom_id(comment)

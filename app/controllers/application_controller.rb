@@ -27,8 +27,8 @@ class ApplicationController < ActionController::Base
 
 	def default_url_options(options = {})
 		if options[:year].is_a?(Post)
-			page = options[:year]
-			options.merge!({:year => page.year, :month => page.month, :name => page.name})
+			post = options[:year]
+			options.merge!({:year => post.year, :month => post.month, :name => post.name})
 		elsif options[:id].is_a?(User) && options[:id]==current_user
 			options.merge!({:id => 'current'})
 		elsif options[:id].is_a?(ActsAsTaggableOn::Tag)
@@ -38,15 +38,13 @@ class ApplicationController < ActionController::Base
 		end
 	end
 
-	def load_page
+	def load_post
 		if params[:year]
 			start = Time.local(params[:year], params[:month])
 			finish = start.end_of_month.end_of_day
-			@page = Page.first(:conditions => ['created_at > ? and created_at < ? and name = ?', start, finish, params[:name]])
-		else
-			@page = Page.find_by_name(params[:name])
+			@post = Post.first(:conditions => ['created_at > ? and created_at < ? and name = ?', start, finish, params[:name]])
 		end
-		if not @page and params[:controller] != 'comments'
+		if not @post and params[:controller] != 'comments'
 			raise ActiveRecord::RecordNotFound
 		end
 	end

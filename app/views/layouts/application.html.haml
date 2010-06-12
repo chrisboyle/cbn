@@ -9,7 +9,7 @@
 		-if not current_page? canonical
 			%link{:rel => 'canonical', :href => canonical}
 		%link{:rel => 'shortcut icon', :href => image_path('favicon.png'), :type => 'image/png'}
-		=auto_discovery_link_tag :atom, feed_path if controller.controller_name == 'pages'
+		=auto_discovery_link_tag :atom, feed_path if controller.controller_name == 'posts'
 		=stylesheet_link_tag :all, :recursive => true, :cache => true
 		=yield :head
 
@@ -18,7 +18,7 @@
 			=render 'user_sessions/identblock'
 
 			#tree
-				=render :partial => 'pages/tree', :object => StaticPage.all
+				=render :partial => 'common/tree', :object => StaticPage.all
 
 			#content{:class => controller && controller.controller_name || nil}
 				-if flash[:notice]
