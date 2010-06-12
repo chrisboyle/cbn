@@ -2,15 +2,15 @@ class CommentsController < ApplicationController
 	filter_resource_access :nested_in => :pages, :only => [:new,:create], :collection => []
 	filter_resource_access :except => [:new,:create]
 	cache_sweeper :fragment_sweeper, :only => [:update,:destroy]
-	before_filter :load_user, :only => :index
 
 	def index
+		load_user if params[:user_id]
 		@comments = (@page ? @page.comments : @user ? @user.comments : Comment).visible_to(current_user).all(:order => 'updated_at DESC')
 
 		respond_to do |format|
 			format.html do
 				redirect_to :controller => :pages, :action => :show, :anchor => 'comments' if @page
-				redirect_to :controller => :users, :action => :show, :id => @user.id, :anchor => 'comments' if @user
+				redirect_to :controller => :users, :action => :show, :id => (@user == current_user ? 'current' : @user.id), :anchor => 'comments' if @user
 			end
 			format.xml  { render :xml => @comments }
 		end
