@@ -4,7 +4,7 @@ class PostsController < ApplicationController
 	cache_sweeper :tree_sweeper
 
 	def index
-		@posts = Post.all(:order => 'created_at DESC')
+		@posts = (params[:year] ? Post.year_month(params[:year],params[:month]) : Post).all(:order => 'created_at DESC')
 
 		respond_to do |format|
 			format.html # index.html.haml

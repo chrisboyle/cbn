@@ -1,12 +1,18 @@
 .hfeed
 	-if params[:is_root]
 		=render 'common/rootbanner'
+	-elsif params[:year]
+		=titleh1("Posts in #{Time.local(params[:year],params[:month]).strftime(params[:month] ? '%B %Y' : '%Y')}")
 	-else
 		%h1 Listing posts
 
 	.entries
 		-if @posts.empty?
-			.placeholder No posts yet
+			.placeholder
+				-if params[:year]
+					No matching posts
+				-else
+					No posts yet
 		-else
 			=render @posts
 

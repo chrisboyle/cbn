@@ -41,9 +41,7 @@ class ApplicationController < ActionController::Base
 
 	def load_post
 		if params[:year]
-			start = Time.local(params[:year], params[:month])
-			finish = start.end_of_month.end_of_day
-			@post = Post.first(:conditions => ['created_at > ? and created_at < ? and name = ?', start, finish, params[:name]])
+			@post = Post.year_month(params[:year],params[:month]).find_by_name(params[:name])
 		end
 		if not @post and params[:controller] != 'comments'
 			raise ActiveRecord::RecordNotFound
