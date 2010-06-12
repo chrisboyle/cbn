@@ -1,6 +1,6 @@
-A post you commented on has been edited at chris.boyle.name:
+A post you commented on has been edited at #{EMAIL_SITE_NAME}:
 =""
-=@post.title
+!=@post.title
 -unless @post.tags.empty?
-	Tags: #{@post.tag_list.join(', ')}
-=@link
+	Tags: #{raw @post.tag_list.join(', ')}
+!=@link

@@ -1,7 +1,7 @@
-A comment on "#{@comment.page.title}" requires moderation at chris.boyle.name:
+A comment on "#{@comment.page.title}" requires moderation at #{EMAIL_SITE_NAME}:
 =""
 -it = @comment.identity.icon_and_text
-\[#{it[0]}] #{it[1]} wrote:
-=@comment.body.gsub(/^/,'> ')
+\[#{raw it[0]}] #{raw it[1]} wrote:
+!=@comment.body.gsub(/^/,'> ')
 =""
-=@link
+!=@link

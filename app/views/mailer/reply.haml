@@ -1,7 +1,7 @@
-There's a new reply to your comment on "#{@comment.page.title}" at chris.boyle.name:
+There's a new reply to your comment on "#{@comment.page.title}" at #{EMAIL_SITE_NAME}:
 =""
 -it = @comment.identity.icon_and_text
-\[#{it[0]}] #{it[1]} wrote:
-=@comment.body.gsub(/^/,'> ')
+\[#{raw it[0]}] #{raw it[1]} wrote:
+!=@comment.body.gsub(/^/,'> ')
 =""
-=@link
+!=@link

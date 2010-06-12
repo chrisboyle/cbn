@@ -1,6 +1,6 @@
-There's a new post on chris.boyle.name:
+There's a new post on #{EMAIL_SITE_NAME}:
 =""
-=@post.title
+!=@post.title
 -unless @post.tags.empty?
-	Tags: #{@post.tag_list.join(', ')}
-=@link
+	Tags: #{raw @post.tag_list.join(', ')}
+!=@link

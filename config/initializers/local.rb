@@ -1,4 +1,5 @@
 AUTHOR_NAME = SITE_NAME = 'Chris Boyle'
+EMAIL_SITE_NAME = 'chris.boyle.name'
 BLOG_WORD = 'Blog'
 MAIL_FROM = 'blog@chris.boyle.name'
 BCC = 'blog@chris.boyle.name'
