@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
 	protect_from_forgery # See ActionController::RequestForgeryProtection for details
 	before_filter :canonicalise
 	after_filter :x_ua_compatible
+	after_filter :cache_control
 
 	# Scrub sensitive parameters from your log
 	filter_parameter_logging :password, :fb_sig_friends
@@ -113,6 +114,13 @@ class ApplicationController < ActionController::Base
 
 	def x_ua_compatible
 		response.headers['X-UA-Compatible'] = 'IE=edge'
+	end
+
+	def cache_control
+		unless request.ssl?
+			# They can't be signed in; it's public
+			response.headers['Cache-Control'] = 'public'
+		end
 	end
 
 	private
