@@ -63,4 +63,10 @@ class StaticPagesController < ApplicationController
 			format.xml  { head :ok }
 		end
 	end
+
+	protected
+
+	def load_static_page
+		@static_page = StaticPage.find_by_name(params[:name])
+	end
 end
