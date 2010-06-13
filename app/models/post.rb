@@ -15,9 +15,15 @@ class Post < ActiveRecord::Base
 	has_many :comments
 
 	named_scope :year_month, Proc.new {|year,month|
-		start = Time.local(year, month)
+		start = Time.zone.local(year, month)
 		finish = month ? start.end_of_month.end_of_day : start.end_of_year.end_of_day
 		{:conditions => ['created_at > ? and created_at < ?', start, finish]}
+	}
+
+	named_scope :before_after, Proc.new {|before,after|
+		{:conditions => merge_conditions(
+				before && ['created_at < ?', before],
+				after  && ['created_at > ?', after])}
 	}
 
 	def year

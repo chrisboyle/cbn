@@ -10,9 +10,10 @@
 						-months.each do |month,posts|
 							%li
 								=link_to month.strftime('%B %Y'), month.strftime('/%Y/%m')
-								%ul
-									-posts.each do |post|
-										%li= link_to post.title, post
+								-if month >= 3.months.ago
+									%ul
+										-posts.each do |post|
+											%li= link_to post.title, post
 						%li= link_to 'Recent comments', comments_path
 			-elsif page.name=='projects'
 				%li#projecttree

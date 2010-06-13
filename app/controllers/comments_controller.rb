@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
 
 	def index
 		load_user if params[:user_id]
-		@comments = (@post ? @post.comments : @user ? @user.comments : Comment).visible_to(current_user).all(:order => 'updated_at DESC')
+		@comments = (@post ? @post.comments : @user ? @user.comments : Comment).visible_to(current_user).all(:order => 'updated_at DESC', :limit => PAGE_SIZE)
 
 		respond_to do |format|
 			format.html do

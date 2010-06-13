@@ -2,19 +2,24 @@
 	-if params[:is_root]
 		=render 'common/rootbanner'
 	-elsif params[:year]
-		=titleh1("Posts in #{Time.local(params[:year],params[:month]).strftime(params[:month] ? '%B %Y' : '%Y')}")
+		=titleh1("Posts in #{Time.zone.local(params[:year],params[:month]).strftime(params[:month] ? '%B %Y' : '%Y')}")
 	-else
 		%h1 Listing posts
 
 	.entries
 		-if @posts.empty?
 			.placeholder
-				-if params[:year]
+				-if params[:year] or params[:before] or params[:after]
 					No matching posts
 				-else
 					No posts yet
 		-else
+			-rev = params[:after] and not params[:before]
+			-if params[:before] or (rev and @more)
+				%p= link_to 'Newer posts', {:after => @posts.first.created_at.strftime('%Y%m%d%H%M%S')}, :rel => 'nofollow prev'
 			=render @posts
+			-if @more or (rev and params[:after])
+				%p= link_to 'Older posts', {:before => @posts.last.created_at.strftime('%Y%m%d%H%M%S')}, :rel => 'nofollow next'
 
 	-if permitted_to? :create, Post.new
 		=button_to 'New post', new_post_path, :method => :get

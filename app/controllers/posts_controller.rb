@@ -4,7 +4,14 @@ class PostsController < ApplicationController
 	cache_sweeper :tree_sweeper
 
 	def index
-		@posts = (params[:year] ? Post.year_month(params[:year],params[:month]) : Post).all(:order => 'created_at DESC')
+		before, after = Time.from_timestamp(params[:before]), Time.from_timestamp(params[:after])
+		rev = after and not before
+		@posts = (params[:year] ? Post.year_month(params[:year],params[:month]) : Post) \
+			.before_after(before, after) \
+			.all(:order => rev ? 'created_at' : 'created_at DESC', :limit => PAGE_SIZE+1)
+		@more = @posts.length > PAGE_SIZE
+		@posts.slice!(PAGE_SIZE,1)
+		@posts.reverse! if rev
 
 		respond_to do |format|
 			format.html # index.html.haml
