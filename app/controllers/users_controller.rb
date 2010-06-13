@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 	cache_sweeper :fragment_sweeper, :only => :delete_comments
 
 	def index
-		@users = User.all
+		@users = User.all(:order => :created_at)
 
 		respond_to do |format|
 			format.html
