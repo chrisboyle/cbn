@@ -8,6 +8,6 @@
 			%h2.entry-title= title
 		.timescale #{project.start ? project.start.strftime('%B %Y') : 'unknown'} - #{project.end ? project.end.strftime('%B %Y') : 'present'} (#{project.status})
 		.tags= render :partial => 'tags/tags', :object => project.tags
-		-if project.vcs
+		-if project.vcs.present?
 			.vcs= project.vcs
 		.entry-content= render :partial => 'common/body', :format => 'html', :object => (is_current || project.summary.blank?) ? project.body : project.summary
