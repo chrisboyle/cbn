@@ -1,4 +1,4 @@
--cache 'tree' do
+-cache((has_role? :admin) ? 'tree-admin' : 'tree') do
 	%ul
 		-t = (tree.dup << StaticPage.new(:name => 'blog') << StaticPage.new(:name => 'projects')).sort {|a,b| a.name <=> b.name}
 		-t.each do |page|
