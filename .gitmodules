@@ -31,3 +31,6 @@
 [submodule "vendor/plugins/rails_xss"]
 	path = vendor/plugins/rails_xss
 	url = git://github.com/rails/rails_xss.git
+[submodule "vendor/plugins/redirect_routing"]
+	path = vendor/plugins/redirect_routing
+	url = git://github.com/fnando/redirect_routing.git
