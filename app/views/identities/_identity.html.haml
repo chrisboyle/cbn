@@ -1,9 +1,10 @@
 -icon, text = *identity.icon_and_text
 -imgpath = "/images/sprites/user_#{icon}.png"
 -plain ||= false
+-multi ||= false
 -no_link, no_profile = (plain or not identity.url), (plain or not identity.profile_url)
 %span.identity<
-	-if identity.user.role_symbols.include? :admin
+	-if not multi and identity.user.role_symbols.include? :admin
 		=succeed AUTHOR_NAME do
 			=image_tag '/images/sprites/user_admin.png'
 	-else

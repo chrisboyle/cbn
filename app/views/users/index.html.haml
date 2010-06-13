@@ -9,5 +9,5 @@
 	-@users.each do |user|
 		%tr
 			%td= link_to user.id, user
-			%td= render user.identities
+			%td= render :partial => user.identities, :locals => {:multi=>true}
 			%td= h user.email

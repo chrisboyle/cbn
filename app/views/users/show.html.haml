@@ -14,7 +14,7 @@
 			-@user.identities.each do |i|
 				%dd
 					=f.radio_button(:default_identity_id, i.id)
-					%label{:for => "user_default_identity_id_#{i.id}"}>= render :partial => i, :locals => {:plain=>true}
+					%label{:for => "user_default_identity_id_#{i.id}"}>= render :partial => i, :locals => {:plain=>true, :multi=>true}
 		%dd
 			%button{:disabled=>true} Add
 			%span.fieldnote (not yet implemented, admin can do this manually)
