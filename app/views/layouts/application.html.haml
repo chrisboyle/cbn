@@ -9,6 +9,9 @@
 		-if not current_page? canonical
 			%link{:rel => 'canonical', :href => canonical}
 		%link{:rel => 'shortcut icon', :href => image_path('favicon.png'), :type => 'image/png'}
+		-if request.ssl? and current_page? '/' and request.query_string.blank? and defined? OPENID2_PROVIDER and defined? OPENID2_LOCAL_ID
+			%link{:rel => 'openid2.provider', :href => OPENID2_PROVIDER}
+			%link{:rel => 'openid2.local_id', :href => OPENID2_LOCAL_ID}
 		=auto_discovery_link_tag :atom, feed_path if controller.controller_name == 'posts'
 		=stylesheet_link_tag :all, :recursive => true, :cache => true
 		=yield :head

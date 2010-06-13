@@ -2,6 +2,8 @@ AUTHOR_NAME = SITE_NAME = 'Chris Boyle'
 EMAIL_SITE_NAME = 'chris.boyle.name'
 BLOG_WORD = 'Blog'
 PAGE_SIZE = 10
+OPENID2_PROVIDER = 'https://www.google.com/accounts/o8/ud?source=profiles'
+OPENID2_LOCAL_ID = 'http://www.google.com/profiles/chris.boyle.name'
 MAIL_FROM = 'blog@chris.boyle.name'
 BCC = 'blog@chris.boyle.name'
 if Rails.env.production?
