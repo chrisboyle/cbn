@@ -1,5 +1,5 @@
 class FragmentSweeper < ActionController::Caching::Sweeper
-	observe Post, StaticPage, Comment
+	observe Post, StaticPage, Comment, Project
 
 	def before_update(record)
 		expire_fragment(record.cache_key)
