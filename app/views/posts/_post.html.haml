@@ -1,10 +1,11 @@
-%div[post]{:class => (current_page? post) ? nil : 'hentry'}
-	-title = link_to_unless_current(post.title, post, :rel => 'bookmark')
-	-if current_page? post
-		%h1= title
-	-else
-		%h2.entry-title= title
-	-cache post do
+-is_current = current_page? post
+-cache post.cache_key + (is_current ? '-c' : '') do
+	%div[post]{:class => is_current ? nil : 'hentry'}
+		-title = link_to_unless_current(post.title, post, :rel => 'bookmark')
+		-if is_current
+			%h1= title
+		-else
+			%h2.entry-title= title
 		=render :partial => 'common/times', :format => 'html', :object => post
 		.tags= render :partial => 'tags/tags', :object => post.tags
 		.entry-content= render :partial => 'common/body', :format => 'html', :object => post.body
