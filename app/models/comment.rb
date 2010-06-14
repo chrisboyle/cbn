@@ -4,6 +4,7 @@ class Comment < ActiveRecord::Base
 	attr_accessible :body, :parent_id, :identity_id
 	acts_as_nested_set :scope => :post_id
 	validates_presence_of :body
+	validates_length_of :body, :maximum => 3000
 	validates_presence_of :identity
 	validates_presence_of :post
 	validate do |c|

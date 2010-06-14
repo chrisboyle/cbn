@@ -74,17 +74,21 @@ class CommentsController < ApplicationController
 			if (params[:_commit] || params[:commit]) == 'Cancel'
 				format.html { redirect_to @comment }
 				format.js   { render(:update) {|p| p.replace dom_id(@comment), :partial => @comment}}
-			elsif @comment.update_attributes(params[:comment])
-				format.html do
-					flash[:notice] = 'Comment was successfully updated.'
-					redirect_to @comment
-				end
-				format.js
-				format.xml  { head :ok }
 			else
-				format.html { render :action => "edit" }
-				format.js   { render(:update) { |p| p.replace dom_id(@comment), :partial => 'comments/edit' }}
-				format.xml  { render :xml => @comment.errors, :status => :unprocessable_entity }
+				@comment.attributes = params[:comment]
+				@comment.updated_ip = request.remote_ip
+				if @comment.save
+					format.html do
+						flash[:notice] = 'Comment was successfully updated.'
+						redirect_to @comment
+					end
+					format.js
+					format.xml  { head :ok }
+				else
+					format.html { render :action => "edit" }
+					format.js   { render(:update) { |p| p.replace dom_id(@comment), :partial => 'comments/edit' }}
+					format.xml  { render :xml => @comment.errors, :status => :unprocessable_entity }
+				end
 			end
 		end
 	end
@@ -162,6 +166,7 @@ class CommentsController < ApplicationController
 		@comment = Comment.new(params[:comment])
 		@comment.post = @post
 		@comment.approved = current_user && current_user.role_symbols.include?(:known)
+		@comment.created_ip = @comment.updated_ip = request.remote_ip
 	end
 
 	def set_approved(a)

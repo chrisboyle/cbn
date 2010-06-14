@@ -9,19 +9,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100612143723) do
+ActiveRecord::Schema.define(:version => 20100614185514) do
 
   create_table "comments", :force => true do |t|
     t.integer  "post_id"
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "identity_id",                    :null => false
-    t.boolean  "deleted",     :default => false, :null => false
+    t.integer  "identity_id",                                  :null => false
+    t.boolean  "deleted",                   :default => false, :null => false
     t.integer  "parent_id"
     t.integer  "lft"
     t.integer  "rgt"
-    t.boolean  "approved",    :default => false, :null => false
+    t.boolean  "approved",                  :default => false, :null => false
+    t.string   "created_ip",  :limit => 64,                    :null => false
+    t.string   "updated_ip",  :limit => 64,                    :null => false
   end
 
   create_table "identities", :force => true do |t|
