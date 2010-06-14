@@ -29,4 +29,6 @@
 	-tags = ActsAsTaggableOn::Tag.all
 	-unless tags.empty?
 		%hr
-		.tags= render :partial => 'tags/tags', :object => tags
+		=link_to 'Tags', :controller => :tags, :action => :index
+		.tags
+			!=tags.collect {|t| (render :partial => 'tags/tag', :object => t).strip }.join(', ')

@@ -29,7 +29,7 @@ body
 	margin: 0 auto 0
 	padding: 0 0.5em 0 1em
 	max-width: 900px
-	min-width: 28em
+	min-width: 32em
 
 * html #page
 	height: 100%
@@ -67,7 +67,7 @@ hr
 .clear
 	clear: both
 
-.endmeta
+.clearleft
 	clear: left
 
 h1, h2, h3, h4, h5
@@ -79,13 +79,12 @@ button, input[type="button"], input[type="submit"]
 
 #tree
 	float: right
-	clear: right
 	width: 12em
 	border:
 		style: solid
 		color = !borders
 		width: 1px 0px 1px 1px
-	margin-top: 1em
+	margin-top: 0.5em
 	margin-right: -0.5em
 	padding-right: 0.5em
 	padding-left: 0.5em
@@ -96,19 +95,23 @@ button, input[type="button"], input[type="submit"]
 		list-style-type: none
 		ul
 			padding-left: 1em
+	hr
+		background-color = !borderfill
+		border = 0px "solid" !borderfill
+	.tags
+		padding-left: 1em
 
 #identblock
 	button
 		vertical-align: middle
-	float: right
+	text-align: right
 	form, form div
 		display: inline
 
 #content
-	min-width: 14em
+	min-width: 18em
 	margin-right: 13.5em
 	padding-bottom: 1em
-	padding-top: 1em
 
 .hentry
 	clear: left
@@ -148,21 +151,23 @@ form .comment
 
 .face
 	float: left
-	padding-top: 0.3em
+	margin-right: 8px
 
 #rootbanner
 	margin-bottom: 1em
 	min-height: 90px
 	vertical-align: middle
 	h1
-		padding-top: 0.3em
-		white-space: nowrap
 		margin-left: inherit
-	address
-		display: inline
+	.vcard
 		font-style: normal
 		abbr
 			text-decoration: none
+	h1, .tagline
+		margin-left: 104px
+
+.favicons
+	float: left
 
 .tagline
 	margin-bottom: 0.5em
@@ -306,11 +311,15 @@ table
 .pagecontrols
 	margin-bottom: 1em
 
-.vcs
-	border = 1px solid !borders
-	background: #ffffff
-	color: #000000
-	font-family: monospace
+.project
+	.timescale, .tags
+		float: left
+	.tags
+		margin-left: 1em
+
+.vcslinks a
+	font-weight: bolder
+	font-size: 110%
 
 .hresume h2
 	font-size: 1.25em

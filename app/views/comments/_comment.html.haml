@@ -10,7 +10,7 @@
 					&nbsp;
 					=render :partial => 'common/times', :format => 'html', :object => comment
 				.left= render comment.identity
-				.endmeta
+				.clearleft
 			.body
 				=simple_format h(comment.body).gsub('  ',' &nbsp;')
 		-acts = [:reply,:edit,:delete,:approve,:trust,:disapprove]

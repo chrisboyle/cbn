@@ -6,8 +6,16 @@
 			%h1= title
 		-else
 			%h2.entry-title= title
-		.timescale #{project.start ? project.start.strftime('%B %Y') : 'unknown'} - #{project.end ? project.end.strftime('%B %Y') : 'present'} (#{project.status})
-		.tags= render :partial => 'tags/tags', :object => project.tags
+		.meta
+			.timescale #{project.start ? project.start.strftime('%B %Y') : 'unknown'} - #{project.end ? project.end.strftime('%B %Y') : 'present'} (#{project.status})
+			.tags= render :partial => 'tags/tags', :object => project.tags
+			.clearleft
 		-if project.vcs.present?
-			.vcs= project.vcs
+			.vcslinks
+				-if /^git:\/\/(github.com\/.*?)\.git$/.match project.vcs
+					=succeed ";" do concat link_to 'github', "http://#{$1}"; end
+					=succeed ";" do concat link_to 'bugs', "http://#{$1}/issues"; end
+					=link_to 'changes', "http://#{$1}/commits"
+				-else
+					=link_to 'VCS URL', project.vcs
 		.entry-content= render :partial => 'common/body', :format => 'html', :object => (is_current || project.summary.blank?) ? project.body : project.summary
