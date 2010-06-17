@@ -36,13 +36,10 @@ class Time
 		strftime('%Y-%m-%d %H:%M:%S')
 	end
 
+	TIMESTAMP_RX = Regexp.compile /^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/
 	def self.from_timestamp(ts)
 		m = TIMESTAMP_RX.match(ts)
 		return nil unless m
 		zone.local(*(m[1..6].map &:to_i))
 	end
-
-	protected
-
-	TIMESTAMP_RX = Regexp.compile /^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/
 end

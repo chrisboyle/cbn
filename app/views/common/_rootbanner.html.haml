@@ -14,12 +14,17 @@
 	.favicons
 		-[ |
 		['google','Google profile','http://www.google.com/profiles/chris.boyle.name'], |
-		['insanejournal','InsaneJournal: shortcipher','http://shortcipher.insanejournal.com/'], |
-		['dreamwidth','Dreamwidth: shortcipher','http://shortcipher.dreamwidth.org/'], |
+		['twitter','Twitter: c_boyle','http://twitter.com/c_boyle'], |
+		['github', 'Github: chrisboyle', 'http://github.com/chrisboyle'], |
 		['debian','Debian QA stats','http://qa.debian.org/developer.php?login=cmb@debian.org'], |
+		['stackoverflow','Stack Overflow','http://stackoverflow.com/users/6540/chris-boyle'], |
+		['serverfault','Server Fault','http://serverfault.com/users/5708/chris-boyle'], |
+		['superuser','Super User','http://superuser.com/users/4211/chris-boyle'], |
 		['launchpad','Launchpad: cmb','https://launchpad.net/~cmb'], |
 		['picasa','Picasa albums','http://picasaweb.google.com/chris.boyle.name'], |
+		['dreamwidth','Dreamwidth: shortcipher','http://shortcipher.dreamwidth.org/'], |
 		['facebook','Facebook: shortcipher','http://www.facebook.com/shortcipher'], |
+		['insanejournal','InsaneJournal: shortcipher','http://shortcipher.insanejournal.com/'], |
 		['lastfm','Last.fm: shortcipher','http://www.last.fm/user/shortcipher'], |
 		['grooveshark','Grooveshark: chrisboyle','http://listen.grooveshark.com/user/chrisboyle/3458294'], |
 		['linkedin','LinkedIn: shortcipher','http://www.linkedin.com/in/shortcipher'], |
@@ -29,9 +34,15 @@
 		['steam','SteamID: kerneloops','http://steamcommunity.com/id/kerneloops'], |
 		['worldofgoo','World Of Goo profile','http://goofans.com/leaderboard/player/ae06cbe5d4bb4b85ebfbe453ba14dbce'], |
 		['maelfroth','Maelfroth: cmb','http://wiki.maelfroth.org/~cmb'], |
-		['twitter','Twitter: c_boyle','http://twitter.com/c_boyle'], |
-		['stackoverflow','Stack Overflow: cmb','http://stackoverflow.com/users/6540/chris-boyle'], |
-		['serverfault','Server Fault: cmb','http://serverfault.com/users/5708/chris-boyle'], |
-		['superuser','Super User: cmb','http://superuser.com/users/4211/chris-boyle'], |
 		].each do |i,t,u| |
 			=link_to image_tag("sprites/fav_#{i}.png"), u, :rel => 'me', :title => t
+	-content_for :js do
+		:javascript
+			Event.observe(window,"load",function() {
+				$$(".favicons a").findAll(function(node){
+					return node.getAttribute('title');
+				}).each(function(node){
+					new Tooltip(node,node.title,{min_distance_y:10});
+					node.removeAttribute("title");
+				});
+			});

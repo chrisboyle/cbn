@@ -2,6 +2,7 @@
 !borders = #0077bb
 !dimborders = #99ccdd
 !borderfill = #88ddff
+!dimtext = #444444
 !font = "FreeSans", "DejaVu Sans", "Liberation Sans", "sans-serif"
 !fontsize = 12pt
 
@@ -27,18 +28,33 @@ body
 		color = !borders
 	min-height: 100%
 	margin: 0 auto 0
-	padding: 0 0.5em 0 1em
+	padding: 0 1em 0 1em
 	max-width: 900px
 	min-width: 32em
 
 * html #page
 	height: 100%
 
+#footer
+	margin-top: 4em
+	padding-bottom: 1em
+	font-size: 66%
+	color = !dimtext
+	hr
+		color = !dimtext
+		background-color = !dimborders
+	a
+		white-space: nowrap
+
 p
 	margin: 0 0 1em 0
 
 a
 	text-decoration: none
+
+.tooltip
+	background = !pagebg
+	border = 1px solid !borders
 
 textarea
 	width: 98%
@@ -85,10 +101,9 @@ button, input[type="button"], input[type="submit"]
 		color = !borders
 		width: 1px 0px 1px 1px
 	margin-top: 0.5em
-	margin-right: -0.5em
+	margin-right: -1em
 	padding-right: 0.5em
 	padding-left: 0.5em
-	height: 100%
 	ul
 		margin: 0
 		padding-left: 0
@@ -168,13 +183,14 @@ form .comment
 
 .favicons
 	float: left
+	cursor: default
 
 .tagline
 	margin-bottom: 0.5em
 	font-style: italic
 
-.times, .timescale
-	color: #444444
+.times, .project .date_duration
+	color = !dimtext
 	font-size: 80%
 
 .notice
@@ -312,15 +328,63 @@ table
 	margin-bottom: 1em
 
 .project
-	.timescale, .tags
+	.date_duration, .tags
 		float: left
+	.date_duration
+		margin-top: 0.1em
 	.tags
-		margin-left: 1em
+		margin-left: 0.5em
+	.heading
+		h1, h2
+			display: inline
+		.version
+			margin-left: 0.5em
+	.downloads
+		p, ul
+			float: left
+		p
+			margin-bottom: 0
+		ul
+			margin-top: 0
+		li:first-child a:first-child
+			font-weight: bolder
+
+.tags span
+	vertical-align: middle
 
 .vcslinks a
 	font-weight: bolder
 	font-size: 110%
 
+.project.hentry .vcslinks a
+	font-size: 100%
+
+.android_market
+	span
+		float: left
+		margin-right: 0.5em
+	border = 1px solid !borders
+	background = !borderfill
+	margin: 0.7em 0 0.7em
+	padding: 0.5em
+
+.android_market a
+	font-weight: bolder
+
 .hresume h2
 	font-size: 1.25em
 	margin-top: 0.5em
+
+@media print
+	#tree, #identblock
+		display: none
+	#page
+		width: auto
+		border: none
+	#content
+		margin-right: 0
+	#rootbanner
+		h1, .tagline
+			margin-left: 0
+	.face, .favicons
+		display: none

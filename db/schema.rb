@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100614185514) do
+ActiveRecord::Schema.define(:version => 20100616084051) do
 
   create_table "comments", :force => true do |t|
     t.integer  "post_id"
@@ -75,6 +75,9 @@ ActiveRecord::Schema.define(:version => 20100614185514) do
     t.datetime "updated_at"
     t.date     "start"
     t.date     "end"
+    t.string   "android_market_id"
+    t.string   "version"
+    t.string   "filename_start"
   end
 
   create_table "roles", :force => true do |t|

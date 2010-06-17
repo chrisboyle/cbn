@@ -13,7 +13,7 @@
 			%link{:rel => 'openid2.provider', :href => OPENID2_PROVIDER}
 			%link{:rel => 'openid2.local_id', :href => OPENID2_LOCAL_ID}
 		=auto_discovery_link_tag :atom, feed_path if controller.controller_name == 'posts'
-		=stylesheet_link_tag :all, :recursive => true, :cache => true
+		=stylesheet_link_tag :all, :recursive => true, :cache => true, :media => :all
 		=yield :head
 
 	%body
@@ -32,6 +32,11 @@
 					.error= flash[:error]
 
 				=yield
+			.clear
+
+			#footer
+				%hr
+				Opinions my own unless otherwise stated. &copy; Chris Boyle 2010, comments &copy; their authors, icons &copy;/&trade; their owners. Trouble with this site? Use the #{link_to 'public bug tracker', 'http://github.com/chrisboyle/cbn/issues'} or #{link_to 'contact me', '/contact'}.
 
 		=javascript_include_tag :all, :cache => true
 		=yield :js
