@@ -46,9 +46,10 @@
 					%ul
 						-files.each do |f|
 							%li
-								-if %w(.gz .bz2).include? f.extname
+								-if %w(.gz .bz2 .tgz .tbz .c .cpp).include? f.extname  # (not .py .pl .rb .js)
 									Source:
 								=link_to f.basename, "/download/#{f.basename}"
+								=number_to_human_size(f.size)
 								-if sigs[f.to_s].present?
 									(#{link_to raw('PGP&nbsp;signature'), "/download/#{sigs[f.to_s].basename}"})
 					.clearleft
