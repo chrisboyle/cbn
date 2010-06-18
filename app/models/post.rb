@@ -1,5 +1,6 @@
 class Post < ActiveRecord::Base
 	acts_as_taggable
+	validates_format_of :tag_list, :with => /\A[A-Za-z0-9, _+-]*\Z/
 	validates_presence_of :name, :title, :body
 	validates_each :body do |record, attr, value|
 		begin

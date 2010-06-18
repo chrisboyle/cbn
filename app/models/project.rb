@@ -1,5 +1,6 @@
 class Project < ActiveRecord::Base
 	acts_as_taggable
+	validates_format_of :tag_list, :with => /\A[A-Za-z0-9, _+-]*\Z/
 	validates_presence_of :title, :body
 	STATUSES = %w( idea planning active maintenance abandoned )
 	validates_inclusion_of :status, :in => STATUSES
