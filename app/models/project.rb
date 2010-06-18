@@ -30,7 +30,7 @@ class Project < ActiveRecord::Base
 		bin, src, sig = [], [], {}
 		files.each do |f|
 			case f.extname
-			when *%w(.gz .rb .py .pl .js .c .cpp) then src << f
+			when *%w(.gz .tgz .tbz .rb .py .pl .js .c .cpp) then src << f
 			when *%w(.apk .deb .ko .so) then bin << f
 			when *%w(.asc) then sig[f.to_s[0..-5]] = f
 			end
