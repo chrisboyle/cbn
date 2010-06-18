@@ -40,8 +40,12 @@ class ProjectsController < ApplicationController
 	end
 
 	def update
+		p = params[:project]
+		# Hack to allow setting a date to nil - TODO find a better way
+		if p['start(1i)'].blank? and p['start(2i)'].blank? then p['start(3i)'] = '' end
+		if p['end(1i)'].blank? and p['end(2i)'].blank? then p['end(3i)'] = '' end
 		respond_to do |format|
-			if @project.update_attributes(params[:project])
+			if @project.update_attributes(p)
 				flash[:notice] = 'Project was successfully updated.'
 				format.html { redirect_to(@project) }
 				format.xml  { head :ok }
