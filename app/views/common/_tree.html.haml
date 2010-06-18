@@ -31,4 +31,4 @@
 		%hr
 		=link_to 'Tags', :controller => :tags, :action => :index
 		.tags
-			!=tags.collect {|t| (render :partial => 'tags/tag', :object => t).strip }.join(', ')
+			!=tags.sort_by(&:name).collect {|t| (render :partial => 'tags/tag', :object => t).strip }.join(', ')
