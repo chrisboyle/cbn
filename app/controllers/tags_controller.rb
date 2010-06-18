@@ -5,7 +5,7 @@ class TagsController < ApplicationController
 	cache_sweeper :tree_sweeper
 
 	def index
-		@tags = Tag.all(:order => :name)
+		@tags = Tag.all(:order => :name).select {|t| Post.tagged_with(t).present? or Project.tagged_with(t).present?}
 	end
 
 	protected

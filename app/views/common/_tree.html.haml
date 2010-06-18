@@ -31,4 +31,4 @@
 		%hr
 		=link_to 'Tags', :controller => :tags, :action => :index
 		.tags
-			!=tags.sort_by(&:name).collect {|t| (render :partial => 'tags/tag', :object => t).strip }.join(', ')
+			!=tags.select {|t| Post.tagged_with(t).present? or Project.tagged_with(t).present?}.sort_by(&:name).collect {|t| (render :partial => 'tags/tag', :object => t).strip }.join(', ')
