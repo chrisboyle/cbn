@@ -76,9 +76,8 @@ class User < ActiveRecord::Base
 	end
 
 	def before_connect(sess)
-		i = Identity.find_or_create_by_provider_and_identifier('facebook', sess.user.uid.to_s) do |i|
-			i.secret = sess.session_key
-		end
+		i = identities.to_a.find {|i| i.provider=='facebook' and i.identifier==sess.user.uid.to_s }
+		i.secret = sess.session_key
 		i.display_name = sess.user.name
 		i.name         = sess.user.name
 		i.url          = sess.user.profile_url
@@ -111,7 +110,7 @@ class User < ActiveRecord::Base
 	end
 
 	def build_facebook_user(opts={})
-		i = Identity.find_or_create_by_provider_and_identifier('facebook', opts[:facebook_uid].to_s) do |i|
+		i = Identity.find_or_initialize_by_provider_and_identifier('facebook', opts[:facebook_uid].to_s) do |i|
 			i.secret = opts[:facebook_session_key]
 		end
 		self.identities << i
