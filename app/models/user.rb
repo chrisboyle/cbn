@@ -52,9 +52,14 @@ class User < ActiveRecord::Base
 			i.display_name = profile['screen_name']
 			i.guess_urls
 		end
-		i.user ||= User.new(:default_identity => i) do |u|
-			u.reset_persistence_token
+		unless i.user
+			User.create do |u|
+				u.default_identity = i
+				u.identities << i
+				u.reset_persistence_token
+			end
 		end
+		i.user
 	end
 
 	def self.find_by_openid_identifier(ident)
