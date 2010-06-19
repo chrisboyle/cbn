@@ -9,7 +9,7 @@
 				.right
 					&nbsp;
 					=render :partial => 'common/times', :format => 'html', :object => comment
-				.left= render comment.identity
+				.left= comment.identity ? (render comment.identity) : 'deleted identity (bug!)'
 				.clearleft
 			.body
 				=simple_format h(comment.body).gsub('  ',' &nbsp;')
