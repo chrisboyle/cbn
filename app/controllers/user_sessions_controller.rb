@@ -31,10 +31,18 @@ class UserSessionsController < ApplicationController
 		end
 		@user_session.save do |result|
 			if result
+				u = current_user
 				# There's probably a better way to do this, but login_count is already 2 for OpenID (wtf)
-				if current_user.created_at > 30.seconds.ago
+				if u.created_at > 30.seconds.ago
+					it = u.identity.icon_and_text
+					key = [it[0], (%w(dreamwidth insanejournal livejournal).include? it[0]) ? it[1] : u.identity.identifier]
+					friendships = Rails.root.join('config', 'friendships')
+					if friendships.file? and friendships.readable? and friendships.readlines.collect {|l| l.chomp.split(' ')}.include? key
+						u.roles << Role.find_by_name('known')
+						u.save
+					end
 					(Role.find_by_name('admin').users.collect &:email).each do |e|
-						Mailer.deliver_signup_admin(current_user, e, url_for(:controller=>:users, :action=>:show, :id=>current_user.id)) unless e.blank?
+						Mailer.deliver_signup_admin(u, e, url_for(:controller=>:users, :action=>:show, :id=>u.id)) unless e.blank?
 					end
 				end
 				# TODO: respect Authlogic's cookie expiry time (3 months is the default)

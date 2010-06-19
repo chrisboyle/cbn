@@ -11,6 +11,7 @@ config/facebooker.yml
 config/google_analytics.yml
 config/twitter.yml
 config/initializers/session_store.rb
+config/friendships
 .*.swp
 public/images/auto_sprite.png
 public/javascripts/all.js

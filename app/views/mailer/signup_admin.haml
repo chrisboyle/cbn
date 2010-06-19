@@ -2,5 +2,7 @@ A new user has signed in at #{EMAIL_SITE_NAME}:
 =""
 -it = @user.identity.icon_and_text
 \[#{raw it[0]}] #{raw it[1]}
+-if @user.role_symbols.include? :known
+	(found in friendships file, granted "known" role)
 =""
 !=@link
