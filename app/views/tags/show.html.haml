@@ -1,5 +1,5 @@
 =titleh1 "Tag: #{@tag.name}"
 
-=render Project.tagged_with(@tag)
+=render Project.tagged_with(@tag).sort_by(&:name)
 
-=render Post.tagged_with(@tag)
+=render Post.tagged_with(@tag).sort_by(&:created_at).reverse
