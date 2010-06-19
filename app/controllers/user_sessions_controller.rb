@@ -37,7 +37,8 @@ class UserSessionsController < ApplicationController
 						Mailer.deliver_signup_admin(current_user, e, url_for(:controller=>:users, :action=>:show, :id=>current_user.id)) unless e.blank?
 					end
 				end
-				cookies[:secure_cookies_exist] = { :value => true, :httponly => true }
+				# TODO: respect Authlogic's cookie expiry time (3 months is the default)
+				cookies[:secure_cookies_exist] = { :value => true, :httponly => true, :expires => @user_session.remember_me ? 3.months.from_now : nil }
 				flash[:notice] = "Successfully signed in."
 				redirect_to session.delete(:next) || root_url
 			else
