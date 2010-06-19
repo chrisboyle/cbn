@@ -96,7 +96,7 @@ class User < ActiveRecord::Base
 	def map_openid_registration(r)
 		email_ = r['http://schema.openid.net/contact/email'] || r['http://axschema.org/contact/email'] || r['email']
 		email = email_ if email_
-		if @@last_openid_ident and @@last_openid_ident.user == self
+		if @@last_openid_ident
 			name = r['http://schema.openid.net/namePerson'] || r['http://axschema.org/namePerson'] || r['fullname']
 			name = name.to_s if name
 			if name.blank?
