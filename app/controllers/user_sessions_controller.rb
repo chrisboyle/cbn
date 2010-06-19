@@ -1,4 +1,6 @@
 class UserSessionsController < ApplicationController
+	skip_before_filter :verify_authenticity_token, :only => :create  # OpenID will POST big requests
+
 	def new
 		@user_session = UserSession.new
 	end
