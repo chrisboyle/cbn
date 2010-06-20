@@ -1,5 +1,5 @@
-atom_feed(:language => 'en-GB') do |feed|
-	feed.title SITE_NAME
+atom_feed(:language => 'en-GB', :root_url => @tag ? acts_as_taggable_on_tag_url(@tag) : root_url) do |feed|
+	feed.title ((@tag ? "Tag \"#{@tag.name}\" - " : "") + SITE_NAME)
 	feed.updated @posts.present? ? @posts.first.created_at : Time.now
 
 	@posts.each do |post|
