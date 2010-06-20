@@ -14,7 +14,9 @@ ActionController::Routing::Routes.draw do |map|
 	map.connect       'logout', :controller => :user_sessions, :action => :destroy
 	map.resources     :comments, :except => [:new,:create], :member => {:reply => :get, :approve => :post, :trust => :post, :disapprove => :post}
 	map.resources     :projects
-	map.resources     :acts_as_taggable_on_tags, :as => :tags, :only => [:index,:show], :controller => :tags
+	map.resources     :acts_as_taggable_on_tags, :as => :tags, :only => [:index,:show], :controller => :tags do |t|
+		t.feed        'feed', :controller => :posts, :action => :index, :format => 'atom', :conditions => {:method => :get}
+	end
 
 	map.redirect      'blog', '/'
 	map.redirect      'journal', '/'

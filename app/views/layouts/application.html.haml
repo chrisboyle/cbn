@@ -12,7 +12,10 @@
 		-if request.ssl? and current_page? '/' and request.query_string.blank? and defined? OPENID2_PROVIDER and defined? OPENID2_LOCAL_ID
 			%link{:rel => 'openid2.provider', :href => OPENID2_PROVIDER}
 			%link{:rel => 'openid2.local_id', :href => OPENID2_LOCAL_ID}
-		=auto_discovery_link_tag :atom, feed_path if controller.controller_name == 'posts'
+		-if controller.controller_name == 'tags' and @tag
+			=auto_discovery_link_tag :atom, acts_as_taggable_on_tag_feed_path(@tag)
+		-else
+			=auto_discovery_link_tag :atom, feed_path
 		=stylesheet_link_tag :all, :recursive => true, :cache => true, :media => :all
 		=yield :head
 

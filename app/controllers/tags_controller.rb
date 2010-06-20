@@ -7,10 +7,4 @@ class TagsController < ApplicationController
 	def index
 		@tags = Tag.all(:order => :name).select {|t| Post.tagged_with(t).present? or Project.tagged_with(t).present?}
 	end
-
-	protected
-
-	def load_tag
-		@tag = Tag.find_by_name(params[:id])
-	end
 end

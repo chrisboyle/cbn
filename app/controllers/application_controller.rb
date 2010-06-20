@@ -34,6 +34,8 @@ class ApplicationController < ActionController::Base
 			options.merge!({:id => 'current'})
 		elsif options[:id].is_a?(ActsAsTaggableOn::Tag)
 			options.merge!({:id => options[:id].name})
+		elsif options[:acts_as_taggable_on_tag_id].is_a?(ActsAsTaggableOn::Tag)
+			options.merge!({:acts_as_taggable_on_tag_id => options[:acts_as_taggable_on_tag_id].name})
 		else
 			{}
 		end
@@ -98,6 +100,16 @@ class ApplicationController < ActionController::Base
 		else
 			permitted_to! :show, User.new  # can't even access yourself by id
 			@user = i ? User.find(i) : nil
+		end
+	end
+
+	def load_tag
+		t = params[:acts_as_taggable_on_tag_id] || params[:id]
+		if t
+			@tag = ActsAsTaggableOn::Tag.find_by_name(t)
+			raise ActiveRecord::RecordNotFound unless @tag
+		else
+			@tag = nil
 		end
 	end
 
