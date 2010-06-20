@@ -26,7 +26,7 @@
 			#tree
 				=render :partial => 'common/tree', :object => StaticPage.all
 
-			#content{:class => controller && controller.controller_name || nil}
+			#content{:class => controller ? (controller.controller_name=='tags' ? 'tags_controller' : controller.controller_name) : nil}
 				-if flash[:notice]
 					.notice= flash[:notice]
 				-if flash[:warning]
