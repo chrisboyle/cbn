@@ -13,9 +13,9 @@
 			%link{:rel => 'openid2.provider', :href => OPENID2_PROVIDER}
 			%link{:rel => 'openid2.local_id', :href => OPENID2_LOCAL_ID}
 		-if controller.controller_name == 'tags' and @tag
-			=auto_discovery_link_tag :atom, acts_as_taggable_on_tag_feed_path(@tag), :title => "Tag '#{@tag.name}' - #{SITE_NAME}"
+			=auto_discovery_link_tag :atom, acts_as_taggable_on_tag_feed_url(@tag, :secure=>false), :title => "Tag '#{@tag.name}' - #{SITE_NAME}"
 		-else
-			=auto_discovery_link_tag :atom, feed_path, :title => SITE_NAME
+			=auto_discovery_link_tag :atom, feed_url(:secure=>false), :title => SITE_NAME
 		=stylesheet_link_tag :all, :recursive => true, :cache => true, :media => :all
 		=yield :head
 
