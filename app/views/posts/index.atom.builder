@@ -1,6 +1,6 @@
 atom_feed(:language => 'en-GB') do |feed|
 	feed.title SITE_NAME
-	feed.updated @posts.first.created_at
+	feed.updated @posts.present? ? @posts.first.created_at : Time.now
 
 	@posts.each do |post|
 		feed.entry post, :url => post_url(post, :secure => false, :host => request.host) do |entry|
