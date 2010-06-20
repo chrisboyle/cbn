@@ -36,6 +36,8 @@
 		['maelfroth','Maelfroth: cmb','http://wiki.maelfroth.org/~cmb'], |
 		].each do |i,t,u| |
 			=link_to image_tag("sprites/fav_#{i}.png"), u, :rel => 'me', :title => t
+	.clearleft
+	.feedlink= link_to raw("#{image_tag 'sprites/feed.png'} Feed of these posts"), feed_url(:secure=>false)
 	-content_for :js do
 		:javascript
 			Event.observe(window,"load",function() {

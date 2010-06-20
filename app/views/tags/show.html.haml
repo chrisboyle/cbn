@@ -1,4 +1,5 @@
 =titleh1 "Tag: #{@tag.name}"
+.feedlink= link_to raw("#{image_tag 'sprites/feed.png'} Feed of posts with this tag"), acts_as_taggable_on_tag_feed_url(@tag, :secure=>false)
 
 =render Project.tagged_with(@tag).all(:order => :name)
 
