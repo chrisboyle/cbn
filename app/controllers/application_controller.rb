@@ -54,11 +54,19 @@ class ApplicationController < ActionController::Base
 		case e
 		when ActiveRecord::RecordNotFound, ActionController::RoutingError
 			b = File.basename(request.request_uri)
-			if not b.include? '/' and FileTest.exists?("#{RAILS_ROOT}/public/download/#{b}")
-				redirect_to "/download/#{b}", :status => :moved_permanently
-			else
-				super(e)
+			if not b.include? '/'
+				p = Rails.root.join('public', 'download', b)
+				if p.exist? and p.file?
+					redirect_to "/download/#{b}", :status => :moved_permanently
+					return
+				end
+				p = Rails.root.join('public', 'tmp', b)
+				if p.exist? and p.file?
+					redirect_to "/tmp/#{b}"
+					return
+				end
 			end
+			super(e)
 		when Authorization::NotAuthorized
 			permission_denied
 		else
