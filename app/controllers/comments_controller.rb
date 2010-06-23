@@ -192,26 +192,27 @@ class CommentsController < ApplicationController
 		if c.approved
 			mailed = {}
 			Role.find_by_name('admin').users.each do |a|
-				Mailer.deliver_comment_admin(c, a.email, u) unless a.email.blank?
+				Mailer.deliver_comment_admin(c, a.email) if a.mailable?
 				mailed[a] = true
 			end
 			if c.parent
+				unsub = url_for(:controller => :users, :action => :show, :id => 'current', :secure => true)
 				if c.parent.user != c.user and not mailed[c.parent.user] and c.parent.user.mail_on_reply
-					Mailer.deliver_reply(c, c.parent.user.email, u) if c.parent.user.mailable?
+					Mailer.deliver_reply(c, c.parent.user.email, u, unsub) if c.parent.user.mailable?
 					mailed[c.parent.user] = true
 				end
 				t = c.parent
 				while t do
 					if t.user != c.user and not mailed[t.user] and t.user.mail_on_thread
-						Mailer.deliver_reply(c, t.user.email, u) if t.user.mailable?
+						Mailer.deliver_reply(c, t.user.email, u, unsub) if t.user.mailable?
 						mailed[t.user] = true
 					end
 					t = t.parent
 				end
 			end
 		else
-			(Role.find_by_name('moderator').users.collect &:email).each do |e|
-				Mailer.deliver_moderator(c, e, u) unless e.blank?
+			Role.find_by_name('moderator').users.each do |m|
+				Mailer.deliver_moderator(c, m.email, u) if m.mailable?
 			end
 		end
 	end
