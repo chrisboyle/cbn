@@ -157,7 +157,7 @@ class CommentsController < ApplicationController
 	protected
 
 	def comment_frag_url(c)
-		return url_for(c.post)+'#'+dom_id(c)
+		return polymorphic_url(c.post,:secure=>false)+'#'+dom_id(c)
 	end
 
 	def new_comment_from_params

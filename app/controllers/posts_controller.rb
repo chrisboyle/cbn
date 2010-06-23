@@ -43,7 +43,7 @@ class PostsController < ApplicationController
 		respond_to do |format|
 			if @post.save
 				(User.find_all_by_mail_on_post(true).collect &:email).each do |e|
-					Mailer.deliver_post(@post, e, url_for(@post)) if e
+					Mailer.deliver_post(@post, e, polymorphic_url(@post,:secure=>false)) if e
 				end
 				flash[:notice] = 'Page was successfully created.'
 				format.html { redirect_to(@post) }
@@ -59,7 +59,7 @@ class PostsController < ApplicationController
 		respond_to do |format|
 			if @post.update_attributes(params[@post.class.name.underscore])
 				(@post.comments.collect &:user).uniq.each do |u|
-					Mailer.deliver_edit(@post, u.email, url_for(@post)) if u.mail_on_edit and u.mailable?
+					Mailer.deliver_edit(@post, u.email, polymorphic_url(@post,:secure=>false)) if u.mail_on_edit and u.mailable?
 				end
 				flash[:notice] = 'Page was successfully updated.'
 				format.html { redirect_to(@post) }
