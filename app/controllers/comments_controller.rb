@@ -190,9 +190,13 @@ class CommentsController < ApplicationController
 
 	def notify_comment(c, u)
 		if c.approved
+			mailed = {}
+			Role.find_by_name('admin').users.each do |a|
+				Mailer.deliver_comment_admin(c, a.email, u) unless a.email.blank?
+				mailed[a] = true
+			end
 			if c.parent
-				mailed = {}
-				if c.parent.user != c.user and c.parent.user.mail_on_reply
+				if c.parent.user != c.user and not mailed[c.parent.user] and c.parent.user.mail_on_reply
 					Mailer.deliver_reply(c, c.parent.user.email, u) if c.parent.user.mailable?
 					mailed[c.parent.user] = true
 				end

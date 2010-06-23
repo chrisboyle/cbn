@@ -1,0 +1,7 @@
+There's a new comment on "#{@comment.post.title}" at #{EMAIL_SITE_NAME}:
+=""
+-it = @comment.identity.icon_and_text
+\[#{raw it[0]}] #{raw it[1]} wrote:
+!=@comment.body.gsub(/^/,'> ')
+=""
+!=@link

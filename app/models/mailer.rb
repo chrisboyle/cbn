@@ -42,4 +42,12 @@ class Mailer < ActionMailer::Base
 		subject "New user on #{EMAIL_SITE_NAME}: #{truncate(t, :length => 40)}"
 		body :user => user, :link => link
 	end
+
+	def comment_admin(comment, to, link)
+		from MAIL_FROM
+		#bcc BCC
+		recipients to
+		subject "New comment on #{EMAIL_SITE_NAME}: #{truncate(comment.body.gsub(/\n+/,'  '), :length => 40)}"
+		body :comment => comment, :link => link
+	end
 end
