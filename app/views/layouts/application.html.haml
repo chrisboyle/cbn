@@ -9,6 +9,7 @@
 		-if not current_page? canonical
 			%link{:rel => 'canonical', :href => canonical}
 		%link{:rel => 'shortcut icon', :href => image_path('favicon.png'), :type => 'image/png'}
+		%link{:rel => 'apple-touch-icon', :href => image_path('touch-icon.png'), :type => 'image/png'}
 		-if request.ssl? and current_page? '/' and request.query_string.blank? and defined? OPENID2_PROVIDER and defined? OPENID2_LOCAL_ID
 			%link{:rel => 'openid2.provider', :href => OPENID2_PROVIDER}
 			%link{:rel => 'openid2.local_id', :href => OPENID2_LOCAL_ID}
