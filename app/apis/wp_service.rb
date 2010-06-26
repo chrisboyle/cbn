@@ -8,8 +8,8 @@ class WPService < ActionWebService::Base
 		controller = Thread.current[:xmlrpc_controller]
 		controller.auth(user,pw)
 		[Blog::Blog.new(
-			:url => controller.root_url,
-			:xmlrpc => controller.xmlrpc_api_url(:secure=>Rails.env.production? ? true : nil),
+			:url => controller.send(:root_url),
+			:xmlrpc => controller.send(:xmlrpc_api_url, :secure=>Rails.env.production? ? true : nil),
 			:blogid => 1,
 			:blogName => SITE_NAME
 		)]
