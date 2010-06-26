@@ -18,6 +18,8 @@ ActionController::Routing::Routes.draw do |map|
 		t.feed        'feed', :controller => :posts, :action => :index, :format => 'atom', :conditions => {:method => :get}
 	end
 
+	map.xmlrpc_api    'xmlrpc.php', :controller => :xmlrpc, :action => :api
+
 	map.redirect      'blog', '/'
 	map.redirect      'journal', '/'
 	map.redirect      'rss', '/feed'

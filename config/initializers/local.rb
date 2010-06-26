@@ -26,6 +26,7 @@ LOGIN_BUTTONS = [
 
 GOOGLE_ANALYTICS = YAML.load(File.read("#{RAILS_ROOT}/config/google_analytics.yml"))
 TWITTER = YAML.load(File.read("#{RAILS_ROOT}/config/twitter.yml"))
+XMLRPC_AUTH = YAML.load(File.read("#{RAILS_ROOT}/config/xmlrpc.yml"))
 
 require 'resource_hacks_hack'
 require 'authlogic_oauth_hacks'

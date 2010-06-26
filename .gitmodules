@@ -34,3 +34,6 @@
 [submodule "vendor/plugins/redirect_routing"]
 	path = vendor/plugins/redirect_routing
 	url = git://github.com/fnando/redirect_routing.git
+[submodule "vendor/plugins/action_web_service"]
+	path = vendor/plugins/action_web_service
+	url = git://github.com/rubyjedi/actionwebservice

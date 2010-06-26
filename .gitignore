@@ -10,6 +10,7 @@ config/database.yml
 config/facebooker.yml
 config/google_analytics.yml
 config/twitter.yml
+config/xmlrpc.yml
 config/initializers/session_store.rb
 config/friendships
 .*.swp

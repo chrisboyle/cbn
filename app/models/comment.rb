@@ -8,7 +8,7 @@ class Comment < ActiveRecord::Base
 	validates_presence_of :identity
 	validates_presence_of :post
 	validate do |c|
-		errors.add_to_base("Invalid parent comment") if c.parent and (c.parent.post_id != c.post_id or c.parent_id == c.id)
+		c.errors.add_to_base("Invalid parent comment") if c.parent and (c.parent.post_id != c.post_id or c.parent_id == c.id)
 	end
 
 	# This could be done with using_access_control(:include_read) but this is faster

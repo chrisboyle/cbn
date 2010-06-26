@@ -4,6 +4,13 @@ class PostsController < ApplicationController
 	cache_sweeper :tree_sweeper
 
 	def index
+		# Wordpress hack
+		p = params[:p]
+		if request.path == '/' and p
+			redirect_to ((p.to_i<0) ? StaticPage.find(-1*p.to_i) : Post.find(p)), :status => :moved_permanently
+			return
+		end
+
 		load_tag if params[:acts_as_taggable_on_tag_id]
 		before, after = Time.from_timestamp(params[:before]), Time.from_timestamp(params[:after])
 		rev = after and not before
