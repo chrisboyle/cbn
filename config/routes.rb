@@ -39,6 +39,7 @@ ActionController::Routing::Routes.draw do |map|
 	map.redirect      'twitter', 'http://twitter.com/c_boyle'
 	map.redirect      'wishlist', 'http://www.amazon.co.uk/gp/registry/wishlist/RC97AUMCBBGA?reveal=unpurchased&filter=all&sort=priority&layout=standard'
 	map.redirect      'xmms-arts', 'http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=456745'
+	map.redirect      'projects/android-puzzles/changes', 'http://github.com/chrisboyle/sgtpuzzles/commits'
 
 	map.resources     :static_pages, :except => :index, :member_path => ':name'
 end
