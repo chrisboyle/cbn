@@ -39,7 +39,7 @@ body
 article, aside, footer, header, hgroup, nav, section
 	display: block
 
-footer
+.footer
 	clear: both
 	margin-top: 4em
 	padding-bottom: 1em
@@ -110,6 +110,7 @@ button, input[type="button"], input[type="submit"]
 		width: 1px 0px 1px 1px
 	margin-top: 0.5em
 	margin-right: -1em
+	margin-bottom: 4em
 	padding-right: 0.5em
 	padding-left: 0.5em
 	ul
@@ -350,11 +351,10 @@ table
 		margin-top: 0.1em
 	.tags
 		margin-left: 0.5em
-	header
-		h1, h2
-			display: inline
-		.version
-			margin-left: 0.5em
+	h1, h2
+		display: inline
+	.version
+		margin-left: 0.5em
 	.downloads
 		p, ul
 			float: left
@@ -404,11 +404,13 @@ table
 		margin-bottom: 0.3em
 
 @media print
-	#tree, #identblock
+	#tree, #identblock, .controls, .footer
 		display: none
 	#page
 		width: auto
 		border: none
+	body, #page
+		background: auto
 	#content
 		margin-right: 0
 	#rootbanner

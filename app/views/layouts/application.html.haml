@@ -24,8 +24,8 @@
 		#page
 			=render 'user_sessions/identblock'
 
-			%nav#tree
-				=render :partial => 'common/tree', :object => StaticPage.all
+			#tree
+				%nav= render :partial => 'common/tree', :object => StaticPage.all
 
 			#content{:class => controller ? (controller.controller_name=='tags' ? 'tags_controller' : controller.controller_name) : nil}
 				-if flash[:notice]
@@ -37,9 +37,10 @@
 
 				=yield
 
-			%footer
-				%hr
-				Opinions my own unless otherwise stated. &copy; Chris Boyle 2010, comments &copy; their authors, icons &copy;/&trade; their owners. Trouble with this site? Use the #{link_to 'public bug tracker', 'http://github.com/chrisboyle/cbn/issues'} or #{link_to 'contact me', '/contact'}.
+			.footer
+				%footer
+					%hr
+					Opinions my own unless otherwise stated. &copy; Chris Boyle 2010, comments &copy; their authors, icons &copy;/&trade; their owners. Trouble with this site? Use the #{link_to 'public bug tracker', 'http://github.com/chrisboyle/cbn/issues'} or #{link_to 'contact me', '/contact'}.
 
 		=javascript_include_tag :all, :cache => true
 		=yield :js
