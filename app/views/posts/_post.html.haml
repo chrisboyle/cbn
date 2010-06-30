@@ -1,13 +1,14 @@
 -is_current = current_page? post
-%div[post]{:class => is_current ? nil : 'hentry'}
+%article[post]{:class => is_current ? nil : 'hentry'}
 	-cache post.cache_key + (is_current ? '-c' : '') do
 		-title = link_to_unless_current(post.title, post, :rel => 'bookmark')
-		-if is_current
-			%h1= title
-		-else
-			%h2.entry-title= title
-		=render :partial => 'common/times', :format => 'html', :object => post
-		.tags= render :partial => 'tags/tags', :object => post.tags
+		%header
+			-if is_current
+				%h1= title
+			-else
+				%h2.entry-title= title
+			=render :partial => 'common/times', :format => 'html', :object => post
+			.tags= render :partial => 'tags/tags', :object => post.tags
 		.entry-content= render :partial => 'common/body', :format => 'html', :object => post.body
 	-if not is_current
 		=link_to "Comments (#{post.comments.count})", url_for(post)+'#comments'

@@ -40,7 +40,7 @@ h1, h2, h3, h4, h5 {
   text-align: center; }
     </style>
   </head>
-  <body onload="document.getElementById('searchinput').focus()">
+  <body>
     <div id="page">
       <h1>404 Not Found</h1>
       <p>In May 2010 I took this site apart and put it back together. There may have been parts left over. If you think this request should have worked, <a href="mailto:chris@boyle.name">email me</a>.</p>
@@ -48,7 +48,7 @@ h1, h2, h3, h4, h5 {
       <form class="searchForm" method="get" action="http://www.google.co.uk/search">
         <div id="searchbox">
           <input type="hidden" name="as_sitesearch" value="chris.boyle.name" />
-          <input type="text" name="q" class="search" id="searchinput" />
+          <input type="search" autofocus="autofocus" name="q" class="search" id="searchinput" />
           <input type="submit" value="Search" />
         </div>
       </form>

@@ -1,8 +1,8 @@
 -is_current = current_page? project
 -cache project.cache_key + (is_current ? '-c' : '') do
-	%div[project]{:class => is_current ? nil : 'hentry'}
+	%article[project]{:class => is_current ? nil : 'hentry'}
 		-title = link_to_unless_current(project.title, project, :rel => 'bookmark')
-		.heading
+		%header
 			-if is_current
 				%h1= title
 			-else
@@ -10,20 +10,20 @@
 			-if project.version.present?
 				%span.version
 					v#{project.version}
-		.meta
-			.date_duration
-				-if project.start
-					%abbr.dtstart{:title => project.start.strftime('%Y-%m-%d')}= project.start.strftime('%B %Y')
-				-else
-					unknown
-				\-
-				-if project.end
-					%abbr.dtend{:title => project.end.strftime('%Y-%m-%d')}= project.end.strftime('%B %Y')
-				-else
-					present
-				(#{project.status})
-			.tags= render :partial => 'tags/tags', :object => project.tags
-			.clearleft
+			.meta
+				.date_duration
+					-if project.start
+						%abbr.dtstart{:title => project.start.strftime('%Y-%m-%d')}= project.start.strftime('%B %Y')
+					-else
+						unknown
+					\-
+					-if project.end
+						%abbr.dtend{:title => project.end.strftime('%Y-%m-%d')}= project.end.strftime('%B %Y')
+					-else
+						present
+					(#{project.status})
+				.tags= render :partial => 'tags/tags', :object => project.tags
+				.clearleft
 		-if project.vcs.present?
 			.vcslinks
 				-if project.android_market_id.present? and not is_current
