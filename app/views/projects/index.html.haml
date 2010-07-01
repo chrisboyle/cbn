@@ -6,4 +6,4 @@
 	=render @projects
 
 -if permitted_to? :create, :projects
-	=button_to 'New project', new_project_path, :method => :get
+	.controls= button_to 'New project', new_project_path, :method => :get

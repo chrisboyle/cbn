@@ -6,5 +6,16 @@ class TagsController < ApplicationController
 
 	def index
 		@tags = Tag.all(:order => :name).select {|t| Post.tagged_with(t).present? or Project.tagged_with(t).present?}
+		respond_to do |format|
+			format.html
+			format.pdf { @template.template_format = 'html'; render :pdf => 'tags' }
+		end
+	end
+
+	def show
+		respond_to do |format|
+			format.html
+			format.pdf { @template.template_format = 'html'; render :pdf => @tag.name }
+		end
 	end
 end

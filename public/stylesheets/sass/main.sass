@@ -45,8 +45,10 @@ article, aside, footer, header, hgroup, nav, section
 	padding-bottom: 1em
 	font-size: 66%
 	color: $dimtext
+	page-break-before: avoid
+	page-break-inside: avoid
 	hr
-		color: $dimtext
+		color: $dimborders
 		background-color: $dimborders
 	a
 		white-space: nowrap
@@ -59,6 +61,12 @@ a
 
 a:hover
 	text-decoration: underline
+
+h1, h2, h3, h4, h5
+	page-break-after: avoid
+
+li
+	page-break-inside: avoid
 
 .tooltip
 	background: $pagebg
@@ -75,10 +83,10 @@ textarea
 
 hr
 	clear: left
-	color: black
+	color: $borders
 	background-color: $borders
-	height: 1px
 	border: 0px solid $borders
+	height: 1px
 	width: 100%
 	display: block
 
@@ -120,6 +128,7 @@ button, input[type="button"], input[type="submit"]
 		ul
 			padding-left: 1em
 	hr
+		color: $borderfill
 		background-color: $borderfill
 		border: 0px solid $borderfill
 	.tags
@@ -402,19 +411,38 @@ table
 	p
 		margin-top: 0.3em
 		margin-bottom: 0.3em
+	.education, .experience
+		page-break-inside: avoid
+
+.pdflink
+	margin-bottom: 0.5em
+	span
+		vertical-align: middle
 
 @media print
-	#tree, #identblock, .controls, .footer
+	#tree, #identblock, .controls, .pdflink, #new_comment, #comment_hr
 		display: none
 	#page
 		width: auto
 		border: none
-	body, #page
-		background: auto
+	#page, .comment .meta, .android_market
+		background: #ffffff
+	.comment, .CodeRay .code, .android_market
+		border-color: #000000
+	.comment .meta
+		border-bottom-color: #000000
 	#content
 		margin-right: 0
+	#content.static_pages h1
+		text-align: center
 	#rootbanner
+		h1
+			text-align: left
 		h1, .tagline
 			margin-left: 0
 	.face, .favicons
 		display: none
+	.footer hr
+		color: #000000
+		background-color: #000000
+		border-color: #000000

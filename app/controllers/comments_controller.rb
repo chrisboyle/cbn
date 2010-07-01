@@ -13,6 +13,7 @@ class CommentsController < ApplicationController
 				redirect_to :controller => :users, :action => :show, :id => (@user == current_user ? 'current' : @user.id), :anchor => 'comments' if @user
 			end
 			format.xml  { render :xml => @comments }
+			format.pdf { @template.template_format = 'html'; render :pdf => 'comments' }
 		end
 	end
 

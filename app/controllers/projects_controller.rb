@@ -9,6 +9,7 @@ class ProjectsController < ApplicationController
 		respond_to do |format|
 			format.html
 			format.xml { render :xml => @projects }
+			format.pdf { @template.template_format = 'html'; render :pdf => 'projects' }
 		end
 	end
 
@@ -16,6 +17,7 @@ class ProjectsController < ApplicationController
 		respond_to do |format|
 			format.html
 			format.xml { render :xml => @project }
+			format.pdf { @template.template_format = 'html'; render :pdf => @project.name }
 		end
 	end
 

@@ -3,22 +3,12 @@ class StaticPagesController < ApplicationController
 	cache_sweeper :fragment_sweeper, :only => [:update,:destroy]
 	cache_sweeper :tree_sweeper
 
-	def index
-		@static_pages = StaticPage.all(:order => :title)
-
-		respond_to do |format|
-			format.html # index.html.haml
-			format.xml  { render :xml => @static_pages }
-			format.json { render :json => @static_pages }
-			format.atom
-		end
-	end
-
 	def show
 		respond_to do |format|
 			format.html
 			format.xml  { render :xml => @static_page }
 			format.json { render :json => @static_page }
+			format.pdf { @template.template_format = 'html'; render :pdf => @static_page.name }
 		end
 	end
 

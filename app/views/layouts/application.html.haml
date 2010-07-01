@@ -5,6 +5,8 @@
 		%title<
 			-title = yield :title
 			=(title ? (title+" - ") : "") + SITE_NAME
+		%meta{:name => 'author', :content => AUTHOR_NAME}
+		%base{:href => root_url}
 		-canonical = url_for(:secure => false, :only_path => false, :host => request.host)
 		-if not current_page? canonical
 			%link{:rel => 'canonical', :href => canonical}
@@ -37,10 +39,7 @@
 
 				=yield
 
-			.footer
-				%footer
-					%hr
-					Opinions my own unless otherwise stated. &copy; Chris Boyle 2010, comments &copy; their authors, icons &copy;/&trade; their owners. Trouble with this site? Use the #{link_to 'public bug tracker', 'http://github.com/chrisboyle/cbn/issues'} or #{link_to 'contact me', '/contact'}.
+			=render 'common/footer'
 
 		=javascript_include_tag :all, :cache => true
 		=yield :js

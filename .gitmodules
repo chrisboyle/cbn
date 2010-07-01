@@ -37,3 +37,6 @@
 [submodule "vendor/plugins/action_web_service"]
 	path = vendor/plugins/action_web_service
 	url = git://github.com/rubyjedi/actionwebservice
+[submodule "vendor/plugins/wicked_pdf"]
+	path = vendor/plugins/wicked_pdf
+	url = git://github.com/mileszs/wicked_pdf.git

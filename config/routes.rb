@@ -1,8 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
 	map.root          :controller => :posts, :action => :index, :is_root => true, :conditions => {:method => :get}
 	map.resources     :posts, :except => :index, :member_path => ':year/:month/:name', :member_path_requirements => {:year => /\d{4}/, :month => /\d{2}/} do |p|
-	map.month         ':year/:month', :controller => :posts, :action => :index, :requirements => {:year => /\d{4}/, :month => /\d{2}/}, :conditions => {:method => :get}
-	map.month         ':year', :controller => :posts, :action => :index, :requirements => {:year => /\d{4}/}, :conditions => {:method => :get}
+	map.month         ':year/:month.:format', :controller => :posts, :action => :index, :requirements => {:year => /\d{4}/, :month => /\d{2}/}, :conditions => {:method => :get}
+	map.month         ':year.:format', :controller => :posts, :action => :index, :requirements => {:year => /\d{4}/}, :conditions => {:method => :get}
 		p.resources   :comments, :only => [:index,:create,:new]
 	end
 	map.feed          'feed', :controller => :posts, :action => :index, :format => 'atom', :conditions => {:method => :get}

@@ -1,7 +1,7 @@
--is_current = current_page? static_page
+-is_current = (current_page?(static_page) or current_page?(polymorphic_path(static_page, :format => :pdf)))
 -cache static_page.cache_key + (is_current ? '-c' : '') do
 	%article[static_page]{:class => ((current_page? static_page) ? '' : 'hentry') + (static_page.name=='cv' ? ' hresume' : '')}
-		-title = link_to_unless_current(static_page.title, static_page, :rel => 'bookmark')
+		-title = link_to_unless(is_current, static_page.title, static_page, :rel => 'bookmark')
 		%header
 			-if is_current
 				%h1= title

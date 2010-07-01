@@ -28,6 +28,7 @@ class PostsController < ApplicationController
 			format.xml  { render :xml => @posts }
 			format.json { render :json => @posts }
 			format.atom
+			format.pdf { @template.template_format = 'html'; render :pdf => params[:year] ? params[:month] ? "#{params[:year]}-#{params[:month]}" : "#{params[:year]}" : 'posts' }
 		end
 	end
 
@@ -36,6 +37,7 @@ class PostsController < ApplicationController
 			format.html
 			format.xml  { render :xml => @post }
 			format.json { render :json => @post }
+			format.pdf { @template.template_format = 'html'; render :pdf => @post.name }
 		end
 	end
 
