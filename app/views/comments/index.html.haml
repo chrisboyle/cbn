@@ -1,4 +1,4 @@
-=titleh1 'Recent comments'
+=titleh1 @post ? "Comments on #{@post.title}" : @user ? "Comments by #{@user.identity.icon_and_text[1]}" : 'Recent comments'
 -if @comments.empty?
 	.placeholder No comments yet
 -else
