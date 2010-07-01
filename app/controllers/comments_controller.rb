@@ -193,7 +193,7 @@ class CommentsController < ApplicationController
 		if c.approved
 			mailed = {}
 			Role.find_by_name('admin').users.each do |a|
-				Mailer.deliver_comment_admin(c, a.email) if a.mailable?
+				Mailer.deliver_comment_admin(c, a.email, u) if a.mailable?
 				mailed[a] = true
 			end
 			if c.parent
