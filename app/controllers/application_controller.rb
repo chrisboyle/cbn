@@ -27,6 +27,9 @@ class ApplicationController < ActionController::Base
 	end
 
 	def default_url_options(options = {})
+		if params[:format] == 'pdf' and options[:format] != :pdf
+			options.merge!({:secure => false, :only_path => false})
+		end
 		if options[:year].is_a?(Post)
 			post = options[:year]
 			options.merge!({:year => post.year, :month => post.month, :name => post.name})
