@@ -43,11 +43,11 @@ class Mailer < ActionMailer::Base
 		body :user => user, :link => link
 	end
 
-	def comment_admin(comment, to, link)
+	def comment_admin(comment, to, link, is_edit)
 		from MAIL_FROM
 		#bcc BCC
 		recipients to
-		subject "New comment on #{EMAIL_SITE_NAME}: #{truncate(comment.body.gsub(/\n+/,'  '), :length => 40)}"
-		body :comment => comment, :link => link
+		subject "#{is_edit ? 'Edited' : 'New'} comment on #{EMAIL_SITE_NAME}: #{truncate(comment.body.gsub(/\n+/,'  '), :length => 40)}"
+		body :comment => comment, :link => link, :is_edit => is_edit
 	end
 end
