@@ -46,7 +46,7 @@ class UserSessionsController < ApplicationController
 					end
 				end
 				# TODO: respect Authlogic's cookie expiry time (3 months is the default)
-				cookies[:secure_cookies_exist] = { :value => true, :httponly => true, :expires => @user_session.remember_me ? 3.months.from_now : nil }
+				cookies[:secure_cookies_exist] = { :value => true, :httponly => true, :domain => '.'+ENV['HOSTNAME'], :expires => @user_session.remember_me ? 3.months.from_now : nil }
 				flash[:notice] = "Successfully signed in."
 				redirect_to session.delete(:next) || root_url
 			else
@@ -59,7 +59,7 @@ class UserSessionsController < ApplicationController
 		@user_session = UserSession.find
 		@user_session.destroy if @user_session
 		flash[:notice] = "Successfully signed out."
-		cookies.delete :secure_cookies_exist
+		cookies.delete :secure_cookies_exist, :domain => '.'+ENV['HOSTNAME']
 		redirect_to(params[:next] || :back)
 	end
 
