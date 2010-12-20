@@ -8,6 +8,9 @@ class ApplicationController < ActionController::Base
 	helper :all # include all helpers, all the time
 	helper_method :current_user
 	protect_from_forgery # See ActionController::RequestForgeryProtection for details
+	rescue_from ActionController::MethodNotAllowed do |e|
+		render :file => Rails.root.join('public','405.html'), :status => 405
+	end
 	before_filter :canonicalise
 	after_filter :x_ua_compatible
 	after_filter :cache_control
