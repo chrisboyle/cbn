@@ -16,6 +16,7 @@ class PostsController < ApplicationController
 		rev = after and not before
 		p = Post
 		if @tag then p = p.tagged_with(@tag) end
+		if not has_role? :admin then p = p.by_draft(false) end
 		if params[:year] then p = p.year_month(params[:year],params[:month]) end
 		@posts = p.before_after(before, after) \
 			.all(:order => rev ? 'created_at' : 'created_at DESC', :limit => PAGE_SIZE+1)
@@ -67,7 +68,12 @@ class PostsController < ApplicationController
 
 	def update
 		respond_to do |format|
-			if @post.update_attributes(params[@post.class.name.underscore])
+			was_draft = @post.draft?
+			@post.attributes = params[@post.class.name.underscore]
+			if was_draft and not @post.draft? then
+				@post.created_at = @post.updated_at = Time.now
+			end
+			if @post.save
 				unsub = url_for(:controller => :users, :action => :show, :id => 'current', :secure => true)
 				(@post.comments.collect &:user).uniq.each do |u|
 					Mailer.deliver_edit(@post, u.email, polymorphic_url(@post,:secure=>false), unsub) if u.mail_on_edit and u.mailable?

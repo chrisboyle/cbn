@@ -13,7 +13,7 @@ class MetaWeblogService < ActionWebService::Base
 		p.title = struct['title']
 		p.body = struct['description']
 		if p.respond_to?(:tag_list) then p.tag_list = struct['mt_keywords'] end
-		# TODO: publish/draft
+		p.draft = ! publish
 		p.save!
 		p.id
 	end
@@ -25,7 +25,8 @@ class MetaWeblogService < ActionWebService::Base
 		p.title = struct['title']
 		p.body = struct['description']
 		if p.respond_to?(:tag_list) then p.tag_list = struct['mt_keywords'] end
-		# TODO: publish/draft
+		if not p.draft and publish then p.created_at = p.updated_at = Time.now end
+		p.draft = ! publish
 		p.save!
 	end
 
@@ -64,7 +65,7 @@ class MetaWeblogService < ActionWebService::Base
 			:mt_text_more => '',
 			:dateCreated => p.created_at ? p.created_at.dup.utc : Time.now.utc,
 			:mt_keywords => (p.respond_to? :tag_list) ? tag_list : '',
-			:post_status => 'publish'
+			:post_status => if p.draft then 'draft' else 'publish' end
 		)
 	end
 end

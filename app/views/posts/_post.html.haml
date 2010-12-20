@@ -1,5 +1,5 @@
 -is_current = (current_page?(post) or current_page?(polymorphic_path(post, :format => :pdf)))
-%article[post]{:class => is_current ? nil : 'hentry'}
+%article[post]{:class => [is_current ? nil : 'hentry', if post.draft? then 'draft' end].join(' ')}
 	-cache post.cache_key + (is_current ? '-c' : '') do
 		-title = link_to_unless(is_current, post.title, post, :rel => 'bookmark')
 		%header

@@ -14,6 +14,9 @@
 		=f.label :tag_list
 		=f.text_field :tag_list
 	.field
+		=f.check_box :draft
+		=f.label :draft
+	.field
 		.label
 			=f.label :body
 		~f.text_area :body, :onkeydown => 'checkTab(this,event)'

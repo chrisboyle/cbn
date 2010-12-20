@@ -27,7 +27,7 @@
 			=render 'user_sessions/identblock'
 
 			#tree
-				%nav= render :partial => 'common/tree', :object => StaticPage.all
+				%nav= render :partial => 'common/tree', :object => if has_role? :admin then StaticPage.all else StaticPage.by_draft(false) end
 
 			#content{:class => controller ? (controller.controller_name=='tags' ? 'tags_controller' : controller.controller_name) : nil}
 				-if flash[:notice]

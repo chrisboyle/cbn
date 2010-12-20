@@ -15,4 +15,8 @@ class StaticPage < ActiveRecord::Base
 	def to_param
 		name
 	end
+
+	named_scope :by_draft, Proc.new {|d|
+		{:conditions => ['draft = ?', d]}
+	}
 end

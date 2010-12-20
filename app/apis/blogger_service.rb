@@ -23,6 +23,8 @@ class BloggerService < ActionWebService::Base
 		controller.auth(user,pw)
 		p = Post.find_by_id(post_id)
 		p.body = content
+		if not p.draft and publish then p.created_at = p.updated_at = Time.now end
+		p.draft = ! publish
 		p.save!
 	end
 

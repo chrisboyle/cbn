@@ -16,6 +16,10 @@ class Project < ActiveRecord::Base
 		end
 	end
 
+	named_scope :by_draft, Proc.new {|d|
+		{:conditions => ['draft = ?', d]}
+	}
+
 	def to_param
 		name
 	end

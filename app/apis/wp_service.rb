@@ -118,7 +118,7 @@ class WPService < ActionWebService::Base
 			:date_created_gmt => p.created_at ? p.created_at.dup.utc : Time.now.utc,
 			:userid => 1,
 			:page_id => -1*p.id,  # aforementioned ugly hack
-			:page_status => 'publish',
+			:page_status => if p.draft? then 'draft' else 'publish' end,
 			:description => p.body,
 			:title => p.title,
 			:link => u,

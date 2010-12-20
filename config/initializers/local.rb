@@ -1,3 +1,7 @@
+require "socket"
+HOSTNAME = if  Rails.env.production? then 'chris.boyle.name' else Socket::gethostname end
+DOMAIN = if HOSTNAME.include? '.' then ".#{HOSTNAME}" else HOSTNAME end
+ACCEPTABLE_HOSTNAMES = [HOSTNAME, 'ipv6.'+HOSTNAME]
 AUTHOR_NAME = SITE_NAME = 'Chris Boyle'
 EMAIL_SITE_NAME = 'chris.boyle.name'
 BLOG_WORD = 'Blog'
@@ -6,12 +10,6 @@ OPENID2_PROVIDER = 'https://www.google.com/accounts/o8/ud?source=profiles'
 OPENID2_LOCAL_ID = 'http://www.google.com/profiles/chris.boyle.name'
 MAIL_FROM = 'blog@chris.boyle.name'
 BCC = 'blog@chris.boyle.name'
-if Rails.env.production?
-	ENV['HOSTNAME'] = 'chris.boyle.name'
-elsif not ENV['HOSTNAME']
-	require "socket"
-	ENV['HOSTNAME'] = Socket::gethostname
-end
 LOGIN_BUTTONS = [
 	['AOL','https://www.aol.com/'],
 	['Blogger','http://username.blogspot.com/'],

@@ -6,14 +6,16 @@
 				%li#blogtree
 					=link_to BLOG_WORD, root_path
 					%ul
-						-months = Post.all(:order => 'created_at DESC').group_by {|p| p.created_at.beginning_of_month }
+						-p = Post
+						-if not has_role? :admin then p = p.by_draft(false) end
+						-months = p.all(:order => 'created_at DESC').group_by {|p| p.created_at.beginning_of_month }
 						-months.each do |month,posts|
 							%li
 								=link_to month.strftime('%B %Y'), month.strftime('/%Y/%m')
 								-if month >= 3.months.ago
 									%ul
 										-posts.each do |post|
-											%li= link_to post.title, post
+											%li{:class => if post.draft? then 'draft' end}= link_to post.title, post
 						%li= link_to 'Recent comments', comments_path
 			-elsif page.name=='projects'
 				%li#projecttree
@@ -22,7 +24,7 @@
 						-Project.all(:order => :name).each do |p|
 							%li= link_to p.title, p
 			-else
-				%li= link_to page.title, page
+				%li{:class => if page.draft? then 'draft' end}= link_to page.title, page
 		-if permitted_to? :create, StaticPage.new
 			%li= button_to 'New page', new_static_page_path, :method => :get
 

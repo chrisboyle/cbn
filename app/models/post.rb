@@ -27,6 +27,10 @@ class Post < ActiveRecord::Base
 				after  && ['created_at > ?', after])}
 	}
 
+	named_scope :by_draft, Proc.new {|d|
+		{:conditions => ['draft = ?', d]}
+	}
+
 	def year
 		created_at.year.to_s
 	end
