@@ -8,3 +8,4 @@ Disallow: /addtz
 Disallow: /munin
 Disallow: /login
 Disallow: /admin
+Disallow: /private
