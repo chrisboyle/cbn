@@ -8,6 +8,9 @@ MAIL_FROM = 'blog@chris.boyle.name'
 BCC = 'blog@chris.boyle.name'
 if Rails.env.production?
 	ENV['HOSTNAME'] = 'chris.boyle.name'
+elsif not ENV['HOSTNAME']
+	require "socket"
+	ENV['HOSTNAME'] = Socket::gethostname
 end
 LOGIN_BUTTONS = [
 	['AOL','https://www.aol.com/'],
