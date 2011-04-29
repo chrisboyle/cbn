@@ -23,7 +23,7 @@ class StaticPagesController < ApplicationController
 		respond_to do |format|
 			if @static_page.save
 				flash[:notice] = 'Page was successfully created.'
-				format.html { redirect_to @static_page }
+				format.html { return redirect_to @static_page }
 				format.xml  { render :xml => @static_page, :status => :created, :location => @static_page }
 			else
 				format.html { render :action => :edit }
@@ -36,7 +36,7 @@ class StaticPagesController < ApplicationController
 		respond_to do |format|
 			if @static_page.update_attributes(params[@static_page.class.name.underscore])
 				flash[:notice] = 'Page was successfully updated.'
-				format.html { redirect_to(@static_page) }
+				format.html { return redirect_to(@static_page) }
 				format.xml  { head :ok }
 			else
 				format.html { render :action => :edit }
@@ -49,7 +49,7 @@ class StaticPagesController < ApplicationController
 		@static_page.destroy
 
 		respond_to do |format|
-			format.html { redirect_to root_url }
+			format.html { return redirect_to root_url }
 			format.xml  { head :ok }
 		end
 	end

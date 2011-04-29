@@ -25,7 +25,7 @@ class UsersController < ApplicationController
 		respond_to do |format|
 			if @user.update_attributes(params[:user])
 				flash[:notice] = 'Account successfully updated.'
-				format.html { redirect_to @user }
+				format.html { return redirect_to @user }
 				format.xml  { head :ok }
 			else
 				format.html { render :action => :show }
@@ -39,7 +39,7 @@ class UsersController < ApplicationController
 		flash[:notice] = 'Account successfully deleted.'
 
 		respond_to do |format|
-			format.html { redirect_to root_url }
+			format.html { return redirect_to root_url }
 			format.xml  { head :ok }
 		end
 	end
@@ -47,7 +47,7 @@ class UsersController < ApplicationController
 	def delete_comments
 		@user.comments.each &:destroy
 		respond_to do |format|
-			format.html { flash[:notice] = 'Comments successfully deleted.'; redirect_to @user }
+			format.html { flash[:notice] = 'Comments successfully deleted.'; return redirect_to @user }
 			format.xml  { head :ok }
 		end
 	end

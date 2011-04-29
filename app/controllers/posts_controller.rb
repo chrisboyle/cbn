@@ -7,8 +7,7 @@ class PostsController < ApplicationController
 		# Wordpress hack
 		p = params[:p]
 		if request.path == '/' and p
-			redirect_to ((p.to_i<0) ? StaticPage.find(-1*p.to_i) : Post.find(p)), :status => :moved_permanently
-			return
+			return redirect_to ((p.to_i<0) ? StaticPage.find(-1*p.to_i) : Post.find(p)), :status => :moved_permanently
 		end
 
 		load_tag if params[:acts_as_taggable_on_tag_id]
@@ -57,7 +56,7 @@ class PostsController < ApplicationController
 					Mailer.deliver_post(@post, u.email, polymorphic_url(@post,:secure=>false), unsub) if u.mailable?
 				end
 				flash[:notice] = 'Page was successfully created.'
-				format.html { redirect_to(@post) }
+				format.html { return redirect_to(@post) }
 				format.xml  { render :xml => @post, :status => :created, :location => @post }
 			else
 				format.html { render :action => :edit }
@@ -79,7 +78,7 @@ class PostsController < ApplicationController
 					Mailer.deliver_edit(@post, u.email, polymorphic_url(@post,:secure=>false), unsub) if u.mail_on_edit and u.mailable?
 				end
 				flash[:notice] = 'Page was successfully updated.'
-				format.html { redirect_to(@post) }
+				format.html { return redirect_to(@post) }
 				format.xml  { head :ok }
 			else
 				format.html { render :action => :edit }
@@ -92,7 +91,7 @@ class PostsController < ApplicationController
 		@post.destroy
 
 		respond_to do |format|
-			format.html { redirect_to root_url }
+			format.html { return redirect_to root_url }
 			format.xml  { head :ok }
 		end
 	end

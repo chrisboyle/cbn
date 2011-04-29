@@ -9,8 +9,8 @@ class CommentsController < ApplicationController
 
 		respond_to do |format|
 			format.html do
-				redirect_to :controller => :posts, :action => :show, :anchor => 'comments' if @post
-				redirect_to :controller => :users, :action => :show, :id => (@user == current_user ? 'current' : @user.id), :anchor => 'comments' if @user
+				return redirect_to :controller => :posts, :action => :show, :anchor => 'comments' if @post
+				return redirect_to :controller => :users, :action => :show, :id => (@user == current_user ? 'current' : @user.id), :anchor => 'comments' if @user
 			end
 			format.xml  { render :xml => @comments }
 			format.pdf { @template.template_format = 'html'; render :pdf => 'comments' }
@@ -19,14 +19,14 @@ class CommentsController < ApplicationController
 
 	def show
 		respond_to do |format|
-			format.html { redirect_to comment_frag_url(@comment) }
+			format.html { return redirect_to comment_frag_url(@comment) }
 			format.xml  { render :xml => @comment }
 		end
 	end
 
 	def new
 		respond_to do |format|
-			format.html { redirect_to :controller => :posts, :action => :show, :anchor => 'new_comment' }
+			format.html { return redirect_to :controller => :posts, :action => :show, :anchor => 'new_comment' }
 			format.xml  { render :xml => @comment }
 		end
 	end
@@ -43,7 +43,7 @@ class CommentsController < ApplicationController
 		if not @comment.identity then raise "Anonymous comments are not allowed" end
 		respond_to do |format|
 			if (params[:_commit] || params[:commit]) == 'Cancel'
-				format.html { redirect_to @comment.post }
+				format.html { return redirect_to @comment.post }
 				format.js do
 					if @comment.parent
 						t = "reply_to_#{dom_id(@comment.parent)}"
@@ -54,7 +54,7 @@ class CommentsController < ApplicationController
 				end
 			elsif @comment.save
 				notify_comment(@comment, comment_frag_url(@comment))
-				format.html { redirect_to @post }
+				format.html { return redirect_to @post }
 				format.js
 			else
 				format.html { render :controller => :posts, :action => :show }
@@ -73,7 +73,7 @@ class CommentsController < ApplicationController
 	def update
 		respond_to do |format|
 			if (params[:_commit] || params[:commit]) == 'Cancel'
-				format.html { redirect_to @comment }
+				format.html { return redirect_to @comment }
 				format.js   { render(:update) {|p| p.replace dom_id(@comment), :partial => @comment}}
 			else
 				@comment.attributes = params[:comment]
@@ -84,7 +84,7 @@ class CommentsController < ApplicationController
 					end
 					format.html do
 						flash[:notice] = 'Comment was successfully updated.'
-						redirect_to @comment
+						return redirect_to @comment
 					end
 					format.js
 					format.xml  { head :ok }
@@ -108,7 +108,7 @@ class CommentsController < ApplicationController
 		u.save!
 		u.comments.each {|c| c.approved = true; c.save! }
 		respond_to do |format|
-			format.html { redirect_to @comment }
+			format.html { return redirect_to @comment }
 			format.js { render(:update) {|p| p.redirect_to @comment }}
 		end
 	end
@@ -127,7 +127,7 @@ class CommentsController < ApplicationController
 		end
 
 		respond_to do |format|
-			format.html { redirect_to @comment.post }
+			format.html { return redirect_to @comment.post }
 			format.js do
 				render :update do |p|
 					if @comment.is_visible_to? current_user and not deleted and not params[:context]
@@ -180,10 +180,10 @@ class CommentsController < ApplicationController
 			@comment.approved = a
 			respond_to do |format|
 				if @comment.save
-					format.html { redirect_to @comment }
+					format.html { return redirect_to @comment }
 					format.js   { render(:update) {|p| p.replace dom_id(@comment), :partial => @comment}}
 				else
-					format.html { flash[:error] = 'Failed to update comment'; redirect_to @comment }
+					format.html { flash[:error] = 'Failed to update comment'; return redirect_to @comment }
 					format.js   { render(:update) {|p| p.alert 'Failed to update comment' }}
 				end
 			end

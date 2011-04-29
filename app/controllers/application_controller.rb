@@ -63,13 +63,11 @@ class ApplicationController < ActionController::Base
 			if not b.include? '/'
 				p = Rails.root.join('public', 'download', b)
 				if p.exist? and p.file?
-					redirect_to "/download/#{b}", :status => :moved_permanently
-					return
+					return redirect_to "/download/#{b}", :status => :moved_permanently
 				end
 				p = Rails.root.join('public', 'tmp', b)
 				if p.exist? and p.file?
-					redirect_to "/tmp/#{b}"
-					return
+					return redirect_to "/tmp/#{b}"
 				end
 			end
 			super(e)
@@ -100,7 +98,7 @@ class ApplicationController < ActionController::Base
 		end
 		login_page = url_for :controller => :user_sessions, :action => :new, :secure => true, :host => request.host
 		respond_to do |format|
-			format.html { redirect_to login_page }
+			format.html { return redirect_to login_page }
 			format.js { render(:update) {|p| p.redirect_to login_page }}
 			format.all { render :file => "#{RAILS_ROOT}/public/403.html", :status => '403 Forbidden' }
 		end
@@ -130,9 +128,9 @@ class ApplicationController < ActionController::Base
 	def canonicalise
 		p = request.path.sub(/\/+\Z/, '').sub(/\.html\Z/,'')
 		if Rails.env.production? and not ACCEPTABLE_HOSTNAMES.include? request.host
-			redirect_to 'http%s://%s:%d%s' % [request.ssl? ? 's' : '', HOSTNAME, request.port, p]
+			return redirect_to 'http%s://%s:%d%s' % [request.ssl? ? 's' : '', HOSTNAME, request.port, p]
 		elsif p.present? && p != request.path
-			redirect_to p, :status => 301
+			return redirect_to p, :status => 301
 		end
 	end
 

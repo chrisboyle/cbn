@@ -35,9 +35,8 @@
 		-if is_current
 			-if project.android_market_id.present?
 				.android_market
-					=link_to image_tag('sprites/bugdroid.png')+'Go to Android Market', "market://details?id=#{project.android_market_id}"
-					to install and be notified of future updates (link will only work on an Android device).
-					.clearleft
+					=link_to image_tag('sprites/bugdroid.png')+'Go to Android Market', "http://market.android.com/details?id=#{project.android_market_id}"
+					to install and be notified of future updates.
 			-files, sigs = project.downloads
 			-if files.present?
 				.downloads
