@@ -4,7 +4,7 @@
 		-title = link_to_unless(is_current, static_page.title, static_page, :rel => 'bookmark')
 		%header
 			-if is_current
-				%h1= title
+				%h1.entry-title= title
 			-else
 				%h2.entry-title= title
 		.entry-content= render :partial => 'common/body', :format => 'html', :object => static_page.body

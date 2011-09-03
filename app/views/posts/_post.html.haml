@@ -4,7 +4,7 @@
 		-title = link_to_unless(is_current, post.title, post, :rel => 'bookmark')
 		%header
 			-if is_current
-				%h1= title
+				%h1.entry-title= title
 			-else
 				%h2.entry-title= title
 			=render :partial => 'common/times', :format => 'html', :object => post
