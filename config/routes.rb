@@ -29,6 +29,7 @@ ActionController::Routing::Routes.draw do |map|
 	map.redirect      'comics', 'http://www.google.com/reader/shared/user/17429808451195384076/label/comics'
 	map.redirect      'ebay', 'http://feedback.ebay.com/ws/eBayISAPI.dll?ViewFeedback&userid=chrisboyle'
 	map.redirect      'facebook', 'http://www.facebook.com/shortcipher'
+	map.redirect      'diaspora', 'https://joindiaspora.com/u/chrisboyle'
 	map.redirect      'insanejournal', 'http://shortcipher.insanejournal.com/86249.html'
 	map.redirect      'lastfm', 'http://last.fm/user/shortcipher'
 	map.redirect      'linkedin', 'http://www.linkedin.com/in/shortcipher'
