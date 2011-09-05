@@ -6,8 +6,8 @@
 			-title = yield :title
 			=(title ? (title+" - ") : "") + SITE_NAME
 		%meta{:name => 'author', :content => AUTHOR_NAME}
-		%link{:rel  => 'author', :href => "http://#{HOSTNAME}/", :type => "text/html"}
 		%base{:href => root_url}
+		%link{:rel  => 'author', :href => "http://#{HOSTNAME}/", :type => "text/html"}
 		-canonical = url_for(:secure => false, :only_path => false, :host => request.host)
 		-if not current_page? canonical
 			%link{:rel => 'canonical', :href => canonical}

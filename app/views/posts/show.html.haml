@@ -1,5 +1,6 @@
 -title(@post.title)
 =render @post
+-description render :partial => 'common/body', :format => 'text', :object => @post.body
 
 .controls.pagecontrols
 	-if permitted_to? :edit, @post

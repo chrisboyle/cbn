@@ -16,7 +16,7 @@
 		-else
 			-rev = params[:after] and not params[:before]
 			-if params[:before] or (rev and @more)
-				%p= link_to 'Newer posts', {:after => @posts.first.created_at.strftime('%Y%m%d%H%M%S')}, :rel => 'nofollow prev'
+				%p= link_to 'Newer posts', {:after => (@posts.first.created_at + 1.second).strftime('%Y%m%d%H%M%S')}, :rel => 'nofollow prev'
 			=render @posts
 			-if @more or (rev and params[:after])
 				%p= link_to 'Older posts', {:before => @posts.last.created_at.strftime('%Y%m%d%H%M%S')}, :rel => 'nofollow next'

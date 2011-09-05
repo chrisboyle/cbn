@@ -4,6 +4,10 @@ module ApplicationHelper
 		content_for :title, t
 	end
 
+	def description(d)
+		content_for :head, tag('meta', :name=>'description', :content => truncate(strip_tags(d.gsub(/\n/,' ').strip), :length=>150))
+	end
+
 	def titleh1(t)
 		title(t)
 		content_tag(:h1, t)

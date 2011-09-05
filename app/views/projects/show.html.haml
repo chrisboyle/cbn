@@ -1,5 +1,6 @@
 -title(@project.title)
 =render @project
+-description render :partial => 'common/body', :format => 'text', :object => (@project.summary || @project.body)
 .controls
 	-if permitted_to? :edit, @project
 		=button_to 'Edit', edit_project_path(@project), :method => :get

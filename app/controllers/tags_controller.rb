@@ -13,6 +13,10 @@ class TagsController < ApplicationController
 	end
 
 	def show
+		@projects = Project.tagged_with(@tag).all(:order => :name)
+		@posts = Post.tagged_with(@tag)
+		if not has_role? :admin then @posts = @posts.by_draft(false) end
+		@posts = @posts.all(:order => 'created_at DESC')
 		respond_to do |format|
 			format.html
 			format.pdf { @template.template_format = 'html'; render :pdf => @tag.name }
