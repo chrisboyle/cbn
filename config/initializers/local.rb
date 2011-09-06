@@ -6,6 +6,7 @@ AUTHOR_NAME = SITE_NAME = 'Chris Boyle'
 EMAIL_SITE_NAME = 'chris.boyle.name'
 BLOG_WORD = 'Blog'
 PAGE_SIZE = 10
+DESCRIPTION_LENGTH = 160
 COPYRIGHT_YEARS = '2010-2011'
 OPENID2_LOCAL_ID = 'https://profiles.google.com/chris.boyle.name'
 OPENID2_PROVIDER = 'https://www.google.com/accounts/o8/ud?source=profiles'

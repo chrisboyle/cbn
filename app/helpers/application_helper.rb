@@ -5,7 +5,9 @@ module ApplicationHelper
 	end
 
 	def description(d)
-		content_for :head, tag('meta', :name=>'description', :content => truncate(strip_tags(d).gsub(/\s+/,' ').sub(/^PDF version\s*/,'').strip, :length=>150))
+		d.sub!(/.*<p class='summary'>(.*?)<\/p>.*/m,'\1')  # e.g. CV
+		d = strip_tags(d).gsub(/\s+/,' ').gsub(/&quot;/,'"').sub(/^PDF version\s*/,'').strip
+		content_for :head, tag('meta', :name=>'description', :content => truncate(d, :length=>DESCRIPTION_LENGTH))
 	end
 
 	def titleh1(t)
