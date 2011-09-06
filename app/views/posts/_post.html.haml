@@ -7,7 +7,7 @@
 				%h1.entry-title= title
 			-else
 				%h2.entry-title= title
-			=render :partial => 'common/times', :format => 'html', :object => post
+			=render :partial => 'common/times', :format => 'html', :object => post, :locals => {:author => true}
 			.tags= render :partial => 'tags/tags', :object => post.tags
 		.entry-content= render :partial => 'common/body', :format => 'html', :object => post.body
 	-if not is_current

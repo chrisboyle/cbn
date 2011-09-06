@@ -7,8 +7,9 @@
 			=(title ? (title+" - ") : "") + SITE_NAME
 		%meta{:name => 'author', :content => AUTHOR_NAME}
 		%base{:href => root_url}
-		%link{:rel  => 'author', :href => "http://#{HOSTNAME}/", :type => "text/html"}
-		-canonical = url_for(:secure => false, :only_path => false, :host => request.host)
+		-unless controller.controller_name == 'posts' and @post
+			%link{:rel  => 'author', :href => CANONICAL_ROOT, :type => "text/html"}
+		-canonical = url_for(:secure => false, :only_path => false, :host => HOSTNAME)
 		-if not current_page? canonical
 			%link{:rel => 'canonical', :href => canonical}
 		%link{:rel => 'shortcut icon', :href => image_path('favicon.png'), :type => 'image/png'}

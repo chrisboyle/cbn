@@ -1,5 +1,6 @@
 require "socket"
 HOSTNAME = if  Rails.env.production? then 'chris.boyle.name' else Socket::gethostname end
+CANONICAL_ROOT = "http://#{HOSTNAME}/"
 DOMAIN = if HOSTNAME.include? '.' then ".#{HOSTNAME}" else HOSTNAME end
 ACCEPTABLE_HOSTNAMES = [HOSTNAME, 'ipv6.'+HOSTNAME]
 AUTHOR_NAME = SITE_NAME = 'Chris Boyle'

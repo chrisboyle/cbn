@@ -5,10 +5,10 @@
 -no_link, no_profile = (plain or not identity.url), (plain or not identity.profile_url)
 %span.identity<
 	-if not multi and identity.user.role_symbols.include? :admin
-		=succeed AUTHOR_NAME do
+		=succeed link_to_unless plain, AUTHOR_NAME, CANONICAL_ROOT, {:rel => 'author'} do
 			=image_tag '/images/sprites/user_admin.png', :title => 'admin'
 	-else
-		=succeed link_to_unless no_link, text, identity.url, {:rel => 'nofollow'} do
+		=succeed link_to_unless no_link, text, identity.url, {:rel => multi ? 'nofollow' : 'nofollow author'} do
 			-if FileTest.exists?("#{RAILS_ROOT}/public#{imgpath}")
 				=link_to_unless no_profile, image_tag(imgpath, :title => icon), identity.profile_url, {:rel => 'nofollow'}
 -if has_role? :admin and identity.user and identity.user != current_user and not current_page? :controller => :users, :action => :index
