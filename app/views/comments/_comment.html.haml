@@ -5,14 +5,15 @@
 			deleted comment
 	-else
 		-cache comment do
-			.meta
-				.right
-					&nbsp;
-					=render :partial => 'common/times', :format => 'html', :object => comment
-				.left= comment.identity ? (render comment.identity) : 'deleted identity (bug!)'
-				.clearleft
-			.body
-				=simple_format h(comment.body).gsub('  ',' &nbsp;')
+			%article
+				.meta
+					.right
+						&nbsp;
+						=render :partial => 'common/times', :format => 'html', :object => comment
+					.left= comment.identity ? (render comment.identity) : 'deleted identity (bug!)'
+					.clearleft
+				.body
+					=simple_format h(comment.body).gsub('  ',' &nbsp;')
 		-acts = [:reply,:edit,:delete,:approve,:trust,:disapprove]
 		-confirms = { :delete => 'Really delete this?', :trust => 'Really approve all current and future posts from this user?' }
 		-allowed = acts.select {|act| (act == :reply) ? (comment.approved and not context and not comment.deleted) : (permitted_to? act, comment) }

@@ -6,8 +6,10 @@ AUTHOR_NAME = SITE_NAME = 'Chris Boyle'
 EMAIL_SITE_NAME = 'chris.boyle.name'
 BLOG_WORD = 'Blog'
 PAGE_SIZE = 10
+COPYRIGHT_YEARS = '2010-2011'
+OPENID2_LOCAL_ID = 'https://profiles.google.com/chris.boyle.name'
 OPENID2_PROVIDER = 'https://www.google.com/accounts/o8/ud?source=profiles'
-OPENID2_LOCAL_ID = 'http://www.google.com/profiles/chris.boyle.name'
+BUG_TRACKER = 'http://github.com/chrisboyle/cbn/issues'
 MAIL_FROM = 'blog@chris.boyle.name'
 BCC = 'blog@chris.boyle.name'
 LOGIN_BUTTONS = [

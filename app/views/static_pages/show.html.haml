@@ -1,5 +1,6 @@
 -title(@static_page.title)
 =render @static_page
+-description render :partial => 'common/body', :format => 'text', :object => @static_page.body
 
 .controls.pagecontrols
 	-if permitted_to? :edit, @static_page
