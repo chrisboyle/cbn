@@ -7,7 +7,7 @@
 			=(title ? (title+" - ") : "") + SITE_NAME
 		%meta{:name => 'author', :content => AUTHOR_NAME}
 		%base{:href => root_url}
-		-unless controller.controller_name == 'posts' and @post
+		-unless (controller.controller_name == 'posts' and @post) or (controller.controller_name == 'comments')
 			%link{:rel  => 'author', :href => CANONICAL_ROOT, :type => "text/html"}
 		-canonical = url_for(:secure => false, :only_path => false, :host => HOSTNAME)
 		-if not current_page? canonical
