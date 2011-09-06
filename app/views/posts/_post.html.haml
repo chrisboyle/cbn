@@ -11,4 +11,4 @@
 			.tags= render :partial => 'tags/tags', :object => post.tags
 		.entry-content= render :partial => 'common/body', :format => 'html', :object => post.body
 	-if not is_current
-		=link_to "Comments (#{post.comments.count})", url_for(post)+'#comments'
+		=link_to "Comments (#{post.comments.select {|c| c.is_visible_to? current_user}.count})", url_for(post)+'#comments'
