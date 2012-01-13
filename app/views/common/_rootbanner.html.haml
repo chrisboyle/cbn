@@ -1,19 +1,20 @@
 %header#rootbanner
 	.face>= image_tag 'sprites/illustshort.png', :class => 'face'
-	.author.vcard
-		%h1.fn.n<
-			%span.given-name Chris
-			%span.family-name Boyle
-		.tagline<
-			%span.role.title Software engineer
-			in
-			%span.adr
-				=succeed "," do
-					%span.locality Cambridge
-				%abbr.country-name{:title => "United Kingdom"} UK
+	.addrholder
+		%address.author.vcard
+			%h1.fn.n<
+				%span.given-name Chris
+				%span.family-name Boyle
+			.tagline<
+				%span.role.title Software engineer
+				in
+				%span.adr
+					=succeed "," do
+						%span.locality Cambridge
+					%abbr.country-name{:title => "United Kingdom"} UK
 	.favicons
 		-[ |
-		['google','Google profile','https://profiles.google.com/chris.boyle.name'], |
+		['google','Google profile','https://plus.google.com/115464904021452085056'], |
 		['twitter','Twitter: c_boyle','http://twitter.com/c_boyle'], |
 		['github', 'Github: chrisboyle', 'http://github.com/chrisboyle'], |
 		['stackoverflow','Stack Overflow','http://stackoverflow.com/users/6540/chris-boyle'], |
